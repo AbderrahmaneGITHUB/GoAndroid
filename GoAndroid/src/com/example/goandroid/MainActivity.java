@@ -31,12 +31,14 @@ public class MainActivity extends Activity {
 				
 		new View.OnTouchListener() {
 	        public boolean onTouch(View myView, MotionEvent event) {
+	        	
+	        	
 	        	/******************************************************/
 	        	/*				Declaration variables				  */
 	        	/******************************************************/
 	            int action, xI, xY, px, py;
 	            float x, y;
-
+555555
 	          	/******************************************************/
 	        	/*							Codes					  */
 	        	/******************************************************/
