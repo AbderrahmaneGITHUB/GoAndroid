@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	//test Antoine 
+	//test Antoine 2
 	
 	/******************************************************************/
 	/*				Declaration des variables globales		   		  */
