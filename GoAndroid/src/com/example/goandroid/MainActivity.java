@@ -117,6 +117,7 @@ public class MainActivity extends Activity {
 	public class Position{
 		int x;
 		int y;
+		
 	}
 
 	public class Pion{
