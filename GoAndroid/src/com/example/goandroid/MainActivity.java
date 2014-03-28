@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 	                }
 	            	else
 	                {
-	                	Toast.makeText(MainActivity.this, "touché en ("+px+" / "+py+")", 2000).show();
+	                	Toast.makeText(MainActivity.this, "touchï¿½ en ("+px+" / "+py+")", 2000).show();
 	                	//Test
 	                    ImageView iv = new ImageView(MainActivity.this);
 	                    iv.setImageResource(R.drawable.pion_noir);                
@@ -109,7 +109,11 @@ public class MainActivity extends Activity {
 		BLAN,
 		NOIR;
 	}
-
+	
+	public enum Couleur2 {
+		BLAN,
+		NOIR;
+	}
 	public class Position{
 		int x;
 		int y;
