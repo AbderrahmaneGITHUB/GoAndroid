@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	//test Antoine 2
 	
+555555
 	/******************************************************************/
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
