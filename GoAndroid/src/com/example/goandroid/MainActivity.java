@@ -11,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	//test Antoine 2
 	
-555555
 	/******************************************************************/
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
@@ -39,7 +37,7 @@ public class MainActivity extends Activity {
 	        	/******************************************************/
 	            int action, xI, xY, px, py;
 	            float x, y;
-555555
+
 	          	/******************************************************/
 	        	/*							Codes					  */
 	        	/******************************************************/
@@ -105,24 +103,67 @@ public class MainActivity extends Activity {
 		}
 		return res;
 	}
+	
+	/******************************************************************/
+	/*					Les fonctions initialisationPlateau			  */
+	/******************************************************************/
+	Plateau  initialisationPlateau(int taille)
+	{
+		Plateau plateau = new Plateau();
+		
+		plateau.taille = taille;
+		
+		effacerPlateau(plateau);
+		
+		
+		return plateau;
+	}
+	
+	/******************************************************************/
+	/*					Les fonctions initialisationPlateau			  */
+	/******************************************************************/
+	void effacerPlateau(Plateau plateau)
+	{
+		int taille = plateau.taille;
+		
+		for(int i = 0; i < taille*taille; i++)
+		{
+			plateau.positionPlateau.add(new Pion());
+			plateau.positionPlateau.get(i).couleur = Couleur.RIEN;
+		}		
+	}
+	
+	/******************************************************************/
+	/*					Les fonctions initialisationPlateau			  */
+	/******************************************************************/
+	void initialisationPosition (Plateau plateau){
+		int z = 0;
+		int taille = plateau.taille;
+		for(int j=0; j < taille; j++)
+		{
+			for(int k=0; k < taille; k++)
+			{
+				plateau.positionPlateau.get(z).position.x =  k;
+				plateau.positionPlateau.get(z).position.y =  j;
+				z++;
+			}
+		}		
+	}	
 		
 	/******************************************************************/
 	/*			Declaration des Structures et des Enums globales	  */
 	/******************************************************************/
 
 	public enum Couleur {
+		RIEN,
 		BLAN,
-		NOIR;
+		NOIR,
+		ETRANGE;
 	}
-	
-	public enum Couleur2 {
-		BLAN,
-		NOIR;
-	}
+
 	public class Position{
 		int x;
-		int y;
-		
+		int y;		
 	}
 
 	public class Pion{
@@ -136,9 +177,21 @@ public class MainActivity extends Activity {
 		int nbrPositionsMax;
 	}
 
-	class Chaine{
+	public class Chaine{
 		Positions lesCoordCases;
 		Couleur couleur;
+	}
+	
+	public class chaines{
+		List<Chaine> lesChaines;
+		int nbrPositionsActuel;
+		int nbrPositionsMax;
+	}
+	
+	public class Plateau{
+		
+		List<Pion> positionPlateau;
+		int taille;		
 	}
 }
 
