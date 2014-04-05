@@ -1,5 +1,6 @@
 package com.example.goandroid;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,22 +17,29 @@ public class MainActivity extends Activity {
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
 	private View maVue;	
-	
+	private Plateau plateau;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		/**************************************************************/
+    	/*				Declaration variables				  		  */
+    	/**************************************************************/ 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);		
 		maVue = findViewById(R.id.imageView1);
 		
-		maVue.setOnTouchListener(
-				
-		new View.OnTouchListener() {
+		/************   Initialisation du tableau		***************/
+		this.plateau = new Plateau();
+		initialisationPlateau(13, this.plateau);		
+
+		/**************************************************************/
+	/*						setOnTouchListener				  		  */
+    	/**************************************************************/ 		
+		maVue.setOnTouchListener(	new View.OnTouchListener() {
 	        public boolean onTouch(View myView, MotionEvent event) {
-	        	
-	        	
+	        		        	
 	        	/******************************************************/
 	        	/*				Declaration variables				  */
 	        	/******************************************************/
@@ -89,7 +97,7 @@ public class MainActivity extends Activity {
 	}
 	
 	/******************************************************************/
-	/*							Les fonctions	  					  */
+	/*						appartientAlaChaine	  					  */
 	/******************************************************************/
 	public int appartientAlaChaine(Position pos, Chaine chaine){
 		int res = 0;
@@ -105,22 +113,18 @@ public class MainActivity extends Activity {
 	}
 	
 	/******************************************************************/
-	/*					Les fonctions initialisationPlateau			  */
+	/*							initialisationPlateau    			  */
 	/******************************************************************/
-	Plateau  initialisationPlateau(int taille)
+	void  initialisationPlateau(int taille, Plateau plateau)
 	{
-		Plateau plateau = new Plateau();
-		
-		plateau.taille = taille;
-		
+		plateau.positionPlateau = new ArrayList<Pion>();
+		plateau.taille = taille;		
 		effacerPlateau(plateau);
-		
-		
-		return plateau;
+		initialisationPosition (plateau);
 	}
 	
 	/******************************************************************/
-	/*					Les fonctions initialisationPlateau			  */
+	/*							effacerPlateau						  */
 	/******************************************************************/
 	void effacerPlateau(Plateau plateau)
 	{
@@ -128,13 +132,15 @@ public class MainActivity extends Activity {
 		
 		for(int i = 0; i < taille*taille; i++)
 		{
-			plateau.positionPlateau.add(new Pion());
+			Pion pion = new Pion();	
+			pion.position = new Position();
+			plateau.positionPlateau.add(pion);
 			plateau.positionPlateau.get(i).couleur = Couleur.RIEN;
 		}		
 	}
 	
 	/******************************************************************/
-	/*					Les fonctions initialisationPlateau			  */
+	/*						initialisationPosition					  */
 	/******************************************************************/
 	void initialisationPosition (Plateau plateau){
 		int z = 0;
@@ -147,7 +153,8 @@ public class MainActivity extends Activity {
 				plateau.positionPlateau.get(z).position.y =  j;
 				z++;
 			}
-		}		
+		}	
+		z = 4;
 	}	
 		
 	/******************************************************************/
@@ -162,15 +169,60 @@ public class MainActivity extends Activity {
 	}
 
 	public class Position{
-		int x;
-		int y;		
+		int x;		
+		int y;						
 	}
-
+ /*
+	public class Position{
+		private int x;		
+		private int y;		
+		
+		Position(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
+		
+		public int getX() {
+			return x;
+		}
+		public void setX(int x) {
+			this.x = x;
+		}		
+		public int getY() {
+			return y;
+		}
+		public void setY(int y) {
+			this.y = y;
+		}
+	}
+*/
 	public class Pion{
 		Position position;
-		Couleur couleur;
+		Couleur couleur;	 		
 	}
 
+ /*
+	class Pion{
+		private Position position;
+		private Couleur couleur;	 
+		public Pion(Couleur couleur, Position position){
+			this.couleur = couleur;
+			this.position = position;		
+		}
+		public Position getPosition() {
+			return position;
+		}
+		public void setPosition(Position position) {
+			this.position = position;
+		}
+		public Couleur getCouleur() {
+			return couleur;
+		}
+		public void setCouleur(Couleur couleur) {
+			this.couleur = couleur;
+		}		
+	}
+*/
 	public class Positions{
 		List<Position> lesPositions;
 		int nbrPositionsActuel;
@@ -188,11 +240,36 @@ public class MainActivity extends Activity {
 		int nbrPositionsMax;
 	}
 	
+	
 	public class Plateau{
-		
 		List<Pion> positionPlateau;
 		int taille;		
 	}
+	 /*
+			
+	public class Plateau{
+		private List<Pion> positionPlateau;
+		private int taille;
+		
+		public Plateau(List<Pion> positionPlateau, int taille){
+			this.positionPlateau = positionPlateau;
+			this.taille = taille;			
+		}
+		
+		public List<Pion> getPositionPlateau() {
+			return positionPlateau;
+		}
+		public void setPositionPlateau(List<Pion> positionPlateau) {
+			this.positionPlateau = positionPlateau;
+		}
+		public int getTaille() {
+			return taille;
+		}
+		public void setTaille(int taille) {
+			this.taille = taille;
+		}				
+	}
+	*/
 }
 
 
