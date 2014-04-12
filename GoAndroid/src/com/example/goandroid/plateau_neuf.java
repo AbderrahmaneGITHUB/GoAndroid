@@ -39,8 +39,8 @@ public class plateau_neuf extends MainActivity{
                 y = event.getY();
                 xI = maVue.getWidth();
                 xY = maVue.getHeight();
-                px = (int) (x/(xI/9))+1;
-                py = (int) (y/(xY/9))+1;
+                px = (int) (x/(xI/taille_plateau))+1;
+                py = (int) (y/(xY/taille_plateau))+1;
                 
                 if (action==MotionEvent.ACTION_UP)
                 {
