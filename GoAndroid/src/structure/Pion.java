@@ -1,9 +1,14 @@
-package com.example.goandroid;
+package structure;
+
+import enumeration.Couleur;
 
 public class Pion {
 	
-	Position position;
-	Couleur couleur;
+	/******************************************************************/
+	/*						Structure Pion				  		  	  */
+	/******************************************************************/ 
+	public Position position;
+	public Couleur couleur;
 	
 	/******************************************************************/
 	/*					initialiserUnPion							  */
@@ -65,7 +70,7 @@ public class Pion {
 	/*  de placer un pion en cette position (la valeur 0 est alors	  */
 	/*  retournée)													  */
 	/******************************************************************/
-	int placerPionEnPosition(Plateau plateau, Position pos, Couleur couleur){
+	public int placerPionEnPosition(Plateau plateau, Position pos, Couleur couleur){
 		Pion pion = obtenirPionEnPosition(plateau, pos);
 		if (pion.couleur != Couleur.RIEN) return 0;
 		plateau.positionPlateau.get(pos.y*plateau.taille + pos.x).couleur = couleur;
@@ -76,7 +81,7 @@ public class Pion {
 	/*							obtenirPionEn						  */
 	/* @brief Retourn le pion à la position pos du plateau		  	  */
 	/******************************************************************/
-	Pion obtenirPionEnPosition(Plateau plateau, Position pos){
+	public Pion obtenirPionEnPosition(Plateau plateau, Position pos){
 		return obtenirPionEn(plateau, pos.x, pos.y);
 	}
 	

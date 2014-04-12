@@ -1,6 +1,7 @@
-package com.example.goandroid;
+package structure;
 
 import java.util.List;
+
 
 public class Positions {
 	List<Position> lesPositions;

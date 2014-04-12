@@ -1,4 +1,4 @@
-package com.example.goandroid;
+package enumeration;
 
 public enum Couleur {
 	RIEN,

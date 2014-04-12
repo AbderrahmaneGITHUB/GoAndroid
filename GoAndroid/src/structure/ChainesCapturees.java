@@ -1,4 +1,5 @@
-package com.example.goandroid;
+package structure;
+
 
 public class ChainesCapturees  extends Chaines {
 

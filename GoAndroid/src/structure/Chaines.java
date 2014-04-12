@@ -1,14 +1,18 @@
-package com.example.goandroid;
+package structure;
 
 import java.util.List;
 
+
+
 public class Chaines {
 	
+	/******************************************************************/
+	/*						Structure Chaines				  		  */
+	/******************************************************************/ 
 	List<Chaine> lesChaines;
 	int nbrPositionsActuel;
 	int nbrPositionsMax;
 	
-
 	/******************************************************************/
 	/*					appartientAuTerritoire						  */
 	/* @brief Juste pour la lisibilité du code car un territoire      */	
@@ -37,6 +41,4 @@ public class Chaines {
 		}
 		return res;
 	}
-	
-	
 }

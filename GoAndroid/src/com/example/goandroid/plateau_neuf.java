@@ -11,7 +11,6 @@ public class plateau_neuf extends MainActivity{
 	private View maVue;
 	int taille_plateau = 9;
 	
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +21,7 @@ public class plateau_neuf extends MainActivity{
     	maVue.setOnTouchListener(
     			
     	new View.OnTouchListener() {
-            public boolean onTouch(View myView, MotionEvent event) {
-            	
+            public boolean onTouch(View myView, MotionEvent event) {          	
             	
             	/******************************************************/
             	/*				Declaration variables				  */
@@ -50,19 +48,15 @@ public class plateau_neuf extends MainActivity{
                     }
                 	else
                     {
-                		//Drawable test = drawable(R.drawable.pion_noir);
-                		
+                		//Drawable test = drawable(R.drawable.pion_noir);            		
                     	Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
                     	//Test
                         ImageView iv = new ImageView(plateau_neuf.this);
-                        iv.setImageResource(R.drawable.pion_noir); 
-                        
+                        iv.setImageResource(R.drawable.pion_noir);                     
                     }
                 }      
                 return true;
             }
         });
-    } 
-	
-		
+    } 	
 }

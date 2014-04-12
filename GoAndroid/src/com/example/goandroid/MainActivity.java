@@ -1,5 +1,10 @@
 package com.example.goandroid;
 
+
+import enumeration.Couleur;
+import structure.Pion;
+import structure.Plateau;
+import structure.Position;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +36,8 @@ public class MainActivity extends Activity {
 		InitialisationClasseGo();
 		
 		/************   Initialisation du tableau		***************/
-
 		this.plateau.initialisationPlateau(13, this.plateau);
+		
 		Log.i("test1", "*******************************");
 		Log.i("test1", "Positioner un Pion en (5,1) qui est NOIR");
 		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
@@ -82,11 +87,7 @@ public class MainActivity extends Activity {
 		Log.i("test1", "pionEnlever position: x=" + pionEnlever.position.x 
 												  + "; y=" + pionEnlever.position.y);													
 		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
-		Log.i("test1", "*******************************");
-		
-		/**************************************************************/
-		/*						setOnTouchListener				  	  */
-    	/**************************************************************/ 		
+		Log.i("test1", "*******************************");	
 	
 	}
 	
@@ -99,7 +100,6 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}	
-	
 	
 	/**************************************/
 	/* Action des boutons				  */

@@ -1,11 +1,18 @@
-package com.example.goandroid;
+package structure;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import enumeration.Couleur;
+
+
 public class Plateau {
-	List<Pion> positionPlateau;
-	int taille;	
+	
+	/******************************************************************/
+	/*						Structure Plateau				  		  */
+	/******************************************************************/ 
+	public List<Pion> positionPlateau;
+	public int taille;	
 	
 	/******************************************************************/
 	/*							initialisationPlateau    			  */
@@ -54,6 +61,4 @@ public class Plateau {
 		}	
 		z = 4;
 	}		
-	
-	
 }

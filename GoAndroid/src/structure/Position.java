@@ -1,8 +1,9 @@
-package com.example.goandroid;
+package structure;
+
 
 public class Position {
-	int x;		
-	int y;	
+	public int x;		
+	public int y;	
 	
 	/******************************************************************/
 	/*							memePosition	  					  */
