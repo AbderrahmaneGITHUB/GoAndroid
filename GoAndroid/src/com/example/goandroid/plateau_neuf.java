@@ -1,7 +1,5 @@
 package com.example.goandroid;
 
-import android.R.drawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,13 +46,13 @@ public class plateau_neuf extends MainActivity{
                 {
                 	if(px>9 || px<=0 || py>9 || py<=0)
                 	{
-                		Toast.makeText(plateau_neuf.this, "Hors du plateau", 2000).show();
+                		Toast.makeText(plateau_neuf.this, "Hors du plateau", (int)2000).show();
                     }
                 	else
                     {
                 		//Drawable test = drawable(R.drawable.pion_noir);
                 		
-                    	Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", 2000).show();
+                    	Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
                     	//Test
                         ImageView iv = new ImageView(plateau_neuf.this);
                         iv.setImageResource(R.drawable.pion_noir); 
