@@ -1,4 +1,5 @@
 package com.example.goandroid;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	private Plateau plateau;
 	private Pion pionEnlever;
-	private ClasseProf classeProf; 
+	private Pion pionClasse;
+
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -23,39 +25,39 @@ public class MainActivity extends Activity {
     	/*				Declaration variables				  		  */
     	/**************************************************************/ 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);		
-		//maVue = findViewById(R.id.imageView1);
+		setContentView(R.layout.activity_main);
 		
 		/************   Initialisation du tableau		***************/
-		this.classeProf = new ClasseProf();
-		this.pionEnlever = this.classeProf.initialiserUnPion();
-		this.plateau = new Plateau();
-		this.classeProf.initialisationPlateau(13, this.plateau);
+		InitialisationClasseGo();
+		
+		/************   Initialisation du tableau		***************/
+
+		this.plateau.initialisationPlateau(13, this.plateau);
 		Log.i("test1", "*******************************");
-		Log.i("test1", "Obtenir un Pion en (5,1) qui est NOIR");
+		Log.i("test1", "Positioner un Pion en (5,1) qui est NOIR");
 		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
 		Position pos = new Position();
 		pos.x = 5; 
 		pos.y = 1;
-		Pion pion = this.classeProf.obtenirPionEnPosition(this.plateau, pos);
+		Pion pion = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
 		Log.i("test1", "pion position: x=" + pion.position.x + "; y=" + pion.position.y);
 		Log.i("test1", "pion couleur : " + pion.couleur.toString());		
 		Log.i("test1", "*******************************");
 		Log.i("test1", "Placer un Pion en (5,1) BLANC");
 		pos.x = 5; 
 		pos.y = 1;
-		int testCouleur = this.classeProf.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
+		int testCouleur = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
 		Log.i("test1", "Resultat place Pion en (5,1) : " + testCouleur);
 		Log.i("test1", "*******************************");
 		Log.i("test1", "Placer un Pion en (5,2) BLANC");
 		pos.x = 5; 
 		pos.y = 2;
-		int testCouleur2 = this.classeProf.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
+		int testCouleur2 = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
 		Log.i("test1", "Resultat place Pion en (5,2) : " + testCouleur2);
 		Log.i("test1", "*******************************");		
-		Pion pion2 = this.classeProf.obtenirPionEnPosition(this.plateau, pos);	
+		Pion pion2 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);	
 		Log.i("test1", "Verifier la couleur du Pion en position (5,2), qui est BLANC");
-		Log.i("test1", "pion2 position: x=" + pion.position.x + "; y=" + pion.position.y);
+		Log.i("test1", "pion2 position: x=" + pion2.position.x + "; y=" + pion2.position.y);
 		Log.i("test1", "pion2 couleur : " + pion2.couleur.toString());
 		Log.i("test1", "*******************************");
 		Log.i("test1", "Enlever un Pion en (5,2): BLANC: 4 etapes de verif");
@@ -67,11 +69,11 @@ public class MainActivity extends Activity {
 		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
 		
 		Log.i("test1", "**  2  **");
-		int testEnlevement = this.classeProf.enleverPionEn(this.plateau, pos, this.pionEnlever);
+		int testEnlevement = this.pionClasse.enleverPionEn(this.plateau, pos, this.pionEnlever);
 		Log.i("test1", "test denlevement du pion : " + testEnlevement);
 		
 		Log.i("test1", "**  3  **");
-		Pion pion3 = this.classeProf.obtenirPionEnPosition(this.plateau, pos);
+		Pion pion3 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
 		Log.i("test1", "pion3 couleur : "   + pion3.couleur.toString());
 		Log.i("test1", "pion3 position: x=" + pion3.position.x 
 				  								  + "; y=" + pion3.position.y);
@@ -102,25 +104,36 @@ public class MainActivity extends Activity {
 	/**************************************/
 	/* Action des boutons				  */
 	/**************************************/
-	
 	public void plateau_neuf(View v){
 		/*Toast.makeText(this, "initialisation ",
 				Toast.LENGTH_LONG).show();*/
 		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 		startActivity(intent);
 	}
+	
 	public void plateau_treize(View v){
 		/*Toast.makeText(this, "initialisation ",
 				Toast.LENGTH_LONG).show();*/
 		Intent intent = new Intent(MainActivity.this, plateau_treize.class);
 		startActivity(intent);
 	}
+	
 	public void plateau_dixneuf(View v){
 		/*Toast.makeText(this, "initialisation ",
 				Toast.LENGTH_LONG).show();*/
 		Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
 		startActivity(intent);
 	}
+	
+	/******************************************************************/
+	/*				Initialisation des structures					  */
+	/******************************************************************/
+	public void InitialisationClasseGo(){
+		this.pionClasse = new Pion();  
+		this.plateau = new Plateau();
+		this.pionEnlever = this.pionClasse.initialiserUnPion();
+	}
+	
 }
 
 
