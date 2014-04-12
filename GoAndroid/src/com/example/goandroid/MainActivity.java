@@ -130,6 +130,9 @@ public class MainActivity extends Activity {
         });	
 	}
 	
+	
+	
+	
 	/******************************************************************/
 	/*					appartientAuTerritoire						  */
 	/* @brief Juste pour la lisibilité du code car un territoire      */	
@@ -330,7 +333,6 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	/*			Declaration des Structures et des Enums globales	  */
 	/******************************************************************/
-
 	public enum Couleur {
 		RIEN,
 		BLANC,
@@ -342,57 +344,12 @@ public class MainActivity extends Activity {
 		int x;		
 		int y;						
 	}
- /*
-	public class Position{
-		private int x;		
-		private int y;		
-		
-		Position(int x, int y){
-			this.x = x;
-			this.y = y;
-		}
-		
-		public int getX() {
-			return x;
-		}
-		public void setX(int x) {
-			this.x = x;
-		}		
-		public int getY() {
-			return y;
-		}
-		public void setY(int y) {
-			this.y = y;
-		}
-	}
-*/
+
 	public class Pion{
 		Position position;
 		Couleur couleur;	 		
 	}
 
- /*
-	class Pion{
-		private Position position;
-		private Couleur couleur;	 
-		public Pion(Couleur couleur, Position position){
-			this.couleur = couleur;
-			this.position = position;		
-		}
-		public Position getPosition() {
-			return position;
-		}
-		public void setPosition(Position position) {
-			this.position = position;
-		}
-		public Couleur getCouleur() {
-			return couleur;
-		}
-		public void setCouleur(Couleur couleur) {
-			this.couleur = couleur;
-		}		
-	}
-*/
 	public class Positions{
 		List<Position> lesPositions;
 		int nbrPositionsActuel;
@@ -419,31 +376,6 @@ public class MainActivity extends Activity {
 		List<Pion> positionPlateau;
 		int taille;		
 	}
-	 /*
-			
-	public class Plateau{
-		private List<Pion> positionPlateau;
-		private int taille;
-		
-		public Plateau(List<Pion> positionPlateau, int taille){
-			this.positionPlateau = positionPlateau;
-			this.taille = taille;			
-		}
-		
-		public List<Pion> getPositionPlateau() {
-			return positionPlateau;
-		}
-		public void setPositionPlateau(List<Pion> positionPlateau) {
-			this.positionPlateau = positionPlateau;
-		}
-		public int getTaille() {
-			return taille;
-		}
-		public void setTaille(int taille) {
-			this.taille = taille;
-		}				
-	}
-	*/
 }
 
 
