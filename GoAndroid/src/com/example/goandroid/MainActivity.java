@@ -109,6 +109,7 @@ public class MainActivity extends Activity {
 	            xY = maVue.getHeight();
 	            px = (int) (x/(xI/9))+1;
 	            py = (int) (y/(xY/9))+1;
+	            py = (int) (y/(xY/9))+1;
 	            
 	            if (action==MotionEvent.ACTION_UP)
 	            {
