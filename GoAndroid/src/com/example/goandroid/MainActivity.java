@@ -1,21 +1,16 @@
 package com.example.goandroid;
-import com.example.goandroid.ClasseProf;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
 	/******************************************************************/
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
-	private View maVue;	
 	private Plateau plateau;
 	private Pion pionEnlever;
 	private ClasseProf classeProf; 
@@ -29,10 +24,10 @@ public class MainActivity extends Activity {
     	/**************************************************************/ 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);		
-		maVue = findViewById(R.id.imageView1);
+		//maVue = findViewById(R.id.imageView1);
 		
 		/************   Initialisation du tableau		***************/
-
+		this.classeProf = new ClasseProf();
 		this.pionEnlever = this.classeProf.initialiserUnPion();
 		this.plateau = new Plateau();
 		this.classeProf.initialisationPlateau(13, this.plateau);
@@ -90,44 +85,7 @@ public class MainActivity extends Activity {
 		/**************************************************************/
 		/*						setOnTouchListener				  	  */
     	/**************************************************************/ 		
-		maVue.setOnTouchListener(	new View.OnTouchListener() {
-	        public boolean onTouch(View myView, MotionEvent event) {
-	        		        	
-	        	/******************************************************/
-	        	/*				Declaration variables				  */
-	        	/******************************************************/
-	            int action, xI, xY, px, py;
-	            float x, y;
-
-	          	/******************************************************/
-	        	/*							Codes					  */
-	        	/******************************************************/
-	            action = event.getAction();
-	            x = event.getX();
-	            y = event.getY();
-	            xI = maVue.getWidth();
-	            xY = maVue.getHeight();
-	            px = (int) (x/(xI/9))+1;
-	            py = (int) (y/(xY/9))+1;
-	            py = (int) (y/(xY/9))+1;
-	            
-	            if (action==MotionEvent.ACTION_UP)
-	            {
-	            	if(px>9 || px<=0 || py>9 || py<=0)
-	            	{
-	            		Toast.makeText(MainActivity.this, "Hors du plateau", (int)2000).show();
-	                }
-	            	else
-	                {
-	                	Toast.makeText(MainActivity.this, "touch� en ("+px+" / "+py+")", (int)2000).show();
-	                	//Test
-	                    ImageView iv = new ImageView(MainActivity.this);
-	                    iv.setImageResource(R.drawable.pion_noir);                
-	                }
-	            }      
-	            return true;
-	        }
-        });	
+	
 	}
 	
 	/******************************************************************/
@@ -140,6 +98,29 @@ public class MainActivity extends Activity {
 		return true;
 	}	
 	
+	
+	/**************************************/
+	/* Action des boutons				  */
+	/**************************************/
+	
+	public void plateau_neuf(View v){
+		/*Toast.makeText(this, "initialisation ",
+				Toast.LENGTH_LONG).show();*/
+		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
+		startActivity(intent);
+	}
+	public void plateau_treize(View v){
+		/*Toast.makeText(this, "initialisation ",
+				Toast.LENGTH_LONG).show();*/
+		Intent intent = new Intent(MainActivity.this, plateau_treize.class);
+		startActivity(intent);
+	}
+	public void plateau_dixneuf(View v){
+		/*Toast.makeText(this, "initialisation ",
+				Toast.LENGTH_LONG).show();*/
+		Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
+		startActivity(intent);
+	}
 }
 
 
