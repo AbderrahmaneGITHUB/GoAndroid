@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -90,18 +91,14 @@ public class MainActivity extends Activity {
 		/**************************************************************/
 		/*						setOnTouchListener				  	  */
     	/**************************************************************/ 		
-		maVue.setOnTouchListener(	new View.OnTouchListener() {
+		/*maVue.setOnTouchListener(	new View.OnTouchListener() {
 	        public boolean onTouch(View myView, MotionEvent event) {
 	        		        	
-	        	/******************************************************/
-	        	/*				Declaration variables				  */
-	        	/******************************************************/
+	        	
 	            int action, xI, xY, px, py;
 	            float x, y;
 
-	          	/******************************************************/
-	        	/*							Codes					  */
-	        	/******************************************************/
+	          	
 	            action = event.getAction();
 	            x = event.getX();
 	            y = event.getY();
@@ -127,7 +124,7 @@ public class MainActivity extends Activity {
 	            }      
 	            return true;
 	        }
-        });	
+        });*/	
 	}
 	
 	
@@ -374,6 +371,23 @@ public class MainActivity extends Activity {
 	public class Plateau{
 		List<Pion> positionPlateau;
 		int taille;		
+	}
+	
+	/**************************************/
+	/* Action des boutons				  */
+	/**************************************/
+	
+	public void plateau_neuf(View v){
+		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
+		startActivity(intent);
+	}
+	public void plateau_treize(View v){
+		Intent intent = new Intent(MainActivity.this, plateau_treize.class);
+		startActivity(intent);
+	}
+	public void plateau_dixneuf(View v){
+		Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
+		startActivity(intent);
 	}
 }
 
