@@ -369,8 +369,7 @@ public class MainActivity extends Activity {
 		List<Chaine> lesChaines;
 		int nbrPositionsActuel;
 		int nbrPositionsMax;
-	}
-	
+	}	
 	
 	public class Plateau{
 		List<Pion> positionPlateau;
