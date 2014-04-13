@@ -14,13 +14,12 @@ public class Pion {
 	/*					initialiserUnPion							  */
 	/* @brief Initialisation d'un Pion							  	  */
 	/******************************************************************/
-	public Pion initialiserUnPion(){
-		Pion pion = new Pion();
-		pion.position = new Position();
-		pion.position.x = 30;
-		pion.position.y = 30;
-		pion.couleur = Couleur.RIEN;
-		return pion;
+	public void initialiserUnPion(Pion inPion){
+
+		inPion.position = new Position();
+		inPion.position.x = 30;
+		inPion.position.y = 30;
+		inPion.couleur = Couleur.RIEN;
 	}
 	
 	/******************************************************************/
@@ -45,10 +44,8 @@ public class Pion {
 				pionEnlever.position = pos;
 				pionEnlever.couleur = coul;
 			}
-
 			return 1; //bien enlevé
 		}
-
 		return 0; //il y a aucun pion à cette position
 	}
 	

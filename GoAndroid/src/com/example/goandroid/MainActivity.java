@@ -2,9 +2,12 @@ package com.example.goandroid;
 
 
 import enumeration.Couleur;
+import structure.Chaine;
+import structure.Libertes;
 import structure.Pion;
 import structure.Plateau;
 import structure.Position;
+import structure.Territoire;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +23,9 @@ public class MainActivity extends Activity {
 	private Plateau plateau;
 	private Pion pionEnlever;
 	private Pion pionClasse;
-
+	private Chaine chaineTest;
+	private Territoire territoireTest;
+	private Libertes libertes;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -46,48 +51,86 @@ public class MainActivity extends Activity {
 		pos.y = 1;
 		Pion pion = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
 		Log.i("test1", "pion position: x=" + pion.position.x + "; y=" + pion.position.y);
-		Log.i("test1", "pion couleur : " + pion.couleur.toString());		
-		Log.i("test1", "*******************************");
-		Log.i("test1", "Placer un Pion en (5,1) BLANC");
-		pos.x = 5; 
-		pos.y = 1;
-		int testCouleur = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
-		Log.i("test1", "Resultat place Pion en (5,1) : " + testCouleur);
-		Log.i("test1", "*******************************");
-		Log.i("test1", "Placer un Pion en (5,2) BLANC");
-		pos.x = 5; 
-		pos.y = 2;
-		int testCouleur2 = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
-		Log.i("test1", "Resultat place Pion en (5,2) : " + testCouleur2);
-		Log.i("test1", "*******************************");		
-		Pion pion2 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);	
-		Log.i("test1", "Verifier la couleur du Pion en position (5,2), qui est BLANC");
-		Log.i("test1", "pion2 position: x=" + pion2.position.x + "; y=" + pion2.position.y);
-		Log.i("test1", "pion2 couleur : " + pion2.couleur.toString());
-		Log.i("test1", "*******************************");
-		Log.i("test1", "Enlever un Pion en (5,2): BLANC: 4 etapes de verif");
-		pos.x = 5; 
-		pos.y = 2;
-		Log.i("test1", "**  1  **");
-		Log.i("test1", "Voir le contenu du Pion  pionEnlever avant");
-		Log.i("test1", "pionEnlever position: x=" + pionEnlever.position.x + "; y=" + pionEnlever.position.y);
-		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
+		Log.i("test1", "pion couleur : " + pion.couleur.toString());
 		
-		Log.i("test1", "**  2  **");
-		int testEnlevement = this.pionClasse.enleverPionEn(this.plateau, pos, this.pionEnlever);
-		Log.i("test1", "test denlevement du pion : " + testEnlevement);
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 5).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 7).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 7).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 6).couleur = Couleur.NOIR;
+					
+		Log.i("test1", "*******************************");
+		pos.x = 6; 
+		pos.y = 0;
+		this.territoireTest = this.territoireTest.determineTerritoire(plateau, pos);
 		
-		Log.i("test1", "**  3  **");
-		Pion pion3 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
-		Log.i("test1", "pion3 couleur : "   + pion3.couleur.toString());
-		Log.i("test1", "pion3 position: x=" + pion3.position.x 
-				  								  + "; y=" + pion3.position.y);
-		Log.i("test1", "**  4  **");
-		Log.i("test1", "Voir le contenu du Pion  pionEnlever après");
-		Log.i("test1", "pionEnlever position: x=" + pionEnlever.position.x 
-												  + "; y=" + pionEnlever.position.y);													
-		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
-		Log.i("test1", "*******************************");	
+		pos.x = 5; 
+		pos.y = 0;
+		this.chaineTest = this.chaineTest.determinerChaine(this.plateau, pos);
+		
+		this.libertes.determineLiberte(plateau, this.chaineTest);
+		
+//		Log.i("test1", "*******************************");
+//		Log.i("test1", "Placer un Pion en (5,2) BLANC");
+//		pos.x = 5; 
+//		pos.y = 2;
+//		int testCouleur = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
+//		Log.i("test1", "Resultat place Pion en (5,2) : " + testCouleur);
+//		
+//		Log.i("test1", "*******************************");
+//		Log.i("test1", "Placer un Pion en (5,3) BLANC");
+//		pos.x = 5; 
+//		pos.y = 3;
+//		int testCouleur2 = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
+//		Log.i("test1", "Resultat place Pion en (5,3) : " + testCouleur2);
+//		
+//		Log.i("test1", "*******************************");
+//		Log.i("test1", "Placer un Pion en (5,4) BLANC");
+//		pos.x = 5; 
+//		pos.y = 4;
+//		int testCouleur3 = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.BLANC);
+//		Log.i("test1", "Resultat place Pion en (5,4) : " + testCouleur3);
+//		
+//		Log.i("test1", "*******************************");
+//		Log.i("test1", "Placer un Pion en (5,0) NOIR");
+//		pos.x = 5; 
+//		pos.y = 0;
+//		int testCouleur4 = this.pionClasse.placerPionEnPosition(this.plateau, pos, Couleur.NOIR);
+//		Log.i("test1", "Resultat place Pion en (5,0) : " + testCouleur4);
+//		
+//		Log.i("test1", "*******************************");
+//		pos.x = 5; 
+//		pos.y = 1;
+//		this.chaineTest.determinerChaine(this.plateau, pos);
+		
+//		Log.i("test1", "*******************************");		
+//		Pion pion2 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);	
+//		Log.i("test1", "Verifier la couleur du Pion en position (5,2), qui est BLANC");
+//		Log.i("test1", "pion2 position: x=" + pion2.position.x + "; y=" + pion2.position.y);
+//		Log.i("test1", "pion2 couleur : " + pion2.couleur.toString());
+//		Log.i("test1", "*******************************");
+//		Log.i("test1", "Enlever un Pion en (5,2): BLANC: 4 etapes de verif");
+//		pos.x = 5; 
+//		pos.y = 2;
+//		Log.i("test1", "**  1  **");
+//		Log.i("test1", "Voir le contenu du Pion  pionEnlever avant");
+//		Log.i("test1", "pionEnlever position: x=" + pionEnlever.position.x + "; y=" + pionEnlever.position.y);
+//		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
+//		
+//		Log.i("test1", "**  2  **");
+//		int testEnlevement = this.pionClasse.enleverPionEn(this.plateau, pos, this.pionEnlever);
+//		Log.i("test1", "test denlevement du pion : " + testEnlevement);
+//		
+//		Log.i("test1", "**  3  **");
+//		Pion pion3 = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
+//		Log.i("test1", "pion3 couleur : "   + pion3.couleur.toString());
+//		Log.i("test1", "pion3 position: x=" + pion3.position.x 
+//				  								  + "; y=" + pion3.position.y);
+//		Log.i("test1", "**  4  **");
+//		Log.i("test1", "Voir le contenu du Pion  pionEnlever après");
+//		Log.i("test1", "pionEnlever position: x=" + pionEnlever.position.x 
+//												  + "; y=" + pionEnlever.position.y);													
+//		Log.i("test1", "pionEnlever couleur : " + pionEnlever.couleur.toString());
+//		Log.i("test1", "*******************************");	
 	
 	}
 	
@@ -129,9 +172,22 @@ public class MainActivity extends Activity {
 	/*				Initialisation des structures					  */
 	/******************************************************************/
 	public void InitialisationClasseGo(){
-		this.pionClasse = new Pion();  
-		this.plateau = new Plateau();
-		this.pionEnlever = this.pionClasse.initialiserUnPion();
+		this.pionClasse 	= new Pion();
+		this.pionClasse.initialiserUnPion(this.pionClasse);
+		
+		this.plateau 		= new Plateau();
+		
+		this.pionEnlever 	= new Pion();
+		this.pionEnlever.initialiserUnPion(this.pionEnlever);
+		
+		this.chaineTest = new Chaine();
+		this.chaineTest.initialisationChaine(this.plateau, this.chaineTest);
+		
+		this.territoireTest = new Territoire();
+		this.territoireTest.initialisationChaine(plateau, this.territoireTest);
+		
+		this.libertes= new Libertes();
+		this.libertes.initialisationPosition(plateau, this.libertes);
 	}
 	
 }
