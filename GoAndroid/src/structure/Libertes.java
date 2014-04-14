@@ -27,14 +27,13 @@ public class Libertes extends Positions{
 		Libertes pLiberte 			= new Libertes();
 		Position voisins[] 			= new Position[4];
 		Position positionRef		= new Position();
-		//List<Position> voisins 		= new ArrayList<Position>();
 		/*************************************************************/
 		/*							Codes				 		     */
 		/*************************************************************/
 		//si la chaine est vide, on sort de la fonction
 		if (chaine == null || plateau == null) return pLiberte = null;
 		
-		this.initialisationPosition(plateau, pLiberte);	
+		this.initialisationPositions(plateau, pLiberte);	
 		lesPositions = pLiberte.lesPositions;
 		
 		for (i = 0; i < chaine.lesCoordCases.nbrPositionsActuel; i++)
@@ -47,17 +46,11 @@ public class Libertes extends Positions{
 				voisins[j].x = positionRef.x;
 				voisins[j].y = positionRef.y;
 			}
-//			for (i = 0; i < 4; i++){ 
-//				voisins.add(new Position()); // Récupérer la position de réference du pion
-//				voisins.get(i).x = positionRef.x;
-//				voisins.get(i).y = positionRef.y;
-//			}
-			
+
 			voisins[0].x++;
 			Log.i("determineLiberte", "voisin 0 position: x =" + voisins[0].x + "; y=" + voisins[0].y);
-			
-			int sss = voisins[2].x;
-			voisins[2].x = sss-1;
+
+			voisins[2].x--;
 			Log.i("determineLiberte", "voisin 2 position: x =" + voisins[2].x + "; y=" + voisins[2].y);
 			
 			voisins[1].y++;

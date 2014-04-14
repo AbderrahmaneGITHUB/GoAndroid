@@ -8,7 +8,7 @@ import constante.Constante;
 import enumeration.Couleur;
 
 
-public class Chaine {
+public class Chaine extends Libertes{
 	
 	/******************************************************************/
 	/*						Structure Chaine				  		  */
@@ -29,7 +29,7 @@ public class Chaine {
 		inChaine.nbrPionsActuel = 0;
 		inChaine.nbrPionsMax = Constante.NBR_MAX_CASES;
 		inChaine.lesCoordCases = new Positions();
-		inChaine.lesCoordCases.initialisationPosition(plateau, inChaine.lesCoordCases);
+		inChaine.lesCoordCases.initialisationPositions(plateau, inChaine.lesCoordCases);
 		inChaine.laCouleur = Couleur.RIEN;
 		inChaine.taille = 0;	
 		return  1;

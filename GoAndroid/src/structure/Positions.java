@@ -18,7 +18,7 @@ public class Positions extends Position{
 	/******************************************************************/
 	/*					  initialisationPosition    				  */
 	/******************************************************************/
-	public int initialisationPosition(Plateau plateau, Positions inPositions)
+	public int initialisationPositions(Plateau plateau, Positions inPositions)
 	{
 		inPositions.lesPositions = new ArrayList<Position>();
 		inPositions.nbrPositionsActuel = 0;

@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
 		this.territoireTest.initialisationChaine(plateau, this.territoireTest);
 		
 		this.libertes= new Libertes();
-		this.libertes.initialisationPosition(plateau, this.libertes);
+		this.libertes.initialisationPositions(plateau, this.libertes);
 	}
 	
 }
