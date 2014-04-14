@@ -3,6 +3,8 @@ package com.example.goandroid;
 
 import enumeration.Couleur;
 import structure.Chaine;
+import structure.Chaines;
+import structure.ChainesCapturees;
 import structure.Libertes;
 import structure.Pion;
 import structure.Plateau;
@@ -24,8 +26,10 @@ public class MainActivity extends Activity {
 	private Pion pionEnlever;
 	private Pion pionClasse;
 	private Chaine chaineTest;
+	private Chaines chainesTests;
 	private Territoire territoireTest;
 	private Libertes libertes;
+	private ChainesCapturees ChainesCapturesTest;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -44,30 +48,47 @@ public class MainActivity extends Activity {
 		this.plateau.initialisationPlateau(13, this.plateau);
 		
 		Log.i("test1", "*******************************");
-		Log.i("test1", "Positioner un Pion en (5,1) qui est NOIR");
-		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
+//		Log.i("test1", "Positioner un Pion en (5,1) qui est NOIR");
+//		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
 		Position pos = new Position();
-		pos.x = 5; 
-		pos.y = 1;
-		Pion pion = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
-		Log.i("test1", "pion position: x=" + pion.position.x + "; y=" + pion.position.y);
-		Log.i("test1", "pion couleur : " + pion.couleur.toString());
+//		pos.x = 5; 
+//		pos.y = 1;
+//		Pion pion = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
+//		Log.i("test1", "pion position: x=" + pion.position.x + "; y=" + pion.position.y);
+//		Log.i("test1", "pion couleur : " + pion.couleur.toString());
 		
 		this.plateau.positionPlateau.get(0*this.plateau.taille + 5).couleur = Couleur.NOIR;
-		this.plateau.positionPlateau.get(0*this.plateau.taille + 7).couleur = Couleur.NOIR;
-		this.plateau.positionPlateau.get(1*this.plateau.taille + 7).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
 		this.plateau.positionPlateau.get(1*this.plateau.taille + 6).couleur = Couleur.NOIR;
-					
-		Log.i("test1", "*******************************");
-		pos.x = 6; 
-		pos.y = 0;
-		this.territoireTest = this.territoireTest.determineTerritoire(plateau, pos);
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 7).couleur = Couleur.NOIR;
 		
-		pos.x = 5; 
-		pos.y = 0;
-		this.chaineTest = this.chaineTest.determinerChaine(this.plateau, pos);
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 6).couleur = Couleur.BLANC;
 		
-		this.libertes.determineLiberte(plateau, this.chaineTest);
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 7).couleur = Couleur.NOIR;
+		int valide = 0;
+		pionClasse.position.x = 7; 
+		pionClasse.position.y = 0;
+    	pionClasse.couleur = Couleur.NOIR;
+    	
+    	this.chainesTests = this.ChainesCapturesTest.captureChaines(pionClasse, plateau, valide);
+    	pos.x = 7; 
+    	pos.y = 0;
+		
+
+		
+		
+//		this.plateau.positionPlateau.get(1*this.plateau.taille + 6).couleur = Couleur.NOIR;
+//					
+//		Log.i("test1", "*******************************");
+//		pos.x = 6; 
+//		pos.y = 0;
+//		this.territoireTest = this.territoireTest.determineTerritoire(plateau, pos);
+//		
+//		pos.x = 5; 
+//		pos.y = 0;
+//		this.chaineTest = this.chaineTest.determinerChaine(this.plateau, pos);
+//		
+//		this.libertes.determineLiberte(plateau, this.chaineTest);
 		
 //		Log.i("test1", "*******************************");
 //		Log.i("test1", "Placer un Pion en (5,2) BLANC");
@@ -188,6 +209,13 @@ public class MainActivity extends Activity {
 		
 		this.libertes= new Libertes();
 		this.libertes.initialisationPositions(plateau, this.libertes);
+		
+		this.ChainesCapturesTest = new ChainesCapturees();
+		this.ChainesCapturesTest.initialisationChaines(plateau, this.ChainesCapturesTest);
+		
+		this.chainesTests = new Chaines();
+		this.chainesTests.initialisationChaines(plateau, this.chainesTests);
+		
 	}
 	
 }

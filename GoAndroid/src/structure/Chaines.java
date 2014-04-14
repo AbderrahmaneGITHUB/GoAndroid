@@ -7,7 +7,7 @@ import constante.Constante;
 
 
 
-public class Chaines extends Chaine{
+public class Chaines {
 	
 	/******************************************************************/
 	/*						Structure Chaines				  		  */
@@ -22,8 +22,8 @@ public class Chaines extends Chaine{
 	public int initialisationChaines(Plateau plateau, Chaines inChaines){
 	
 		inChaines.lesChaines = new ArrayList<Chaine>();
-		inChaines.nbrPionsActuel = 0;
-		inChaines.nbrPionsMax = Constante.NBR_MAX_CASES;			
+		inChaines.nbrPositionsActuel = 0;
+		inChaines.nbrPositionsMax = Constante.NBR_MAX_CASES;			
 		return 1;
 	}
 	

@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
-import constante.Constante;
 import enumeration.Couleur;
 
 
-public class Chaine extends Libertes{
+public class Chaine {
 	
 	/******************************************************************/
 	/*						Structure Chaine				  		  */
 	/******************************************************************/ 
-	public List<Pion> lesPions;
-	public int nbrPionsActuel;
-	public int nbrPionsMax;
+	//public List<Pion> lesPions;
+	//public int nbrPionsActuel;
+	//public int nbrPionsMax;
 	public int taille;	
 	public Positions lesCoordCases;
 	public Couleur laCouleur;
@@ -25,9 +24,9 @@ public class Chaine extends Libertes{
 	/* @brief : Initialiser une Chaine			  		  			  */
 	/******************************************************************/ 
 	public int initialisationChaine(Plateau plateau, Chaine inChaine){	
-		inChaine.lesPions = new ArrayList<Pion>();
-		inChaine.nbrPionsActuel = 0;
-		inChaine.nbrPionsMax = Constante.NBR_MAX_CASES;
+		//inChaine.lesPions = new ArrayList<Pion>();
+		//inChaine.nbrPionsActuel = 0;
+		//inChaine.nbrPionsMax = Constante.NBR_MAX_CASES;
 		inChaine.lesCoordCases = new Positions();
 		inChaine.lesCoordCases.initialisationPositions(plateau, inChaine.lesCoordCases);
 		inChaine.laCouleur = Couleur.RIEN;

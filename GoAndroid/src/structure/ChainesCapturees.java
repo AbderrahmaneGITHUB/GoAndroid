@@ -5,7 +5,14 @@ import enumeration.Couleur;
 
 public class ChainesCapturees  extends Chaines {
 
-	
+	/** @brief en fonction de la position du pion et sa couleur retourne
+	* les chaines capturées. Si aucune chaîne n'est capturé par la pose du pion,
+	* alors la valeur NULL est retournée. L'entier (référencé par) valide égal
+	* à zéro si le fait de placer pion en cette position conduit à construire
+	* une chaîne sans liberté de la couleur du pion
+	* (sauf si ce coup produit la capture d'au moins une chaine adverse).
+	* Dans le cas contraire l'entier référencé par valide est égale à 1
+	*/
 	public Chaines captureChaines(Pion pion, Plateau plateau, int valide) {		
 		/**************************************************/
 		/*					Déclaration					  */
@@ -20,6 +27,7 @@ public class ChainesCapturees  extends Chaines {
 		Libertes valideLiberte 			= new Libertes();
 		Chaine rahim 					= new Chaine();
 		Chaines touteChaineCapturees 	= new Chaines();
+		Libertes fonctionLib 			= new Libertes();
 		/**************************************************/
 		/*						Codes					  */
 		/**************************************************/
@@ -29,7 +37,7 @@ public class ChainesCapturees  extends Chaines {
 		positionRef = pion.position;
 		couleurRef = pion.couleur;
 		/*************				Initialisation			**********/	
-		this.initialisationChaine(plateau, valideChaine);
+		valideChaine.initialisationChaine(plateau, valideChaine);
 		valideLiberte.initialisationPositions(plateau, valideLiberte);
 		rahim.initialisationChaine(plateau, rahim);
 		this.initialisationChaines(plateau, touteChaineCapturees);
@@ -44,11 +52,11 @@ public class ChainesCapturees  extends Chaines {
 		if (pion.couleur == Couleur.RIEN)
 			return touteChaineCapturees = null;
 		
-		valideChaine = this.determinerChaine(plateau, pion.position);
+		valideChaine = valideChaine.determinerChaine(plateau, pion.position);
 		
 		if (valideChaine != null) {
-
-			valideLiberte = this.determineLiberte(plateau, valideChaine);
+			
+			valideLiberte = fonctionLib.determineLiberte(plateau, valideChaine);
 
 			if ((valideLiberte.nbrPositionsActuel == 0) && (valideLiberte != null)) {
 				valide = 0;
@@ -81,7 +89,7 @@ public class ChainesCapturees  extends Chaines {
 				// Tester si dans cette position, s'il y a un pion
 				Pion rahimPion = new Pion();
 				rahimPion.initialiserUnPion(rahimPion);
-				rahimPion.obtenirPionEn(plateau, x, y);
+				rahimPion = rahimPion.obtenirPionEn(plateau, x, y);
 				
 				if (rahimPion.couleur != Couleur.RIEN && rahimPion.couleur != Couleur.ETRANGE) {
 					if (couleurRef != rahimPion.couleur) {
@@ -91,15 +99,17 @@ public class ChainesCapturees  extends Chaines {
 						rahimLiberte.initialisationPositions(plateau, rahimLiberte);
 						
 						// Construction de la chaine de ce pion trouvé (d'une autre couleur)
-						rahimChaineACapturer = determinerChaine(plateau, rahimPion.position);
+						rahimChaineACapturer = rahimChaineACapturer.determinerChaine(plateau, rahimPion.position);
 
 						if (rahimChaineACapturer != null) {
 							
 							// Construction de la chaine à qui appartien le pion trouvé
-							rahimLiberte = determineLiberte(plateau, rahimChaineACapturer);
+							rahimLiberte = fonctionLib.determineLiberte(plateau, rahimChaineACapturer);
 							if ((rahimLiberte.nbrPositionsActuel == 0) && (rahimLiberte != null)) {
 								valide = 1;	
-								
+								Chaine chaineInitialisation = new Chaine();
+								//chaineInitialisation.in
+								touteChaineCapturees.lesChaines.add(chaineInitialisation);
 								touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).laCouleur = rahimChaineACapturer.laCouleur;
 								touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).lesCoordCases = rahimChaineACapturer.lesCoordCases;
 										
