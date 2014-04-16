@@ -50,15 +50,18 @@ public class plateau_neuf extends MainActivity{
                 y = event.getY();
                 xI = maVue.getWidth();
                 xY = maVue.getHeight();
-                float x_grille = (float) (taille_plateau - (taille_plateau/30.6) - (taille_plateau/22));
-                float y_grille = (float) (taille_plateau - (taille_plateau/28.6) - (taille_plateau/22));
-                px = (int) (x/(xI/x_grille))+1;
-                py = (int) (y/(xY/y_grille))+1;
-                float cx = (float) xI/x_grille;
-                float cy = (float) xY/y_grille;
-                cx = (float) ((px-1)*cx+(taille_plateau/30.6));
-                cy = (float) ((py-1)*cy+(taille_plateau/28.6));
-                
+                float x_grille = (float) (xI - ((xI/27.027)*2));
+                float y_grille = (float) (xY - (xY/27.027) - (xY/27.027));
+                //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
+                px = (int) (x/(x_grille/(taille_plateau-1)))+1;
+                py = (int) (y/(y_grille/(taille_plateau-1)))+1;
+                //Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
+                float cx = (float) x_grille/(taille_plateau-1);
+                //Toast.makeText(plateau_neuf.this, "taille case ("+cx+")", (int)2000).show();
+                float cy = (float) y_grille/(taille_plateau-1);
+                cx = (float) ((px-1)*cx);
+                cy = (float) ((py-1)*cy);
+                //Toast.makeText(plateau_neuf.this, "touché en ("+cx+" / "+cy+")", (int)2000).show();
                 if (action==MotionEvent.ACTION_UP)
                 {
                 	if(px>9 || px<=0 || py>9 || py<=0)
@@ -83,7 +86,9 @@ public class plateau_neuf extends MainActivity{
                     		le_pion = pion_noir;
                     		tour_joueur.setText("Joueur Blanc");
                     	}
-                    	drawImg(iv, cx, cy, le_pion);
+                    	
+                    	int width = le_pion.getWidth();
+                    	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
                     	couleur_pion++;
                         
                     }
