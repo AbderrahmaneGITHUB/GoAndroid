@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
 		/**************************************************************/
     	/*				Declaration variables				  		  */
     	/**************************************************************/ 
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
