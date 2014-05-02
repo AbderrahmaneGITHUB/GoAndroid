@@ -8,7 +8,6 @@ import structure.ChainesCapturees;
 import structure.Libertes;
 import structure.Pion;
 import structure.Plateau;
-import structure.Position;
 import structure.Positions;
 import structure.Territoire;
 import android.app.Activity;
@@ -83,7 +82,6 @@ public class MainActivity extends Activity {
 		this.plateau.positionPlateau.get(0*this.plateau.taille + 10).couleur = Couleur.BLANC;
 		
 		//this.plateau.positionPlateau.get(0*this.plateau.taille + 6).couleur = Couleur.BLANC;
-		int valide = 0;
 		pionClasse.position.x = 6; 
 		pionClasse.position.y = 1;
     	pionClasse.couleur = Couleur.BLANC;
