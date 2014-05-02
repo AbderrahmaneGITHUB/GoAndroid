@@ -18,7 +18,7 @@ public class plateau_neuf extends MainActivity{
 	//private Plateau plateau;
 	private int taille_plateau = 9;
 	private int couleur_pion = 1;
-	
+
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,16 @@ public class plateau_neuf extends MainActivity{
 	    
 	    // Recopie la nouvelle image bmp dans le contenu de l'ImageView
 	    iv.setImageBitmap(bmp);
+	}
+	
+	public void passer_tour(View v){
+		couleur_pion ++;
+		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
+		if((couleur_pion % 2)==0){
+    		tour_joueur.setText("Joueur Noir");
+    	}else{
+    		tour_joueur.setText("Joueur Blanc");
+    	}
 	}
 		
 }
