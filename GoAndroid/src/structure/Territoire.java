@@ -2,13 +2,105 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.util.Log;
-
 import enumeration.Couleur;
 
-
 public class Territoire extends Chaine{
+	
+	/*******************************************************************
+	 * 
+	*@brief Détermine la ou les chaines entourant un territoire
+	*
+	*******************************************************************/
+	public Chaines entoureUnTerritoire(Territoire leTerritoire, Plateau plateau) {
+		/**************************************************************/
+		/*					Déclaration des variable 		          */
+		/**************************************************************/
+		int i = 0, z = 0, j = 0, res = 0;
+		int xA, yA, taillePlateau, testDedans;
+		int iterAppChaine = 0;
+		int testAppartenanceChaine = 1;
+		Position voisins[] 		= new Position[4];
+		Position pos 			= new Position();
+		Chaine lv_Chaine 		= new Chaine();
+		Chaine chaineTestAppartenanChaine = new Chaine();
+		Chaines pChaines  		= new Chaines();
+		
+		/*************************************************************/
+		/*							Codes				 		     */
+		/*************************************************************/
+		/*********	Initialisation 	**********/
+		pChaines.initialisationChaines(plateau, pChaines);
+		lv_Chaine.initialisationChaine(plateau, lv_Chaine);
+		chaineTestAppartenanChaine.initialisationChaine(plateau, chaineTestAppartenanChaine);
+		
+		if (plateau == null || leTerritoire == null)
+		{
+			return pChaines = null;
+		}
+		//initialisation du Flag qui teste l'appartenance d'un élement à une chaine
+		testAppartenanceChaine = 0;
+		
+		for (i = 0; i < leTerritoire.lesCoordCases.nbrPositionsActuel; i++) {
+			//récupération de l'élement i (position) dans la chaine
+			pos = leTerritoire.lesCoordCases.lesPositions.get(i);
+			 
+			for (z = 0; z < 4; z++){
+				voisins[z] = new Position();
+				voisins[z].x = pos.x;
+				voisins[z].y = pos.y;
+			}
+			voisins[0].x++;
+			voisins[2].x--;	
+			voisins[1].y++;	
+			voisins[3].y--;			
+			
+			for (j = 0; j < 4; j++) {
+				xA = voisins[j].x;
+				yA = voisins[j].y;	
+				
+				//Récupérer la taille du plateau afin de ne pas aller audela de la taille dans le vérification
+				taillePlateau = plateau.taille; 
+				// Tester si on est pas en dehors du plateau
+				testDedans = 0;
+				if((xA >= 0) && (xA < taillePlateau) && (yA >= 0) && (yA < taillePlateau)){
+					testDedans = 1;
+				}
+				
+				if (testDedans == 1) {
+					Pion pionTest = new Pion();
+					pionTest.initialiserUnPion(pionTest);
+					pionTest = pionTest.obtenirPionEnPosition(plateau, voisins[j]);
+					
+					// TODO : Voir si ce pion a une chaine à coté de lui
+					if (pionTest.couleur == Couleur.NOIR || pionTest.couleur == Couleur.BLANC) {
+						//initialisation du Flag qui teste l'appartenance d'un élement à une chaine
+						testAppartenanceChaine = 0;
+						if (pChaines.nbrPositionsActuel != 0)
+						{
+							for (iterAppChaine = 0; iterAppChaine < pChaines.nbrPositionsActuel; iterAppChaine++) {
+								
+								chaineTestAppartenanChaine = pChaines.lesChaines.get(iterAppChaine);
+								
+								res = this.appartientAlaChaine(pionTest.position, chaineTestAppartenanChaine);
+								if (res == 1){
+									testAppartenanceChaine = 1;
+								}
+							}
+						}						
+						if (testAppartenanceChaine == 0) {
+							lv_Chaine = this.determinerChaine(plateau, pionTest.position);
+							if (lv_Chaine != null) {
+								pChaines.lesChaines.add(lv_Chaine);
+								pChaines.nbrPositionsActuel++;							
+							}					
+						}					
+					}		
+				}												
+			}	
+		}	
+		return pChaines;
+	}
 
 	/******************************************************************/
 	/*							determineTerritoire				      */

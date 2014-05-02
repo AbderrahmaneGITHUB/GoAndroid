@@ -19,10 +19,12 @@ public class Chaine {
 	public Positions lesCoordCases;
 	public Couleur laCouleur;
 	
-	
-	/** @brief Détermine la position des yeux relatifs à une chaine
+	/******************************************************************
+	* 
+	* @brief Détermine la position des yeux relatifs à une chaine
 	* Si la chaine n'a aucun oeil alors valeur retournée est NULL
-	*/
+	* 
+	******************************************************************/
 	public Positions lesYeuxDeLaChaine(Chaine chaine, Plateau plateau) {
 		/**************************************************/
 		/*					Déclaration					  */
@@ -66,8 +68,7 @@ public class Chaine {
 				voisins[z] = new Position();
 				voisins[z].x = pos.x;
 				voisins[z].y = pos.y;
-			}
-			
+			}			
 			voisins[0].x++;
 			voisins[2].x--;	
 			voisins[1].y++;	
@@ -143,21 +144,16 @@ public class Chaine {
 									if (pionTest.couleur == couleurRef) // && appartientAlaChaine(voisinsVide[l], chaine) == 1
 									{
 										videAppartientAChaine++;
-										/*
-										printf("Blocage avec Meme couleur = %d\n",
-										videAppartientAChaine);
-										*/
-									}else if (pionTest.couleur != Couleur.RIEN
+									}
+									else if (pionTest.couleur != Couleur.RIEN
 											&& pionTest.couleur != Couleur.ETRANGE) {
 										
 										posTest2.x = pionTest.position.x;
-										posTest2.y = pionTest.position.y;
-										
+										posTest2.y = pionTest.position.y;										
 
 										chaineTest2 = chaineTest2.determinerChaine(plateau, posTest2);
 										liberteTest2 = liberteTest2.determineLiberte(plateau, chaineTest2);
-										
-										
+																				
 										posTest3 = liberteTest2.lesPositions.get(0);
 										
 										if (rahimPositions.memePosition(posTest3, voisins[j]) == 1

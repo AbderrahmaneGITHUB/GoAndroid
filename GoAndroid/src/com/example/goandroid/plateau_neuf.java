@@ -18,14 +18,11 @@ public class plateau_neuf extends MainActivity{
 	//private Plateau plateau;
 	private int taille_plateau = 9;
 	private int couleur_pion = 1;
-
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        
-        
+                   
         setContentView(R.layout.plateau_neuf);
         
         maVue = findViewById(R.id.imageView1);
@@ -33,9 +30,7 @@ public class plateau_neuf extends MainActivity{
     	maVue.setOnTouchListener(
     			
     	new View.OnTouchListener() {
-            public boolean onTouch(View myView, MotionEvent event) {
-            	
-            	
+            public boolean onTouch(View myView, MotionEvent event) {            	            
             	/******************************************************/
             	/*				Declaration variables				  */
             	/******************************************************/
@@ -100,8 +95,7 @@ public class plateau_neuf extends MainActivity{
 	
 	/***********************************/
 	/** Placement des pions ************/
-	/***********************************/
-	
+	/***********************************/	
 	private void drawImg(ImageView iv, float x, float y, Bitmap pion){
 		int tx = iv.getWidth();
 		int ty = iv.getHeight();
@@ -131,6 +125,5 @@ public class plateau_neuf extends MainActivity{
     	}else{
     		tour_joueur.setText("Joueur Blanc");
     	}
-	}
-		
+	}		
 }

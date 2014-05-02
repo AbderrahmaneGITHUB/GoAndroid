@@ -5,9 +5,10 @@ import enumeration.Couleur;
 
 public class ChainesCapturees  extends Chaines {
 
-	/** @brief Réalise la capture des pions correspondant à
+	/***************************************************************************
+	 *  @brief Réalise la capture des pions correspondant à
 	* la chaine en les enlevant du plateau.
-	*/
+	***************************************************************************/
 	public void RealiserCapture(Chaine chaine, Plateau plateau) {
 		/**************************************************/
 		/*					Déclaration					  */
@@ -29,14 +30,15 @@ public class ChainesCapturees  extends Chaines {
 		}
 	}
 	
-	/** @brief en fonction de la position du pion et sa couleur retourne
+	/*****************************************************************************
+	 * @brief en fonction de la position du pion et sa couleur retourne
 	* les chaines capturées. Si aucune chaîne n'est capturé par la pose du pion,
 	* alors la valeur NULL est retournée. L'entier (référencé par) valide égal
 	* à zéro si le fait de placer pion en cette position conduit à construire
 	* une chaîne sans liberté de la couleur du pion
 	* (sauf si ce coup produit la capture d'au moins une chaine adverse).
 	* Dans le cas contraire l'entier référencé par valide est égale à 1
-	*/
+	******************************************************************************/
 	public Chaines captureChaines(Pion pion, Plateau plateau, int valide) {		
 		/**************************************************/
 		/*					Déclaration					  */
@@ -91,8 +93,7 @@ public class ChainesCapturees  extends Chaines {
 			voisins[i] = new Position();
 			voisins[i].x = positionRef.x;
 			voisins[i].y = positionRef.y;
-		}
-		
+		}	
 		voisins[0].x++;
 		voisins[2].x--;	
 		voisins[1].y++;	
@@ -106,10 +107,8 @@ public class ChainesCapturees  extends Chaines {
 			testDedans = 0;
 			if((x >= 0) && (x<t) && (y >= 0) && (y<t)){
 				testDedans = 1;
-			}
-			
-			if (testDedans == 1) {
-				
+			}	
+			if (testDedans == 1) {		
 				// Tester si dans cette position, s'il y a un pion
 				Pion rahimPion = new Pion();
 				rahimPion.initialiserUnPion(rahimPion);
@@ -138,8 +137,7 @@ public class ChainesCapturees  extends Chaines {
 								int res2 = rahimChaineACapturer.appartientAlaChaine(pos2, chaineDejaAppartien);
 								if (res2 == 1)
 									dejaAjoute = 0;
-							}
-							
+							}				
 							if(dejaAjoute == 1){										
 								// Construction de la chaine à qui appartien le pion trouvé
 								rahimLiberte = fonctionLib.determineLiberte(plateau, rahimChaineACapturer);
