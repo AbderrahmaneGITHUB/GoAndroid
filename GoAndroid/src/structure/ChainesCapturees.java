@@ -5,6 +5,30 @@ import enumeration.Couleur;
 
 public class ChainesCapturees  extends Chaines {
 
+	/** @brief Réalise la capture des pions correspondant à
+	* la chaine en les enlevant du plateau.
+	*/
+	public void RealiserCapture(Chaine chaine, Plateau plateau) {
+		/**************************************************/
+		/*					Déclaration					  */
+		/**************************************************/
+		int i = 0;
+		int x = 0;
+		int y = 0;
+
+		/**************************************************/
+		/*						Codes					  */
+		/**************************************************/
+		if ((chaine != null) && (plateau.taille != 0)) {
+
+			for (i = 0; i < chaine.lesCoordCases.nbrPositionsActuel; i++) {
+				x = chaine.lesCoordCases.lesPositions.get(i).x;
+				y = chaine.lesCoordCases.lesPositions.get(i).y;
+				plateau.positionPlateau.get(y * plateau.taille + x).couleur  = Couleur.RIEN;
+			}
+		}
+	}
+	
 	/** @brief en fonction de la position du pion et sa couleur retourne
 	* les chaines capturées. Si aucune chaîne n'est capturé par la pose du pion,
 	* alors la valeur NULL est retournée. L'entier (référencé par) valide égal
@@ -100,21 +124,36 @@ public class ChainesCapturees  extends Chaines {
 						
 						// Construction de la chaine de ce pion trouvé (d'une autre couleur)
 						rahimChaineACapturer = rahimChaineACapturer.determinerChaine(plateau, rahimPion.position);
-
+						int dejaAjoute = 1;
+						
 						if (rahimChaineACapturer != null) {
+						    // Vérification si un élement de la chaine .. est déja ajouter à la liste des chaines ..						
+							for (int iterAppChaine = 0; iterAppChaine < touteChaineCapturees.nbrPositionsActuel; iterAppChaine++) {
+								Position pos2;
+								Chaine chaineDejaAppartien 					= new Chaine();
+								chaineDejaAppartien.initialisationChaine(plateau, chaineDejaAppartien);
+								
+								chaineDejaAppartien = touteChaineCapturees.lesChaines.get(iterAppChaine);
+								pos2 = rahimChaineACapturer.lesCoordCases.lesPositions.get(0);
+								int res2 = rahimChaineACapturer.appartientAlaChaine(pos2, chaineDejaAppartien);
+								if (res2 == 1)
+									dejaAjoute = 0;
+							}
 							
-							// Construction de la chaine à qui appartien le pion trouvé
-							rahimLiberte = fonctionLib.determineLiberte(plateau, rahimChaineACapturer);
-							if ((rahimLiberte.nbrPositionsActuel == 0) && (rahimLiberte != null)) {
-								valide = 1;	
-								Chaine chaineInitialisation = new Chaine();
-								//chaineInitialisation.in
-								touteChaineCapturees.lesChaines.add(chaineInitialisation);
-								touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).laCouleur = rahimChaineACapturer.laCouleur;
-								touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).lesCoordCases = rahimChaineACapturer.lesCoordCases;
-										
-								touteChaineCapturees.nbrPositionsActuel++;							
-							}				
+							if(dejaAjoute == 1){										
+								// Construction de la chaine à qui appartien le pion trouvé
+								rahimLiberte = fonctionLib.determineLiberte(plateau, rahimChaineACapturer);
+								if ((rahimLiberte.nbrPositionsActuel == 0) && (rahimLiberte != null)) {
+									valide = 1;	
+									Chaine chaineInitialisation = new Chaine();
+									//chaineInitialisation.in
+									touteChaineCapturees.lesChaines.add(chaineInitialisation);
+									touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).laCouleur = rahimChaineACapturer.laCouleur;
+									touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).lesCoordCases = rahimChaineACapturer.lesCoordCases;
+											
+									touteChaineCapturees.nbrPositionsActuel++;							
+								}
+							}
 						}			
 					}		
 				}		
@@ -122,4 +161,7 @@ public class ChainesCapturees  extends Chaines {
 		}	
 		return touteChaineCapturees;
 	}
+	
+	
+	
 }

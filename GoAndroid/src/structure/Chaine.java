@@ -20,6 +20,180 @@ public class Chaine {
 	public Couleur laCouleur;
 	
 	
+	/** @brief Détermine la position des yeux relatifs à une chaine
+	* Si la chaine n'a aucun oeil alors valeur retournée est NULL
+	*/
+	public Positions lesYeuxDeLaChaine(Chaine chaine, Plateau plateau) {
+		/**************************************************/
+		/*					Déclaration					  */
+		/**************************************************/
+		int i = 0, z = 0, j = 0, k = 0, l = 0;
+		int x, y, x1, y1, t;
+		int videAppartientAChaine = 0;
+		int voisinsAutreCouleur = 0;
+		int voisinsAvecMure = 0;
+		int testDedans1, testDedans2;
+		int testDejaPasse = 0;	
+		Couleur couleurRef = Couleur.RIEN;	
+		Position voisins[] 				= new Position[4];
+		Position voisinsVide[]  		= new Position[4];
+		Position pos 					= new Position();
+		Position posTest2 				= new Position();
+		Position posTest3 				= new Position();
+		Positions rahimPositions 		= new Positions();
+		Positions rahimPosDejaPasse 	= new Positions();
+		Chaine rahimChainePosDejaPasse  = new Chaine();	
+		Chaine chaineTest2				= new Chaine();	
+		Libertes liberteTest2			= new Libertes();
+		
+		/**************************************************/
+		/*						Codes					  */
+		/**************************************************/
+		rahimPositions.initialisationPositions(plateau, rahimPositions);
+		rahimPosDejaPasse.initialisationPositions(plateau, rahimPosDejaPasse);
+		rahimChainePosDejaPasse.initialisationChaine(plateau, rahimChainePosDejaPasse);
+		chaineTest2.initialisationChaine(plateau, chaineTest2);
+		liberteTest2.initialisationPositions(plateau, liberteTest2);
+		
+		//Récupération de la couleur  de la couleur de réference
+		couleurRef = chaine.laCouleur;
+		
+		for (i = 0; i < chaine.lesCoordCases.nbrPositionsActuel; i++) {
+			//récupération de l'élement i (position) dans la chaine
+			pos = chaine.lesCoordCases.lesPositions.get(i);
+			
+			for (z = 0; z<4; z++){
+				voisins[z] = new Position();
+				voisins[z].x = pos.x;
+				voisins[z].y = pos.y;
+			}
+			
+			voisins[0].x++;
+			voisins[2].x--;	
+			voisins[1].y++;	
+			voisins[3].y--;
+			
+			//Voir si une case d'une couleur RIEN est en tourée avec la même couleur ce qui donne une oeil
+			for (j = 0; j < 4; j++) {
+				x1 = voisins[j].x;
+				y1 = voisins[j].y;
+				
+				//Initialisation des des élement de l'Oeil
+				videAppartientAChaine = 0;
+				voisinsAutreCouleur = 0;
+				voisinsAvecMure = 0;
+				
+				t = plateau.taille;//Récupérer la taille du plateau afin de ne pas aller audela de la taille dans le vérification
+				// Tester si on est pas en dehors du plateau
+				testDedans1 = 0;
+				if((x1 >= 0) && (x1<t) && (y1 >= 0) && (y1<t)){
+					testDedans1 = 1;
+				}
+				
+				if (testDedans1 == 1) {
+					Pion pionCoulTest = new Pion();
+					pionCoulTest.initialiserUnPion(pionCoulTest);
+					
+					pionCoulTest = pionCoulTest.obtenirPionEnPosition(plateau, voisins[j]);
+					
+					//Avec ce teste je cherche que les cases vides
+					if (pionCoulTest.couleur == Couleur.RIEN) {
+						rahimChainePosDejaPasse.lesCoordCases.nbrPositionsActuel =
+								rahimPosDejaPasse.nbrPositionsActuel;
+						
+						rahimChainePosDejaPasse.lesCoordCases.lesPositions =
+								rahimPosDejaPasse.lesPositions;
+						
+						testDejaPasse = this.appartientAlaChaine(voisins[j],
+								rahimChainePosDejaPasse);
+						
+						if (testDejaPasse == 0) {
+							for (k = 0; k<4; k++){
+								voisinsVide[k] = new Position();
+								voisinsVide[k].x = voisins[j].x;
+								voisinsVide[k].y = voisins[j].y;
+							}
+							
+							voisinsVide[0].x++;
+							voisinsVide[2].x--;	
+							voisinsVide[1].y++;	
+							voisinsVide[3].y--;
+							
+							// Détection du deja passage par vérification
+							rahimPosDejaPasse.lesPositions.add(voisins[j]);
+							rahimPosDejaPasse.nbrPositionsActuel++;
+							
+							for (l = 0; l < 4; l++) {
+								x = voisinsVide[l].x;
+								y = voisinsVide[l].y;
+								
+								t = plateau.taille;//Récupérer la taille du plateau afin de ne pas aller audela de la taille dans le vérification
+								// Tester si on est pas en dehors du plateau
+								testDedans2 = 0;
+								if((x >= 0) && (x < t) && (y >= 0) && (y < t)){
+									testDedans2 = 1;
+								}
+								if (testDedans2 == 1) {
+									
+									Pion pionTest = new Pion();
+									pionTest.initialiserUnPion(pionTest);
+									
+									pionTest = pionTest.obtenirPionEnPosition(plateau, voisinsVide[l]);
+									
+									if (pionTest.couleur == couleurRef) // && appartientAlaChaine(voisinsVide[l], chaine) == 1
+									{
+										videAppartientAChaine++;
+										/*
+										printf("Blocage avec Meme couleur = %d\n",
+										videAppartientAChaine);
+										*/
+									}else if (pionTest.couleur != Couleur.RIEN
+											&& pionTest.couleur != Couleur.ETRANGE) {
+										
+										posTest2.x = pionTest.position.x;
+										posTest2.y = pionTest.position.y;
+										
+
+										chaineTest2 = chaineTest2.determinerChaine(plateau, posTest2);
+										liberteTest2 = liberteTest2.determineLiberte(plateau, chaineTest2);
+										
+										
+										posTest3 = liberteTest2.lesPositions.get(0);
+										
+										if (rahimPositions.memePosition(posTest3, voisins[j]) == 1
+												&& liberteTest2.nbrPositionsActuel == 1) 
+										{
+											voisinsAutreCouleur++;
+											
+										}					
+									}
+								}
+								else{
+									voisinsAvecMure++;
+								}
+							}
+						}
+						if ((videAppartientAChaine == 3 && voisinsAutreCouleur == 1)
+								|| (videAppartientAChaine == 4)
+								|| (videAppartientAChaine == 2
+								&& voisinsAvecMure == 2)
+								|| (videAppartientAChaine == 3
+								&& voisinsAvecMure == 1)
+								|| (videAppartientAChaine == 2
+								&& voisinsAvecMure == 1
+								&& voisinsAutreCouleur == 1)) {
+							
+							rahimPositions.lesPositions.add(voisins[j]);							
+							rahimPositions.nbrPositionsActuel++;
+							
+						}						
+					}					
+				}		
+			}
+		}		
+		return rahimPositions;
+	}
+	
 	/******************************************************************/
 	/* @brief : Initialiser une Chaine			  		  			  */
 	/******************************************************************/ 
@@ -37,7 +211,7 @@ public class Chaine {
 	/******************************************************************/
 	/*						appartientAlaChaine	  					  */
 	/*@brief Détermine si une position fait partie d'une chaine donnée*/
-	/* @return retourne 0 pour non et 1 pour oui 				      */
+	/*@return retourne 0 pour non et 1 pour oui 				      */
 	/******************************************************************/
 	public int appartientAlaChaine(Position pos, Chaine chaine){
 		/***************   Déclaration des variables   ****************/
@@ -118,7 +292,7 @@ public class Chaine {
 		Log.i("ChaineFonction", "La couleur du Pion est " + pion.couleur);
 		
 		//Y a pas de pion => y a pas de chaine
-		if (pion.couleur == Couleur.RIEN) return pChaine; 	
+		if (pion.couleur == Couleur.RIEN) return pChaine = null; 	
 		// Récupérer la couleur de la chaine
 		pChaine.laCouleur = pion.couleur;
 		
@@ -190,7 +364,8 @@ public class Chaine {
 		pChaine.lesCoordCases.lesPositions = lesPositions; //Récupérer l'adresse du tableau de position pour commecer à remplir le
 		this.afficherChaine(pChaine);
 		return pChaine;
-	}
-	
+	}	
 }
+
+
 

@@ -9,6 +9,7 @@ import structure.Libertes;
 import structure.Pion;
 import structure.Plateau;
 import structure.Position;
+import structure.Positions;
 import structure.Territoire;
 import android.app.Activity;
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 	private Territoire territoireTest;
 	private Libertes libertes;
 	private ChainesCapturees ChainesCapturesTest;
+	private Positions PosisionsYeuxDeCaine;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -51,7 +53,7 @@ public class MainActivity extends Activity {
 		Log.i("test1", "*******************************");
 //		Log.i("test1", "Positioner un Pion en (5,1) qui est NOIR");
 //		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
-		Position pos = new Position();
+		//Position pos = new Position();
 //		pos.x = 5; 
 //		pos.y = 1;
 //		Pion pion = this.pionClasse.obtenirPionEnPosition(this.plateau, pos);
@@ -61,21 +63,43 @@ public class MainActivity extends Activity {
 		this.plateau.positionPlateau.get(0*this.plateau.taille + 5).couleur = Couleur.NOIR;
 		this.plateau.positionPlateau.get(1*this.plateau.taille + 5).couleur = Couleur.NOIR;
 		this.plateau.positionPlateau.get(1*this.plateau.taille + 6).couleur = Couleur.NOIR;
-		this.plateau.positionPlateau.get(1*this.plateau.taille + 7).couleur = Couleur.NOIR;
-		
-		this.plateau.positionPlateau.get(0*this.plateau.taille + 6).couleur = Couleur.BLANC;
-		
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 7).couleur = Couleur.NOIR;				
 		this.plateau.positionPlateau.get(0*this.plateau.taille + 7).couleur = Couleur.NOIR;
-		int valide = 0;
-		pionClasse.position.x = 7; 
-		pionClasse.position.y = 0;
-    	pionClasse.couleur = Couleur.NOIR;
-    	
-    	this.chainesTests = this.ChainesCapturesTest.captureChaines(pionClasse, plateau, valide);
-    	pos.x = 7; 
-    	pos.y = 0;
 		
-
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 8).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 9).couleur = Couleur.NOIR;
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 9).couleur = Couleur.NOIR;
+		
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 4).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 4).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 4).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 5).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 6).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 7).couleur = Couleur.BLANC;				
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 8).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 9).couleur = Couleur.BLANC;				
+		this.plateau.positionPlateau.get(2*this.plateau.taille + 10).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(1*this.plateau.taille + 10).couleur = Couleur.BLANC;
+		this.plateau.positionPlateau.get(0*this.plateau.taille + 10).couleur = Couleur.BLANC;
+		
+		//this.plateau.positionPlateau.get(0*this.plateau.taille + 6).couleur = Couleur.BLANC;
+		int valide = 0;
+		pionClasse.position.x = 6; 
+		pionClasse.position.y = 1;
+    	pionClasse.couleur = Couleur.BLANC;
+    	
+    	//this.chainesTests = this.ChainesCapturesTest.captureChaines(pionClasse, plateau, valide);
+    	Chaine chaineDeterminer = new Chaine();
+    	chaineDeterminer.initialisationChaine(plateau, chaineDeterminer);
+    	chaineDeterminer = chaineDeterminer.determinerChaine(this.plateau,pionClasse.position);
+    	this.PosisionsYeuxDeCaine = this.chaineTest.lesYeuxDeLaChaine(chaineDeterminer, this.plateau);
+    	
+		for(int k = 0; k < this.chainesTests.nbrPositionsActuel; k++){
+			this.chaineTest = this.chainesTests.lesChaines.get(k);
+			this.ChainesCapturesTest.RealiserCapture(this.chaineTest, this.plateau);
+		}
+		
+		
 		
 		
 //		this.plateau.positionPlateau.get(1*this.plateau.taille + 6).couleur = Couleur.NOIR;
@@ -217,6 +241,8 @@ public class MainActivity extends Activity {
 		this.chainesTests = new Chaines();
 		this.chainesTests.initialisationChaines(plateau, this.chainesTests);
 		
+		this.PosisionsYeuxDeCaine = new Positions();
+		this.PosisionsYeuxDeCaine.initialisationPositions(this.plateau, this.PosisionsYeuxDeCaine);
 	}
 	
 }
