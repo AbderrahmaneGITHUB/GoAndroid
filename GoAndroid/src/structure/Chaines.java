@@ -13,13 +13,19 @@ public class Chaines {
 	public int nbrPositionsMax;
 	
 	/******************************************************************/
+	/*					Constructeur Chaines				  		  */
+	/******************************************************************/ 
+	public Chaines(){	
+		this.initialisationChaines();		
+	}
+	
+	/******************************************************************/
 	/* @brief : Initialiser une Chaine			  		  			  */
 	/******************************************************************/ 
-	public int initialisationChaines(Plateau plateau, Chaines inChaines){
-	
-		inChaines.lesChaines = new ArrayList<Chaine>();
-		inChaines.nbrPositionsActuel = 0;
-		inChaines.nbrPositionsMax = Constante.NBR_MAX_CASES;			
+	public int initialisationChaines(){	
+		this.lesChaines = new ArrayList<Chaine>();
+		this.nbrPositionsActuel = 0;
+		this.nbrPositionsMax = Constante.NBR_MAX_CASES;			
 		return 1;
 	}
 }

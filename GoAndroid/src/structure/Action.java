@@ -11,14 +11,21 @@ public class Action {
 	public int nbrPositionsMax;	
 	
 	/******************************************************************/
+	/*					  Constructeur Action		   				  */
+	/******************************************************************/
+	public  Action()
+	{
+		this.initialisationAction();
+	}
+	
+	/******************************************************************/
 	/*					  initialisation Action		   				  */
 	/******************************************************************/
-	public int initialisationPositions(Plateau plateau, Action inAction)
+	public int initialisationAction()
 	{
-		inAction.lesActions = new ArrayList<ActionJoueur>();
-		inAction.nbrPositionsActuel = 0;
-		inAction.nbrPositionsMax = 3*Constante.NBR_MAX_CASES;
-		
+		this.lesActions = new ArrayList<ActionJoueur>();
+		this.nbrPositionsActuel = 0;
+		this.nbrPositionsMax = 3*Constante.NBR_MAX_CASES;
 		return 1;
 	}	
 }

@@ -16,6 +16,23 @@ public class Chaine {
 	public Positions lesCoordCases;
 	public Couleur laCouleur;
 	
+	/******************************************************************/
+	/*						Constructeur Chaine				  		  */
+	/******************************************************************/ 
+	public Chaine(){
+		this.initialisationChaine();
+	}
+	
+	/******************************************************************/
+	/* @brief : Initialiser une Chaine			  		  			  */
+	/******************************************************************/ 
+	public int initialisationChaine(){	
+		this.lesCoordCases = new Positions();
+		this.laCouleur = Couleur.RIEN;
+		this.taille = 0;	
+		return  1;
+	}
+	
 	/******************************************************************
 	* 
 	* @brief Détermine la position des yeux relatifs à une chaine
@@ -47,13 +64,7 @@ public class Chaine {
 		
 		/**************************************************/
 		/*						Codes					  */
-		/**************************************************/
-		rahimPositions.initialisationPositions(plateau, rahimPositions);
-		rahimPosDejaPasse.initialisationPositions(plateau, rahimPosDejaPasse);
-		rahimChainePosDejaPasse.initialisationChaine(plateau, rahimChainePosDejaPasse);
-		chaineTest2.initialisationChaine(plateau, chaineTest2);
-		liberteTest2.initialisationPositions(plateau, liberteTest2);
-		
+		/**************************************************/		
 		//Récupération de la couleur  de la couleur de réference
 		couleurRef = chaine.laCouleur;
 		
@@ -90,7 +101,7 @@ public class Chaine {
 				
 				if (testDedans1 == 1) {
 					Pion pionCoulTest = new Pion();
-					pionCoulTest.initialiserUnPion(pionCoulTest);
+					//pionCoulTest.initialiserUnPion(pionCoulTest);
 					
 					pionCoulTest = pionCoulTest.obtenirPionEnPosition(plateau, voisins[j]);
 					
@@ -134,7 +145,7 @@ public class Chaine {
 								if (testDedans2 == 1) {
 									
 									Pion pionTest = new Pion();
-									pionTest.initialiserUnPion(pionTest);
+									//pionTest.initialiserUnPion(pionTest);
 									
 									pionTest = pionTest.obtenirPionEnPosition(plateau, voisinsVide[l]);
 									
@@ -153,7 +164,7 @@ public class Chaine {
 																				
 										posTest3 = liberteTest2.lesPositions.get(0);
 										
-										if (rahimPositions.memePosition(posTest3, voisins[j]) == 1
+										if (voisins[j].memePosition(posTest3, voisins[j]) == 1
 												&& liberteTest2.nbrPositionsActuel == 1) 
 										{
 											voisinsAutreCouleur++;
@@ -185,21 +196,7 @@ public class Chaine {
 			}
 		}		
 		return rahimPositions;
-	}
-	
-	/******************************************************************/
-	/* @brief : Initialiser une Chaine			  		  			  */
-	/******************************************************************/ 
-	public int initialisationChaine(Plateau plateau, Chaine inChaine){	
-		//inChaine.lesPions = new ArrayList<Pion>();
-		//inChaine.nbrPionsActuel = 0;
-		//inChaine.nbrPionsMax = Constante.NBR_MAX_CASES;
-		inChaine.lesCoordCases = new Positions();
-		inChaine.lesCoordCases.initialisationPositions(plateau, inChaine.lesCoordCases);
-		inChaine.laCouleur = Couleur.RIEN;
-		inChaine.taille = 0;	
-		return  1;
-	}
+	}		
 	
 	/******************************************************************/
 	/*						appartientAlaChaine	  					  */
@@ -274,11 +271,7 @@ public class Chaine {
 		
 		/*************************************************************/
 		/*							Codes				 		     */
-		/*************************************************************/
-		/*************				Initialisation			**********/
-		this.initialisationChaine(plateau, pChaine);
-		pion.initialiserUnPion(pion); 
-		
+		/*************************************************************/	
 		//Obtenir le type de pion X ou O à la position pos
 		pion = pion.obtenirPionEnPosition(plateau, pos); 
 		Log.i("ChaineFonction", "Pion en position (" + pion.position.x +", "+ pion.position.y+")");
@@ -341,7 +334,7 @@ public class Chaine {
 					if (dansChainedansChaine == 0){ 
 						// récupérer le type d'élement
 						Pion pionIci = new Pion(); 
-						pionIci.initialiserUnPion(pionIci);
+						//pionIci.initialiserUnPion(pionIci);
 						pionIci = pionIci.obtenirPionEnPosition(plateau, voisins.get(i)); 
 						// si cet élement est de meme type que l'élement qu'on cherche => on l'ajoute dans la chaine
 						if (pionIci.couleur == pChaine.laCouleur){ 

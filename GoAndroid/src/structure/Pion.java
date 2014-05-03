@@ -10,16 +10,24 @@ public class Pion {
 	public Position position;
 	public Couleur couleur;
 	
+	
+	/******************************************************************/
+	/*					Constructeur Pion				  		  	  */
+	/******************************************************************/
+	public Pion(){
+		this.initialiserUnPion();	
+	}
+			
 	/******************************************************************/
 	/*					initialiserUnPion							  */
 	/* @brief Initialisation d'un Pion							  	  */
 	/******************************************************************/
-	public void initialiserUnPion(Pion inPion){
+	public void initialiserUnPion(){
 
-		inPion.position = new Position();
-		inPion.position.x = 30;
-		inPion.position.y = 30;
-		inPion.couleur = Couleur.RIEN;
+		this.position = new Position();
+		this.position.x = 30;
+		this.position.y = 30;
+		this.couleur = Couleur.RIEN;
 	}
 	
 	/******************************************************************/

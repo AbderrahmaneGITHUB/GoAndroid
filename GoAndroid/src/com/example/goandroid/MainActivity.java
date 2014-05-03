@@ -41,10 +41,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		/************   Initialisation du tableau		***************/
-		InitialisationClasseGo();
-		
-		/************   Initialisation du tableau		***************/
-		this.plateau.initialisationPlateau(Constante.TAILLEPLATEAU_13, this.plateau);
+		InitialisationClasseGo();	
 
 	}
 	
@@ -87,30 +84,22 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	public void InitialisationClasseGo(){
 		this.pionClasse 	= new Pion();
-		this.pionClasse.initialiserUnPion(this.pionClasse);
 		
-		this.plateau 		= new Plateau();
+		this.plateau 		= new Plateau(Constante.TAILLEPLATEAU_13);
 		
 		this.pionEnlever 	= new Pion();
-		this.pionEnlever.initialiserUnPion(this.pionEnlever);
 		
 		this.chaineTest = new Chaine();
-		this.chaineTest.initialisationChaine(this.plateau, this.chaineTest);
 		
 		this.territoireTest = new Territoire();
-		this.territoireTest.initialisationChaine(this.plateau, this.territoireTest);
 		
 		this.libertes= new Libertes();
-		this.libertes.initialisationPositions(this.plateau, this.libertes);
 		
 		this.ChainesCapturesTest = new ChainesCapturees();
-		this.ChainesCapturesTest.initialisationChaines(this.plateau, this.ChainesCapturesTest);
 		
 		this.chainesTests = new Chaines();
-		this.chainesTests.initialisationChaines(this.plateau, this.chainesTests);
 		
 		this.PosisionsYeuxDeCaine = new Positions();
-		this.PosisionsYeuxDeCaine.initialisationPositions(this.plateau, this.PosisionsYeuxDeCaine);
 	}	
 }
 

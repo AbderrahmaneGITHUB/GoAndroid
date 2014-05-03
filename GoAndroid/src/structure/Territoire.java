@@ -29,10 +29,6 @@ public class Territoire extends Chaine{
 		/*************************************************************/
 		/*							Codes				 		     */
 		/*************************************************************/
-		/*********	Initialisation 	**********/
-		pChaines.initialisationChaines(plateau, pChaines);
-		lv_Chaine.initialisationChaine(plateau, lv_Chaine);
-		chaineTestAppartenanChaine.initialisationChaine(plateau, chaineTestAppartenanChaine);
 		
 		if (plateau == null || leTerritoire == null)
 		{
@@ -69,7 +65,7 @@ public class Territoire extends Chaine{
 				
 				if (testDedans == 1) {
 					Pion pionTest = new Pion();
-					pionTest.initialiserUnPion(pionTest);
+					//pionTest.initialiserUnPion(pionTest);
 					pionTest = pionTest.obtenirPionEnPosition(plateau, voisins[j]);
 					
 					// TODO : Voir si ce pion a une chaine à coté de lui
@@ -129,11 +125,7 @@ public class Territoire extends Chaine{
 		/*************************************************************/
 		/*							Codes				 		     */
 		/*************************************************************/
-		if (plateau == null) return pTerritoire = null;
-		
-		/*************				Initialisation			**********/	
-		pion.initialiserUnPion(pion);
-		this.initialisationChaine(plateau, pTerritoire);
+		if (plateau == null) return pTerritoire = null;		
 		
 		pion = pion.obtenirPionEnPosition(plateau, pos);
 		if (pion.couleur != Couleur.RIEN) return pTerritoire = null;
@@ -182,7 +174,7 @@ public class Territoire extends Chaine{
 					dansTerritoire = this.appartientAuTerritoire(voisins.get(i), pTerritoire);
 					if (dansTerritoire == 0){ 
 						Pion pionIci = new Pion();
-						pionIci.initialiserUnPion(pionIci);
+						//pionIci.initialiserUnPion(pionIci);
 						pionIci = pionIci.obtenirPionEnPosition(plateau, voisins.get(i));
 									
 						if (pionIci.couleur == Couleur.RIEN){

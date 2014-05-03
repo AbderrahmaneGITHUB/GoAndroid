@@ -2,14 +2,10 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.util.Log;
-
 import enumeration.Couleur;
 
-
 public class Libertes extends Positions{
-
 	
 	/******************************************************************/
 	/*							determineLiberte				      */
@@ -33,7 +29,6 @@ public class Libertes extends Positions{
 		//si la chaine est vide, on sort de la fonction
 		if (chaine == null || plateau == null) return pLiberte = null;
 		
-		this.initialisationPositions(plateau, pLiberte);	
 		lesPositions = pLiberte.lesPositions;
 		
 		for (i = 0; i < chaine.lesCoordCases.nbrPositionsActuel; i++)
@@ -72,11 +67,11 @@ public class Libertes extends Positions{
 				
 				if (testDedans == 1)
 				{
-					int dansLibertes = this.appartientAuxPositions(voisins[z], pLiberte);
+					int dansLibertes = voisins[z].appartientAuxPositions(voisins[z], pLiberte);
 					if (dansLibertes == 0)
 					{
 						Pion pionIci = new Pion();
-						pionIci.initialiserUnPion(pionIci);
+						//pionIci.initialiserUnPion(pionIci);
 						pionIci = pionIci.obtenirPionEnPosition(plateau, voisins[z]);
 						if (pionIci.couleur == Couleur.RIEN)
 						{

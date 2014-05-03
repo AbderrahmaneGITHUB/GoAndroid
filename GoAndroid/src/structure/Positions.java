@@ -2,11 +2,9 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import constante.Constante;
 
-
-public class Positions extends Position{
+public class Positions{
 	
 	/******************************************************************/
 	/*						Structure Positions				  		  */
@@ -16,13 +14,20 @@ public class Positions extends Position{
 	public int nbrPositionsMax;
 	
 	/******************************************************************/
+	/*					Constructeur Positions				  		  */
+	/******************************************************************/ 
+	public Positions(){		
+		this.initialisationPositions();
+	}
+	
+	/******************************************************************/
 	/*					  initialisationPosition    				  */
 	/******************************************************************/
-	public int initialisationPositions(Plateau plateau, Positions inPositions)
+	public int initialisationPositions()
 	{
-		inPositions.lesPositions = new ArrayList<Position>();
-		inPositions.nbrPositionsActuel = 0;
-		inPositions.nbrPositionsMax = Constante.NBR_MAX_CASES;
+		this.lesPositions = new ArrayList<Position>();
+		this.nbrPositionsActuel = 0;
+		this.nbrPositionsMax = Constante.NBR_MAX_CASES;
 		return 1;
 	}
 }

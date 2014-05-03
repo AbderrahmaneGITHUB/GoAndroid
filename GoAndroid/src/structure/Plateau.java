@@ -17,8 +17,12 @@ public class Plateau {
 	/******************************************************************/
 	/*							Constructeur		    			  */
 	/******************************************************************/
-	
-	
+	public Plateau(int intaille){		
+		this.taille = intaille;	
+		this.positionPlateau = new ArrayList<Pion>();			
+		this.effacerPlateau();
+		this.initialisationPosition ();
+	}
 	
 	/******************************************************************/
 	/*							initialisationPlateau    			  */
@@ -27,8 +31,8 @@ public class Plateau {
 	{
 		plateau.positionPlateau = new ArrayList<Pion>();
 		plateau.taille = taille;		
-		effacerPlateau(plateau);
-		initialisationPosition (plateau);
+		this.effacerPlateau();
+		this.initialisationPosition ();
 	}
 	
 	/******************************************************************/
@@ -36,16 +40,16 @@ public class Plateau {
 	/* @brief : Mettre la couleur RIEN dans chaque position du tableau*/
 	/* Afin d'avoir un tableau vide sans une couleur enregistré       */
 	/******************************************************************/
-	public void effacerPlateau(Plateau plateau)
+	public void effacerPlateau()
 	{
-		int taille = plateau.taille;
+		int taille = this.taille;
 		
 		for(int i = 0; i < taille*taille; i++)
 		{
 			Pion pion = new Pion();	
 			pion.position = new Position();
-			plateau.positionPlateau.add(pion);
-			plateau.positionPlateau.get(i).couleur = Couleur.RIEN;
+			this.positionPlateau.add(pion);
+			this.positionPlateau.get(i).couleur = Couleur.RIEN;
 		}		
 	}
 	
@@ -53,15 +57,15 @@ public class Plateau {
 	/*						initialisationPosition 					  */
 	/* @brief : Initialiser les positions du plateau aprés sa création*/
 	/******************************************************************/
-	public void initialisationPosition (Plateau plateau){
+	public void initialisationPosition (){
 		int z = 0;
-		int taille = plateau.taille;
+		int taille = this.taille;
 		for(int j=0; j < taille; j++)
 		{
 			for(int k=0; k < taille; k++)
 			{
-				plateau.positionPlateau.get(z).position.x =  k;
-				plateau.positionPlateau.get(z).position.y =  j;
+				this.positionPlateau.get(z).position.x =  k;
+				this.positionPlateau.get(z).position.y =  j;
 				z++;
 			}
 		}	

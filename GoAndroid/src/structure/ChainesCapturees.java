@@ -2,7 +2,6 @@ package structure;
 
 import enumeration.Couleur;
 
-
 public class ChainesCapturees  extends Chaines {
 
 	/***************************************************************************
@@ -51,7 +50,7 @@ public class ChainesCapturees  extends Chaines {
 		Position voisins[] 				= new Position[4];
 		Chaine valideChaine 			= new Chaine();
 		Libertes valideLiberte 			= new Libertes();
-		Chaine rahim 					= new Chaine();
+		//Chaine rahim 					= new Chaine();
 		Chaines touteChaineCapturees 	= new Chaines();
 		Libertes fonctionLib 			= new Libertes();
 		/**************************************************/
@@ -62,11 +61,6 @@ public class ChainesCapturees  extends Chaines {
 		
 		positionRef = pion.position;
 		couleurRef = pion.couleur;
-		/*************				Initialisation			**********/	
-		valideChaine.initialisationChaine(plateau, valideChaine);
-		valideLiberte.initialisationPositions(plateau, valideLiberte);
-		rahim.initialisationChaine(plateau, rahim);
-		this.initialisationChaines(plateau, touteChaineCapturees);
 		
 		// 4 chaine àcapturer au max
 		touteChaineCapturees.nbrPositionsMax = 4;
@@ -111,15 +105,13 @@ public class ChainesCapturees  extends Chaines {
 			if (testDedans == 1) {		
 				// Tester si dans cette position, s'il y a un pion
 				Pion rahimPion = new Pion();
-				rahimPion.initialiserUnPion(rahimPion);
+
 				rahimPion = rahimPion.obtenirPionEn(plateau, x, y);
 				
 				if (rahimPion.couleur != Couleur.RIEN && rahimPion.couleur != Couleur.ETRANGE) {
 					if (couleurRef != rahimPion.couleur) {
 						Chaine  rahimChaineACapturer = new Chaine();
 						Libertes rahimLiberte = new Libertes();
-						rahimChaineACapturer.initialisationChaine(plateau, rahimChaineACapturer);
-						rahimLiberte.initialisationPositions(plateau, rahimLiberte);
 						
 						// Construction de la chaine de ce pion trouvé (d'une autre couleur)
 						rahimChaineACapturer = rahimChaineACapturer.determinerChaine(plateau, rahimPion.position);
@@ -130,7 +122,6 @@ public class ChainesCapturees  extends Chaines {
 							for (int iterAppChaine = 0; iterAppChaine < touteChaineCapturees.nbrPositionsActuel; iterAppChaine++) {
 								Position pos2;
 								Chaine chaineDejaAppartien 					= new Chaine();
-								chaineDejaAppartien.initialisationChaine(plateau, chaineDejaAppartien);
 								
 								chaineDejaAppartien = touteChaineCapturees.lesChaines.get(iterAppChaine);
 								pos2 = rahimChaineACapturer.lesCoordCases.lesPositions.get(0);
@@ -144,7 +135,7 @@ public class ChainesCapturees  extends Chaines {
 								if ((rahimLiberte.nbrPositionsActuel == 0) && (rahimLiberte != null)) {
 									valide = 1;	
 									Chaine chaineInitialisation = new Chaine();
-									//chaineInitialisation.in
+
 									touteChaineCapturees.lesChaines.add(chaineInitialisation);
 									touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).laCouleur = rahimChaineACapturer.laCouleur;
 									touteChaineCapturees.lesChaines.get(touteChaineCapturees.nbrPositionsActuel).lesCoordCases = rahimChaineACapturer.lesCoordCases;
