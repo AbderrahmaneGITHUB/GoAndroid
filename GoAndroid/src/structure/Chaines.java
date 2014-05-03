@@ -2,13 +2,9 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import constante.Constante;
 
-
-
 public class Chaines {
-	
 	/******************************************************************/
 	/*						Structure Chaines				  		  */
 	/******************************************************************/ 
@@ -26,5 +22,4 @@ public class Chaines {
 		inChaines.nbrPositionsMax = Constante.NBR_MAX_CASES;			
 		return 1;
 	}
-	
 }

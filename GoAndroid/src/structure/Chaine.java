@@ -2,13 +2,10 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.util.Log;
 import enumeration.Couleur;
 
-
-public class Chaine {
-	
+public class Chaine {	
 	/******************************************************************/
 	/*						Structure Chaine				  		  */
 	/******************************************************************/ 
