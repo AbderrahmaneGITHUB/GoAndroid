@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,9 +20,15 @@ public class plateau_neuf extends MainActivity{
 	//private Plateau plateau;
 	private int taille_plateau = 9;
 	private int couleur_pion = 1;
+	private MediaPlayer mPlayer = null;
+	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+		if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
         super.onCreate(savedInstanceState);
                    
         setContentView(R.layout.plateau_neuf);
@@ -91,6 +98,7 @@ public class plateau_neuf extends MainActivity{
                     	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
                     	int width = le_pion.getWidth();                   	
                     	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
+                    	playSound(R.raw.poser);
                     	couleur_pion++;
                         
                     }
@@ -148,5 +156,14 @@ public class plateau_neuf extends MainActivity{
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
 	    return resizedBitmap;
 	
-	}		
+	}	
+	
+	private void playSound(int resId) {
+	    if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
+	    mPlayer = MediaPlayer.create(this, resId);
+	    mPlayer.start();
+	}
 }

@@ -1,6 +1,5 @@
 package com.example.goandroid;
 
-import constante.Constante;
 import structure.Chaine;
 import structure.Chaines;
 import structure.ChainesCapturees;
@@ -11,9 +10,11 @@ import structure.Positions;
 import structure.Territoire;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import constante.Constante;
 
 public class MainActivity extends Activity {	
 	/******************************************************************/
@@ -29,6 +30,8 @@ public class MainActivity extends Activity {
 	private ChainesCapturees ChainesCapturesTest;
 	private Positions PosisionsYeuxDeCaine;
 	
+	private MediaPlayer mPlayer = null;
+	
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -42,7 +45,9 @@ public class MainActivity extends Activity {
 		
 		/************   Initialisation du tableau		***************/
 		InitialisationClasseGo();	
-
+		
+		/*********** Lecture musique ****************/
+		playSound(R.raw.asian_dream);
 	}
 	
 	/******************************************************************/
@@ -59,22 +64,19 @@ public class MainActivity extends Activity {
 	/* Action des boutons				  */
 	/**************************************/
 	public void plateau_neuf(View v){
-		/*Toast.makeText(this, "initialisation ",
-				Toast.LENGTH_LONG).show();*/
+		stopSound();
 		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 		startActivity(intent);
 	}
 	
 	public void plateau_treize(View v){
-		/*Toast.makeText(this, "initialisation ",
-				Toast.LENGTH_LONG).show();*/
+		stopSound();
 		Intent intent = new Intent(MainActivity.this, plateau_treize.class);
 		startActivity(intent);
 	}
 	
 	public void plateau_dixneuf(View v){
-		/*Toast.makeText(this, "initialisation ",
-				Toast.LENGTH_LONG).show();*/
+		stopSound();
 		Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
 		startActivity(intent);
 	}
@@ -100,7 +102,30 @@ public class MainActivity extends Activity {
 		this.chainesTests = new Chaines();
 		
 		this.PosisionsYeuxDeCaine = new Positions();
-	}	
+	}
+	
+	private void playSound(int resId) {
+	    if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
+	    mPlayer = MediaPlayer.create(this, resId);
+	    mPlayer.start();
+	}
+	
+	private void stopSound(){
+		mPlayer.stop();
+        mPlayer.release();
+	}
+	
+	/*@Override
+	public void onDestroy(){
+		super.onDestroy();
+		if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
+	}*/
 }
 
 
