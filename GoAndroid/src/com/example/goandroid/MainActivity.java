@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import constante.Constante;
 
 public class MainActivity extends Activity {	
@@ -29,8 +30,8 @@ public class MainActivity extends Activity {
 	private Libertes libertes;
 	private ChainesCapturees ChainesCapturesTest;
 	private Positions PosisionsYeuxDeCaine;
-	
 	private MediaPlayer mPlayer = null;
+	private TailleEcran tailleEcran;
 	
 	/******************************************************************/
 	/*							onCreate		   					  */
@@ -48,6 +49,16 @@ public class MainActivity extends Activity {
 		
 		/*********** Lecture musique ****************/
 		playSound(R.raw.asian_dream);
+
+		
+		/*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
+		String taille = tailleEcran.getSizeName(this);
+		if(taille!="grand"){
+			View bouton_13 = findViewById(R.id.treize_case);
+			View bouton_19 = findViewById(R.id.dixneuf_case);
+			bouton_13.setVisibility(View.INVISIBLE);
+			bouton_19.setVisibility(View.INVISIBLE);
+		}
 	}
 	
 	/******************************************************************/
@@ -117,15 +128,8 @@ public class MainActivity extends Activity {
 		mPlayer.stop();
         mPlayer.release();
 	}
+	 
 	
-	/*@Override
-	public void onDestroy(){
-		super.onDestroy();
-		if(mPlayer != null) {
-	        mPlayer.stop();
-	        mPlayer.release();
-	    }
-	}*/
 }
 
 

@@ -36,7 +36,7 @@
             />
         
         <Button 
-            android:id="@+id/treize_case"
+            android:id="@+id/dixneuf_case"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:background="@drawable/bouton_19"
