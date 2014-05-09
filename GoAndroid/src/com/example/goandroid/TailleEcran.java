@@ -6,7 +6,7 @@ import android.content.res.Configuration;
 public class TailleEcran {
 	public static String getSizeName(Context context) {
 	    int screenLayout = context.getResources().getConfiguration().screenLayout;
-	    screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
+	    screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK; 
 
 	    switch (screenLayout) {
 	    case Configuration.SCREENLAYOUT_SIZE_SMALL:
