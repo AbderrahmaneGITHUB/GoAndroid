@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,9 +20,15 @@ public class plateau_neuf extends MainActivity{
 	//private Plateau plateau;
 	private int taille_plateau = 9;
 	private int couleur_pion = 1;
+	private MediaPlayer mPlayer = null;
+	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+		if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
         super.onCreate(savedInstanceState);
                    
         setContentView(R.layout.plateau_neuf);
@@ -82,8 +90,15 @@ public class plateau_neuf extends MainActivity{
                     		tour_joueur.setText("Joueur Blanc");
                     	}
                     	
-                    	int width = le_pion.getWidth();
+                    	
+                    	/*le_pion.setWidth(xI/10);
+                    	le_pion.setHeight(xY/10);*/
+                    	
+                    	int taille_pion = (int)(xI/10)/2;
+                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+                    	int width = le_pion.getWidth();                   	
                     	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
+                    	playSound(R.raw.poser);
                     	couleur_pion++;
                         
                     }
@@ -125,5 +140,30 @@ public class plateau_neuf extends MainActivity{
     	}else{
     		tour_joueur.setText("Joueur Blanc");
     	}
-	}		
+	}
+		
+	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
+	
+	}	
+	
+	private void playSound(int resId) {
+	    if(mPlayer != null) {
+	        mPlayer.stop();
+	        mPlayer.release();
+	    }
+	    mPlayer = MediaPlayer.create(this, resId);
+	    mPlayer.start();
+	}
 }
