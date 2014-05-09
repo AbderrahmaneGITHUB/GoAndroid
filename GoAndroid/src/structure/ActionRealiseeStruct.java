@@ -5,7 +5,7 @@ import java.util.List;
 
 import constante.Constante;
 
-public class Action {
+public class ActionRealiseeStruct {
 	public List<ActionJoueur> lesActions;
 	public int nbrPositionsActuel;	
 	public int nbrPositionsMax;	
@@ -13,7 +13,7 @@ public class Action {
 	/******************************************************************/
 	/*					  Constructeur Action		   				  */
 	/******************************************************************/
-	public  Action()
+	public  ActionRealiseeStruct()
 	{
 		this.initialisationAction();
 	}
