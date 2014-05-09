@@ -9,9 +9,6 @@ public class Chaine {
 	/******************************************************************/
 	/*						Structure Chaine				  		  */
 	/******************************************************************/ 
-	//public List<Pion> lesPions;
-	//public int nbrPionsActuel;
-	//public int nbrPionsMax;
 	public int taille;	
 	public Positions lesCoordCases;
 	public Couleur laCouleur;
