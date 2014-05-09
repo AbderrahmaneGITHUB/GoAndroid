@@ -2,9 +2,7 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import enumeration.Couleur;
-
 
 public class Plateau {
 	
@@ -27,13 +25,13 @@ public class Plateau {
 	/******************************************************************/
 	/*							initialisationPlateau    			  */
 	/******************************************************************/
-	public void initialisationPlateau(int taille, Plateau plateau)
-	{
-		plateau.positionPlateau = new ArrayList<Pion>();
-		plateau.taille = taille;		
-		this.effacerPlateau();
-		this.initialisationPosition ();
-	}
+//	public void initialisationPlateau(int taille, Plateau plateau)
+//	{
+//		plateau.positionPlateau = new ArrayList<Pion>();
+//		plateau.taille = taille;		
+//		this.effacerPlateau();
+//		this.initialisationPosition ();
+//	}
 	
 	/******************************************************************/
 	/*							effacerPlateau						  */

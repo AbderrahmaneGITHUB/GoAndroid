@@ -1,12 +1,16 @@
 package com.example.goandroid;
 
 import constante.Constante;
+import enumeration.Couleur;
+import enumeration.Erreur;
+import enumeration.PasseOuJoue;
 import structure.Chaine;
 import structure.Chaines;
 import structure.ChainesCapturees;
 import structure.Libertes;
 import structure.Pion;
 import structure.Plateau;
+import structure.Position;
 import structure.Positions;
 import structure.Territoire;
 import android.app.Activity;
@@ -41,7 +45,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		/************   Initialisation du tableau		***************/
-		InitialisationClasseGo();	
+		initialisationClasseGo();	
 
 	}
 	
@@ -82,7 +86,7 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	/*				Initialisation des structures					  */
 	/******************************************************************/
-	public void InitialisationClasseGo(){
+	public void initialisationClasseGo(){
 		this.pionClasse 	= new Pion();
 		
 		this.plateau 		= new Plateau(Constante.TAILLEPLATEAU_13);
@@ -100,7 +104,55 @@ public class MainActivity extends Activity {
 		this.chainesTests = new Chaines();
 		
 		this.PosisionsYeuxDeCaine = new Positions();
-	}	
+	}
+	
+	/******************************************************************/
+	/*				Initialisation des structures					  */
+	/******************************************************************/
+	public Erreur realiserAction(Couleur inCouleur, Position inPosition, PasseOuJoue passeOuJoue){
+		/******************************************************************/
+		/*				Declaration des variables globales		   		  */
+		/******************************************************************/
+		int testDedans, taille;
+		int testPlacementPion = 0;
+		Pion pionFonction = new Pion();
+		/**************************************************/
+		/*						Codes					  */
+		/**************************************************/
+		switch(passeOuJoue){
+		case JOUE:
+			taille = this.plateau.taille;
+			testDedans = 0;
+			if((inPosition.x >= 0) && (inPosition.x < taille) && (inPosition.y >= 0) && (inPosition.y < taille)){
+				testDedans = 1;
+			}
+			else{
+				return Erreur.ERR_PION_HORS_PLATEAU;
+			}
+			
+			if(testDedans == 1){
+				//Vérification si l'emplacement est déja occupé 
+				testPlacementPion = pionFonction.placerPionEnPosition(this.plateau, inPosition, inCouleur);
+				
+				if(testPlacementPion == 0){
+					return Erreur.ERR_EMPLACEMENT_OCCUPE;
+				}
+				else if(testPlacementPion == 1){
+					//TODO enregistrement du pion dans la liste Action
+					
+				}				
+			}							
+			break;
+						
+		case PASSE:
+			
+			
+			
+			break;			
+		}		
+		return Erreur.NO_ERREUR_OK;
+	}			
+//  Fin du main
 }
 
 
