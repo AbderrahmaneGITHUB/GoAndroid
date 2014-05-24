@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 						if ((inPosition.memePosition(pionAEnlever.position, inPosition) == 1) && 
 							(pionAEnlever.couleur == inCouleur) && 
 							(testPionEnleve == 1)) {
-							//return Erreur.ERR_PION_NON_VALIDE;
+							return Erreur.ERR_PION_NON_VALIDE;
 							//TODO coninu
 						}	
 					}
