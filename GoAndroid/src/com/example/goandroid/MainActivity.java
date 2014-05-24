@@ -69,10 +69,7 @@ public class MainActivity extends Activity {
 		for(int i = 0; i < 4; i++){
 			TestPosition.x = 1;
 			TestPosition.y = 1 +1;
-			this.realiserAction(Couleur.BLANC,  TestPosition, PasseOuJoue.JOUE);
-			
-			
-			
+			this.realiserAction(Couleur.BLANC,  TestPosition, PasseOuJoue.JOUE);								
 		}
 		
 		/*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
@@ -157,7 +154,8 @@ public class MainActivity extends Activity {
 		Pion pionDeReference = new Pion();
 		Pion pionAEnlever = new Pion();
 		Positions positonsYeuxChaine = new Positions();
-		ChainesCapturees chainesCaptures = new ChainesCapturees();
+		ChainesCapturees fonctionCaptures = new ChainesCapturees();
+		Chaines chainesCaptures = new Chaines();
 		Chaine chaineCap = new Chaine();
 		/******************************************************************/
 		/*				Declaration des variables 				   		  */
@@ -186,7 +184,7 @@ public class MainActivity extends Activity {
 				}
 				else if(testPlacementPion == 1){
 					//Vérifier si on a capturé des chaines avec la pos du pion			
-					chainesCaptures = (ChainesCapturees) chainesCaptures.captureChaines(pionDeReference, 
+					chainesCaptures = fonctionCaptures.captureChaines(pionDeReference, 
 																					  this.plateau, 
 																					  this.posPionValide);
 					//Vérification les chaine capturée
@@ -198,9 +196,8 @@ public class MainActivity extends Activity {
 							positonsYeuxChaine = chaineCap.lesYeuxDeLaChaine(chaineCap, this.plateau);
 							if (positonsYeuxChaine.nbrPositionsActuel < 2) {
 								//si la chaine capturée a moins de deux yeux donc elle capturée
-								chainesCaptures.RealiserCapture(chaineCap, plateau);
-							}
-							
+								fonctionCaptures.RealiserCapture(chaineCap, plateau);
+							}						
 						}
 					}else if ((chainesCaptures == null ||
 							   chainesCaptures.nbrPositionsActuel == 0)&&
@@ -210,7 +207,7 @@ public class MainActivity extends Activity {
 						if ((inPosition.memePosition(pionAEnlever.position, inPosition) == 1) && 
 							(pionAEnlever.couleur == inCouleur) && 
 							(testPionEnleve == 1)) {
-							//return Erreur.ERR_PION_NON_VALIDE;
+							return Erreur.ERR_PION_NON_VALIDE;
 							//TODO coninu
 						}	
 					}

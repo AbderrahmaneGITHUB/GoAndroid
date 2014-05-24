@@ -126,8 +126,7 @@ public class plateau_neuf extends MainActivity{
 	    iv.draw(c);
 	    // Fixe les propriété de l'élément pour peindre
 	    Paint p = new Paint();
-	    c.drawBitmap(pion, x, y,p);
-	    
+	    c.drawBitmap(pion, x, y,p);	    
 	    // Recopie la nouvelle image bmp dans le contenu de l'ImageView
 	    iv.setImageBitmap(bmp);
 	}
