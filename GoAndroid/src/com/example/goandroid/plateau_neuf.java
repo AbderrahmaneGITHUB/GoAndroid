@@ -1,5 +1,8 @@
 package com.example.goandroid;
 
+import java.util.List;
+
+import structure.Pion;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -20,6 +23,8 @@ public class plateau_neuf extends MainActivity{
 	//private Plateau plateau;
 	private int taille_plateau = 9;
 	private int couleur_pion = 1;
+	private int xImage,yImage;
+	private float x_grille,y_grille;
 	private MediaPlayer mPlayer = null;
 	
 	
@@ -53,8 +58,10 @@ public class plateau_neuf extends MainActivity{
                 y = event.getY();
                 xI = maVue.getWidth();
                 xY = maVue.getHeight();
-                float x_grille = (float) (xI - ((xI/27.027)*2));
-                float y_grille = (float) (xY - (xY/27.027) - (xY/27.027));
+                xImage = xI;
+                yImage = xY;
+                x_grille = (float) (xI - ((xI/27.027)*2));
+                y_grille = (float) (xY - (xY/27.027) - (xY/27.027));
                 //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
                 px = (int) (x/(x_grille/(taille_plateau-1)))+1;
                 py = (int) (y/(y_grille/(taille_plateau-1)))+1;
@@ -165,5 +172,34 @@ public class plateau_neuf extends MainActivity{
 	    }
 	    mPlayer = MediaPlayer.create(this, resId);
 	    mPlayer.start();
+	}
+	
+	public void test(List<Pion> pion){
+		int z = 0;
+		int taille = 9;
+		Bitmap pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
+        Bitmap pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
+    	ImageView iv = (ImageView) findViewById(R.id.imageView1);
+    	Bitmap le_pion;
+    	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
+    	
+		for(int j=0; j < taille; j++)
+		{
+			for(int k=0; k < taille; k++)
+			{				
+            	if((couleur_pion % 2)==0){
+            		le_pion = pion_blanc;
+            		tour_joueur.setText("Joueur Noir");
+            	}else{
+            		le_pion = pion_noir;
+            		tour_joueur.setText("Joueur Blanc");
+            	}
+            	int taille_pion = (int)(xImage/10)/2;
+            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+            	int width = le_pion.getWidth();                   	
+            	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
+				z++;
+			}
+		}	
 	}
 }

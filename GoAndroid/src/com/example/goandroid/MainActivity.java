@@ -42,7 +42,8 @@ public class MainActivity extends Activity {
 	private Libertes libertes;
 	private ChainesCapturees ChainesCapturesTest;
 	private Positions PosisionsYeuxDeCaine;
-	private MediaPlayer mPlayer = null;
+	public MediaPlayer mPlayer = null;
+	public boolean NoSound = false;
 	private TailleEcran tailleEcran;
 	private ActionRealiseeStruct actionRealisee;
 	private int nombreDePasse; //si on pasee deux fois, on arret la partie
@@ -62,17 +63,18 @@ public class MainActivity extends Activity {
 		initialisationClasseGo();	
 		
 		/*********** Lecture musique ****************/
+		/*if(mPlayer!=null){
+		stopSound();
+		}*/
+		if(mPlayer==null){
 		playSound(R.raw.asian_dream);
-		
+		}
 		/*********** Test de la fonction réalisé action *********/
 		Position TestPosition = new Position();
 		for(int i = 0; i < 4; i++){
 			TestPosition.x = 1;
 			TestPosition.y = 1 +1;
-			this.realiserAction(Couleur.BLANC,  TestPosition, PasseOuJoue.JOUE);
-			
-			
-			
+			this.realiserAction(Couleur.BLANC,  TestPosition, PasseOuJoue.JOUE);								
 		}
 		
 		/*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
@@ -157,7 +159,8 @@ public class MainActivity extends Activity {
 		Pion pionDeReference = new Pion();
 		Pion pionAEnlever = new Pion();
 		Positions positonsYeuxChaine = new Positions();
-		ChainesCapturees chainesCaptures = new ChainesCapturees();
+		ChainesCapturees fonctionCaptures = new ChainesCapturees();
+		Chaines chainesCaptures = new Chaines();
 		Chaine chaineCap = new Chaine();
 		/******************************************************************/
 		/*				Declaration des variables 				   		  */
@@ -186,7 +189,7 @@ public class MainActivity extends Activity {
 				}
 				else if(testPlacementPion == 1){
 					//Vérifier si on a capturé des chaines avec la pos du pion			
-					chainesCaptures = (ChainesCapturees) chainesCaptures.captureChaines(pionDeReference, 
+					chainesCaptures = fonctionCaptures.captureChaines(pionDeReference, 
 																					  this.plateau, 
 																					  this.posPionValide);
 					//Vérification les chaine capturée
@@ -198,9 +201,8 @@ public class MainActivity extends Activity {
 							positonsYeuxChaine = chaineCap.lesYeuxDeLaChaine(chaineCap, this.plateau);
 							if (positonsYeuxChaine.nbrPositionsActuel < 2) {
 								//si la chaine capturée a moins de deux yeux donc elle capturée
-								chainesCaptures.RealiserCapture(chaineCap, plateau);
-							}
-							
+								fonctionCaptures.RealiserCapture(chaineCap, plateau);
+							}						
 						}
 					}else if ((chainesCaptures == null ||
 							   chainesCaptures.nbrPositionsActuel == 0)&&
@@ -241,11 +243,11 @@ public class MainActivity extends Activity {
 	/*						 MediaPlayer					      		  */
 	/**********************************************************************/
 	private void playSound(int resId) {
-	    if(mPlayer != null) {
+	   /* if(mPlayer != null) {
 	        mPlayer.stop();
 	        mPlayer.release();
-	    }
-	    mPlayer = MediaPlayer.create(this, resId);
+	    }*/
+	    mPlayer = mPlayer.create(this, resId);
 	    mPlayer.start();
 	}
 	
@@ -253,6 +255,33 @@ public class MainActivity extends Activity {
 		mPlayer.stop();
         mPlayer.release();
 	}	 
+	
+	/*@Override
+	protected void onDestroy(){
+		mPlayer.stop();
+		mPlayer.release();
+	}*/
+	
+	
+	public void onBackPressed(){
+		String string_activity = this.getClass().getName();
+		String test = "false";
+		if(string_activity.equals("com.example.goandroid.MainActivity")){
+			test = "true";			
+			super.onDestroy();
+			//mPlayer.stop();
+			//mPlayer.stop();
+			//mPlayer.stop();
+			/*//mPlayer.release();
+			mPlayer = null;
+			Toast toast = Toast.makeText(this, test, Toast.LENGTH_LONG);
+			toast.show();
+			*/
+		}else{
+			mPlayer.stop();
+		}
+		super.onBackPressed();
+	}
 }//  Fin du main
 
 
