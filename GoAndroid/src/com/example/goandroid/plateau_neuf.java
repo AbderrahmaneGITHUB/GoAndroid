@@ -3,6 +3,8 @@ package com.example.goandroid;
 import java.util.List;
 
 import structure.Pion;
+import structure.Plateau;
+import structure.Position;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -11,29 +13,39 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import enumeration.Couleur;
+import enumeration.Erreur;
+import enumeration.PasseOuJoue;
 
 public class plateau_neuf extends MainActivity{
 	
 	private View maVue;
-	//private Plateau plateau;
 	private int taille_plateau = 9;
+	private Plateau plateau = new Plateau(taille_plateau);
 	private int couleur_pion = 1;
 	private int xImage,yImage;
-	private float x_grille,y_grille;
+	private float x_grille,y_grille,x_case,y_case;
 	private MediaPlayer mPlayer = null;
-	
+	//public ImageView image_plateau = (ImageView) this.findViewById(R.id.imageView1);
+	public ImageView image_plateau;
+	public Pion pion = new Pion();
+	private Canvas canva;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+		image_plateau = (ImageView) this.findViewById(R.id.imageView1);
+		
 		if(mPlayer != null) {
 	        mPlayer.stop();
 	        mPlayer.release();
 	    }
+		
         super.onCreate(savedInstanceState);
                    
         setContentView(R.layout.plateau_neuf);
@@ -49,7 +61,11 @@ public class plateau_neuf extends MainActivity{
             	/******************************************************/
                 int action, xI, xY, px, py;
                 float x, y;
-
+                Pion unPion = new Pion();
+                Erreur erreur;
+                Position laPosition = new Position();
+                Couleur laCouleur;
+                
               	/******************************************************/
             	/*							Codes					  */
             	/******************************************************/
@@ -58,17 +74,20 @@ public class plateau_neuf extends MainActivity{
                 y = event.getY();
                 xI = maVue.getWidth();
                 xY = maVue.getHeight();
-                xImage = xI;
-                yImage = xY;
+
                 x_grille = (float) (xI - ((xI/27.027)*2));
                 y_grille = (float) (xY - (xY/27.027) - (xY/27.027));
                 //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
                 px = (int) (x/(x_grille/(taille_plateau-1)))+1;
                 py = (int) (y/(y_grille/(taille_plateau-1)))+1;
+                laPosition.x = px;
+                laPosition.y = py;
                 //Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
                 float cx = (float) x_grille/(taille_plateau-1);
+                x_case = cx;
                 //Toast.makeText(plateau_neuf.this, "taille case ("+cx+")", (int)2000).show();
                 float cy = (float) y_grille/(taille_plateau-1);
+                y_case = cy;
                 cx = (float) ((px-1)*cx);
                 cy = (float) ((py-1)*cy);
                 //Toast.makeText(plateau_neuf.this, "touché en ("+cx+" / "+cy+")", (int)2000).show();
@@ -80,39 +99,45 @@ public class plateau_neuf extends MainActivity{
                     }
                 	else
                     {
-                		//Drawable test = drawable(R.drawable.pion_noir);
-                		
-                    	//Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
-                    	//Test
                     	Bitmap pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
                         Bitmap pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
                     	ImageView iv = (ImageView) findViewById(R.id.imageView1);
                     	Bitmap le_pion;
                     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
-                    	if((couleur_pion % 2)==0){
-                    		le_pion = pion_blanc;
+                    	if((couleur_pion % 2)==0 && couleur_pion !=1){
+                    		le_pion = pion_noir;
+                    		laCouleur = Couleur.NOIR;
                     		tour_joueur.setText("Joueur Noir");
                     	}else{
-                    		le_pion = pion_noir;
+                    		le_pion = pion_blanc;
+                    		laCouleur = Couleur.BLANC;
                     		tour_joueur.setText("Joueur Blanc");
                     	}
-                    	
-                    	
-                    	/*le_pion.setWidth(xI/10);
-                    	le_pion.setHeight(xY/10);*/
-                    	
-                    	int taille_pion = (int)(xI/10)/2;
-                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-                    	int width = le_pion.getWidth();                   	
-                    	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
-                    	playSound(R.raw.poser);
-                    	couleur_pion++;
-                        
+                    	 
+                    	//récupération du core erreur renvoyé
+                    	erreur = realiserAction(laCouleur, laPosition, PasseOuJoue.JOUE);
+                    	//Log.d("AS_TEST", "erreur : " + erreur.toString());
+                    	if(erreur==Erreur.NO_ERREUR_OK){
+                    		unPion.couleur = laCouleur;
+                    		unPion.position = laPosition;
+                    		unPion.placerPionEn(plateau, unPion);
+	                    	int taille_pion = (int)(xI/10)/2;
+	                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+	                    	int width = le_pion.getWidth();  
+	                    	
+	                    	//drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
+	                    	playSound(R.raw.poser);
+	                    	couleur_pion++;
+	                    	afficherPlateau(plateau.positionPlateau);
+                    	}else{
+                    		Log.d("AS_TEST", "erreur : " + erreur.toString());
+                    	}
                     }
                 }      
                 return true;
             }
         });
+    	//test(plateau.positionPlateau,image_plateau);
     } 
 	
 	/***********************************/
@@ -124,7 +149,6 @@ public class plateau_neuf extends MainActivity{
 		// Création d'un bitmap vide de la même taille que celui associé à l'ImageView
 		Bitmap bmp = Bitmap.createBitmap(tx,ty, Config.ARGB_8888);
 		String message = "Bitmap tx:"+tx+", ty:"+ty;
-		//Toast.makeText(this,message,Toast.LENGTH_LONG).show();
 		// Un Canvas est associé à un bitamp et gère le dessin d'éléments graphiques sur ce bitmap
 		// voir : http://developer.android.com/reference/android/graphics/Canvas.html
 	    Canvas c = new Canvas(bmp);
@@ -173,12 +197,15 @@ public class plateau_neuf extends MainActivity{
 	    mPlayer.start();
 	}
 	
-	public void test(List<Pion> pion){
+	public void afficherPlateau(List<Pion> pion){
 		int z = 0;
 		int taille = 9;
+		float x,y;
+		Plateau plateau = new Plateau(taille_plateau);
 		Bitmap pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
         Bitmap pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	ImageView iv = (ImageView) findViewById(R.id.imageView1);
+    	
     	Bitmap le_pion;
     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
     	
@@ -186,19 +213,41 @@ public class plateau_neuf extends MainActivity{
 		{
 			for(int k=0; k < taille; k++)
 			{				
-            	if((couleur_pion % 2)==0){
-            		le_pion = pion_blanc;
-            		tour_joueur.setText("Joueur Noir");
-            	}else{
-            		le_pion = pion_noir;
-            		tour_joueur.setText("Joueur Blanc");
+            	//Toast.makeText(plateau_neuf.this, "couleur : ("+pion.get(z).couleur+")", (int)2000).show();
+            	if(pion.get(z).couleur != Couleur.RIEN){
+            		if(pion.get(z).couleur==Couleur.NOIR){
+                		le_pion = pion_blanc;
+                	}else{
+                		le_pion = pion_noir;
+                	}
+            		//Toast.makeText(plateau_neuf.this, "couleur : ("+pion.get(z).couleur+")", (int)2000).show();
+	            	x = (pion.get(z).position.x-1)*x_case;
+	            	y = (pion.get(z).position.y-1)*y_case;
+            		//Log.d("AS_TEST", "("+x+"/"+y+") "+pion.get(z).couleur.toString());
+	            	//Toast.makeText(plateau_neuf.this, "posé en ("+x+" / "+y+")", (int)2000).show();
+	            	int taille_pion = (int)(xImage/10)/2;
+	            	//le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+	            	int width = le_pion.getWidth();                   	
+	            	drawImg(iv, (x+(width/4)), (y+(width/4)), le_pion);
             	}
-            	int taille_pion = (int)(xImage/10)/2;
-            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-            	int width = le_pion.getWidth();                   	
-            	drawImg(iv, (cx+(width/4)), (cy+(width/4)), le_pion);
 				z++;
 			}
 		}	
 	}
+	
+	
+	public void onWindowFocusChanged(boolean hasFocus) {
+		int xI,xY;
+	    super.onWindowFocusChanged(hasFocus);
+	  /*pion.couleur = Couleur.NOIR;
+		pion.position.x=2;
+		pion.position.y=5;*/
+		
+		 xI = maVue.getWidth();
+         xY = maVue.getHeight();      
+           
+         //ImageView img = (ImageView) findViewById(R.id.imageView1);
+         Bitmap bmp = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
+         canva = new Canvas(bmp);
+	    }
 }
