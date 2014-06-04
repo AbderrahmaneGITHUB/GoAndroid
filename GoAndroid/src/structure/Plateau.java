@@ -2,9 +2,6 @@ package structure;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.goandroid.R;
-
 import enumeration.Couleur;
 
 public class Plateau {
@@ -75,15 +72,14 @@ public class Plateau {
 	
 	// TODO méthode afficher plateau en fonction de la taille du plateau
 	public void afficherPlateau(){
-		int z = 0;
+		//int z = 0;
 		int taille = this.taille;
 		
 		for(int j=0; j < taille; j++)
 		{
 			for(int k=0; k < taille; k++)
-			{
-								
-				z++;
+			{							
+				//z++;
 			}
 		}	
 	}

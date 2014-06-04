@@ -1,5 +1,7 @@
 package structure;
 
+import com.example.goandroid.MainActivity;
+
 import enumeration.Couleur;
 
 public class ChainesCapturees  extends Chaines {
@@ -8,6 +10,14 @@ public class ChainesCapturees  extends Chaines {
 	 *  @brief Réalise la capture des pions correspondant à
 	* la chaine en les enlevant du plateau.
 	***************************************************************************/
+	private MainActivity main;
+	public ChainesCapturees(MainActivity inMain){
+		
+		main = inMain;
+		
+	}
+	
+	
 	public void RealiserCapture(Chaine chaine, Plateau plateau) {
 		/**************************************************/
 		/*					Déclaration					  */
@@ -41,7 +51,7 @@ public class ChainesCapturees  extends Chaines {
 	public Chaines captureChaines(Pion pion, Plateau plateau, int valide) {		
 		/**************************************************/
 		/*					Déclaration					  */
-		/**************************************************/		
+		/**************************************************/	
 		int i, x, y, t;
 		int testDedans;
 		Couleur couleurRef;
@@ -67,7 +77,7 @@ public class ChainesCapturees  extends Chaines {
 		
 		// Par defaut l'entier valide vaut 1
 		valide = 1;
-		
+		main.setPosPionValide(1);
 		// Vérification
 		if (pion.couleur == Couleur.RIEN)
 			return touteChaineCapturees = null;
@@ -80,6 +90,7 @@ public class ChainesCapturees  extends Chaines {
 
 			if ((valideLiberte.nbrPositionsActuel == 0) && (valideLiberte != null)) {
 				valide = 0;
+				main.setPosPionValide(0);
 			}
 		}
 		
@@ -134,6 +145,7 @@ public class ChainesCapturees  extends Chaines {
 								rahimLiberte = fonctionLib.determineLiberte(plateau, rahimChaineACapturer);
 								if ((rahimLiberte.nbrPositionsActuel == 0) && (rahimLiberte != null)) {
 									valide = 1;	
+									main.setPosPionValide(1);
 									Chaine chaineInitialisation = new Chaine();
 
 									touteChaineCapturees.lesChaines.add(chaineInitialisation);

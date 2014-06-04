@@ -96,25 +96,25 @@ public class plateau_neuf extends MainActivity{
                     }
                 	else
                     {
-                    	Bitmap pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
+                    	Bitmap pion_noir  = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
                         Bitmap pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
                     	Bitmap le_pion;
                     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
+                    	
                     	if((couleur_pion % 2) == 0 && couleur_pion != 1){
-                    		le_pion = pion_noir;
-                    		laCouleur = Couleur.NOIR;
-                    		tour_joueur.setText("Joueur Noir");
-                    	}else{
                     		le_pion = pion_blanc;
                     		laCouleur = Couleur.BLANC;
+                    		tour_joueur.setText("Joueur Noir"); 
+                    	}else{
+                    		le_pion = pion_noir;
+                    		laCouleur = Couleur.NOIR;
                     		tour_joueur.setText("Joueur Blanc");
                     	}
-
+                    	                    	
                     	//récupération du core erreur renvoyé
                     	erreur = realiserAction(laCouleur, laPosition, PasseOuJoue.JOUE);
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
-                    	switch(erreur){
-                    		
+                    	switch(erreur){                    		
 	                    	case NO_ERREUR_OK:	                    		
 	                    		unPion.couleur  = laCouleur;
 	                    		unPion.position = laPosition;                    		
@@ -129,13 +129,15 @@ public class plateau_neuf extends MainActivity{
 	                    		// TODO : il faut proposer à l'utilisateur d'entregistrer la partie	                    		
 	                    		break;
 	                    		
+	                    	case PASSE:	                    		
+	                    		break;
+	                    		
 	                    	case ERR_PION_NON_VALIDE:	                 		
 	                    	case ERR_EMPLACEMENT_OCCUPE:	                    			             	                    		
             				case ERR_PION_HORS_PLATEAU:	                    	
 	                		default:
 	                			Log.d("AS_TEST", "erreur : " + erreur.toString());
-                    			break;
-                    	
+                    			break;                    	
                     	}                    	                    	
                     }
                 }      
@@ -145,12 +147,55 @@ public class plateau_neuf extends MainActivity{
     	//test(plateau.positionPlateau,image_plateau);
     } 
 	
-	/***********************************/
-	/** Placement des pions ************/
-	/***********************************/	
+	public void traitement(Couleur inCouleur, Position inPosition, PasseOuJoue inPasseOuJoue)
+	{
+		/******************************************************/
+    	/*				Declaration variables				  */
+    	/******************************************************/
+		Erreur erreur;
+		
+		/******************************************************/
+    	/*							Codes					  */
+    	/******************************************************/    
+		//récupération du core erreur renvoyé
+    	erreur = realiserAction(inCouleur, inPosition, inPasseOuJoue);
+    	//Log.d("AS_TEST", "erreur : " + erreur.toString());
+    	switch(erreur){
+    		
+        	case NO_ERREUR_OK:	                    		
+        		                    	
+        		break;
+        		
+        	case FIN_DE_LA_PARTIE:
+        		// TODO : il faut proposer à l'utilisateur d'entregistrer la partie	                    		
+        		break;
+        		
+        	case PASSE:
+        		int z =5;
+        		break;
+        		
+        	case ERR_PION_NON_VALIDE:	                 		
+        	case ERR_EMPLACEMENT_OCCUPE:	                    			             	                    		
+			case ERR_PION_HORS_PLATEAU:	                    	
+    		default:
+    			Log.d("AS_TEST", "erreur : " + erreur.toString());
+    			break;                    	
+    	}   			
+	}
+	
+	/*****************************************************************/
+	/** 				Placement des pions 					   ***/
+	/*****************************************************************/	
 	private void drawImg(ImageView iv, float x, float y, Bitmap pion){
+		
+		/******************************************************/
+    	/*				Declaration variables				  */
+    	/******************************************************/
 		int tx = iv.getWidth();
 		int ty = iv.getHeight();
+		/******************************************************/
+    	/*							Codes					  */
+    	/******************************************************/    
 		// Création d'un bitmap vide de la même taille que celui associé à l'ImageView
 		Bitmap bmp = Bitmap.createBitmap(tx,ty, Config.ARGB_8888);
 		// Un Canvas est associé à un bitamp et gère le dessin d'éléments graphiques sur ce bitmap
@@ -166,13 +211,26 @@ public class plateau_neuf extends MainActivity{
 	    iv.setImageBitmap(bmp);
 	}
 	
+	/*****************************************************************/
+	/** 				Placement des pions 					   ***/
+	/*****************************************************************/	
 	public void passer_tour(View v){
+		/******************************************************/
+    	/*				Declaration variables				  */
+    	/******************************************************/
 		couleur_pion ++;
+		
+		/******************************************************/
+    	/*							Codes					  */
+    	/******************************************************/    	
 		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
 		if((couleur_pion % 2)==0){
     		tour_joueur.setText("Joueur Noir");
+    		// On execute cette fonction afin d'ajouter l'action dans la liste des actions
+    		traitement(Couleur.BLANC, new Position(), PasseOuJoue.PASSE);
     	}else{
     		tour_joueur.setText("Joueur Blanc");
+    		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
     	}
 	}
 		
@@ -225,9 +283,9 @@ public class plateau_neuf extends MainActivity{
 			{				
             	if(listDesPion.get(z).couleur != Couleur.RIEN){
             		if(listDesPion.get(z).couleur==Couleur.NOIR){
-                		le_pion = pion_blanc;
-                	}else{
                 		le_pion = pion_noir;
+                	}else{
+                		le_pion = pion_blanc;
                 	}
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
@@ -237,8 +295,7 @@ public class plateau_neuf extends MainActivity{
 				z++;
 			}
 		}	
-	}
-	
+	}	
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
 		int xI,xY;

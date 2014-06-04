@@ -25,7 +25,7 @@ public class ActionRealiseeStruct {
 	{
 		this.lesActions = new ArrayList<ActionJoueur>();
 		this.nbrPositionsActuel = 0;
-		this.nbrPositionsMax = 3*Constante.NBR_MAX_CASES;
+		this.nbrPositionsMax = 4*Constante.NBR_MAX_CASES;
 		return 1;
 	}	
 }

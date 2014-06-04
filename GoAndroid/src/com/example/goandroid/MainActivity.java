@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 		
 		/*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
 		String taille = tailleEcran.getSizeName(this);
-		if(taille!="grand"){
+		if(taille != "grand"){
 			View bouton_13 = findViewById(R.id.treize_case);
 			View bouton_19 = findViewById(R.id.dixneuf_case);
 			bouton_13.setVisibility(View.INVISIBLE);
@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
 	/*				Fonction d'Initialisation du plateau    		  */
 	/******************************************************************/
 	public void initTaillePlateau(int inTaille){		
-		this.plateau 			= new Plateau(inTaille);
+		this.plateau = new Plateau(inTaille);
 	}
 		
 	/**********************************************************************/
@@ -227,7 +227,8 @@ public class MainActivity extends Activity {
 				return Erreur.FIN_DE_LA_PARTIE;
 			}						
 			
-			break;			
+			return Erreur.PASSE;
+			//break;			
 		}		
 		return Erreur.NO_ERREUR_OK;
 	}			
