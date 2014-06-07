@@ -70,7 +70,7 @@ public class plateau_treize extends MainActivity{
                 y 		= event.getY();
                 xI 		= maVue.getWidth();
                 xY 		= maVue.getHeight();
-                unPion 	= new Pion();
+                unPion 	= new Pion(); 
                 laPosition = new Position();
                 
                 x_grille = (float) (xI - ((xI/100*3.75)*2));
