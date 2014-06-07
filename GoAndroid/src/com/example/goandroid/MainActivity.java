@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -187,6 +188,7 @@ public class MainActivity extends Activity {
 							this.posPionValide);
 					//Vérification les chaine capturée
 					if ((chainesCaptures != null) && (chainesCaptures.nbrPositionsActuel > 0)) {
+						Log.d("AS_TEST", "capture");
 						for (rea = 0; rea < chainesCaptures.nbrPositionsActuel; rea++) {
 							//Récupération un chaine
 							chaineCap = chainesCaptures.lesChaines.get(rea);

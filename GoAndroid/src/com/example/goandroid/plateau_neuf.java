@@ -2,36 +2,39 @@ package com.example.goandroid;
 
 import java.util.List;
 
-import constante.Constante;
 import structure.Pion;
 import structure.Position;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import constante.Constante;
 import enumeration.Couleur;
 import enumeration.Erreur;
 import enumeration.PasseOuJoue;
 
 public class plateau_neuf extends MainActivity{
 	
-	private View maVue;
+	public View maVue;
 	private int taille_plateau;
 	private int couleur_pion;
 	private float x_grille, y_grille, x_case, y_case;
 	private MediaPlayer mPlayer = null;
 	public  ImageView image_plateau;
 	private Canvas canva;
+	private Bitmap bitmap;
+	private Paint p = new Paint();
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,8 @@ public class plateau_neuf extends MainActivity{
 		playSound();
 		super.onCreate(savedInstanceState);                   
         setContentView(R.layout.plateau_neuf);     
-        maVue = findViewById(R.id.imageView1);    	
+        maVue = findViewById(R.id.imageView1);
+        //Log.d("AS_TEST", "taille : " + maVue.getWidth());
     	maVue.setOnTouchListener(
     			
     	new View.OnTouchListener() {
@@ -102,20 +106,24 @@ public class plateau_neuf extends MainActivity{
                     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
                     	
                     	if((couleur_pion % 2) == 0 && couleur_pion != 1){
-                    		le_pion = pion_blanc;
                     		laCouleur = Couleur.BLANC;
-                    		tour_joueur.setText("Joueur Noir"); 
                     	}else{
-                    		le_pion = pion_noir;
                     		laCouleur = Couleur.NOIR;
-                    		tour_joueur.setText("Joueur Blanc");
                     	}
                     	                    	
                     	//récupération du core erreur renvoyé
                     	erreur = realiserAction(laCouleur, laPosition, PasseOuJoue.JOUE);
+                    	//effaceImages(); 
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     	switch(erreur){                    		
-	                    	case NO_ERREUR_OK:	                    		
+	                    	case NO_ERREUR_OK:
+	                    		if((couleur_pion % 2) == 0 && couleur_pion != 1){
+	                        		le_pion = pion_blanc;
+	                        		tour_joueur.setText("Joueur Noir"); 
+	                        	}else{
+	                        		le_pion = pion_noir;
+	                        		tour_joueur.setText("Joueur Blanc");
+	                        	}
 	                    		unPion.couleur  = laCouleur;
 	                    		unPion.position = laPosition;                    		
 		                    	int taille_pion = (int)(xI/10)/2;
@@ -136,7 +144,7 @@ public class plateau_neuf extends MainActivity{
 	                    	case ERR_EMPLACEMENT_OCCUPE:	                    			             	                    		
             				case ERR_PION_HORS_PLATEAU:	                    	
 	                		default:
-	                			Log.d("AS_TEST", "erreur : " + erreur.toString());
+	                			//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     			break;                    	
                     	}                    	                    	
                     }
@@ -178,7 +186,7 @@ public class plateau_neuf extends MainActivity{
         	case ERR_EMPLACEMENT_OCCUPE:	                    			             	                    		
 			case ERR_PION_HORS_PLATEAU:	                    	
     		default:
-    			Log.d("AS_TEST", "erreur : " + erreur.toString());
+    			//Log.d("AS_TEST", "erreur : " + erreur.toString());
     			break;                    	
     	}   			
 	}
@@ -186,29 +194,27 @@ public class plateau_neuf extends MainActivity{
 	/*****************************************************************/
 	/** 				Placement des pions 					   ***/
 	/*****************************************************************/	
-	private void drawImg(ImageView iv, float x, float y, Bitmap pion){
-		
-		/******************************************************/
-    	/*				Declaration variables				  */
-    	/******************************************************/
-		int tx = iv.getWidth();
-		int ty = iv.getHeight();
-		/******************************************************/
-    	/*							Codes					  */
-    	/******************************************************/    
-		// Création d'un bitmap vide de la même taille que celui associé à l'ImageView
-		Bitmap bmp = Bitmap.createBitmap(tx,ty, Config.ARGB_8888);
-		// Un Canvas est associé à un bitamp et gère le dessin d'éléments graphiques sur ce bitmap
-		// voir : http://developer.android.com/reference/android/graphics/Canvas.html
-	    Canvas c = new Canvas(bmp);
-	    // Indispensable pour que le dessin soit réalisé sur le bitmap
-	    // Le bitmap du dans l'ImageView est recopié dans le Bitmap bmp
-	    iv.draw(c);
-	    // Fixe les propriété de l'élément pour peindre
-	    Paint p = new Paint();
-	    c.drawBitmap(pion, x, y,p);	    
-	    // Recopie la nouvelle image bmp dans le contenu de l'ImageView
-	    iv.setImageBitmap(bmp);
+	private void drawImg(float x, float y, Bitmap pion){			    
+	    canva.drawBitmap(pion, x, y,p);	    
+	   
+	    // Recopie la nouvelle image bmp dans le contenu de l'ImageView	    
+	    
+	}
+	
+	private void afficheImages(){
+		((ImageView) maVue).setImageBitmap(bitmap);
+	}
+	
+	private void effaceImages(){
+		int x = maVue.getWidth();
+		int y = maVue.getHeight();
+		//int test = bmp.getWidth();
+		//Log.d("AS_TEST", "width bmp :"+test);
+		ImageView image = (ImageView)findViewById(R.id.imageView1);
+		Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.go9);
+		bmp = getResizedBitmap(bmp, x, y);		
+		canva.drawBitmap(bmp, 0, 0,p);	
+		((ImageView) maVue).setImageBitmap(bmp); 
 	}
 	
 	/*****************************************************************/
@@ -273,6 +279,7 @@ public class plateau_neuf extends MainActivity{
 		/**************************************************/
 		/*						Codes					  */
 		/**************************************************/
+        effaceImages();
 		pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
         pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	iv = (ImageView) findViewById(R.id.imageView1);	
@@ -290,21 +297,27 @@ public class plateau_neuf extends MainActivity{
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
 	            	int width = le_pion.getWidth();                   	
-	            	drawImg(iv, (x+(width/4)), (y+(width/4)), le_pion);
+	            	drawImg((x+(width/4)), (y+(width/4)), le_pion);
             	}
 				z++;
 			}
-		}	
+		}			
+		afficheImages();		
+		
 	}	
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
 		int xI,xY;
 	    super.onWindowFocusChanged(hasFocus);
-		
+		 
+	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-         xY = maVue.getHeight();      
-
-         Bitmap bmp = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
-         canva = new Canvas(bmp);
+         xY = maVue.getHeight();   
+         
+         //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
+         bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
+         canva = new Canvas(bitmap);
+         canva.save(1);
+         maVue.draw(canva);
 	    }
 }
