@@ -76,8 +76,8 @@ public class plateau_neuf extends MainActivity{
                 unPion 	= new Pion();
                 laPosition = new Position();
                 
-                x_grille = (float) (xI - ((xI/27.027)*2));
-                y_grille = (float) (xY - (xY/27.027) - (xY/27.027));
+                x_grille = (float) (xI - ((xI/100*3.75)*2));
+                y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
                 //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
                 px 				= (int) (x/(x_grille/(taille_plateau-1)))+1;
                 py 				= (int) (y/(y_grille/(taille_plateau-1)))+1;
@@ -296,7 +296,9 @@ public class plateau_neuf extends MainActivity{
                 	}
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
-	            	int width = le_pion.getWidth();                   	
+	            	int taille_pion = (int)(x_grille/9)/2;
+	            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+	            	int width = le_pion.getWidth();            	
 	            	drawImg((x+(width/4)), (y+(width/4)), le_pion);
             	}
 				z++;

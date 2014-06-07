@@ -9,7 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="120dp" >
 
-       
+       <TextView 
+            android:id="@+id/tour_joueur"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Joueur Noir"
+            android:textColor="#000"
+            android:textSize="40dp"/>
 
     </LinearLayout>
 
@@ -32,11 +39,12 @@
             android:text="Button" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/passer"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Passer le tour"
+            android:onClick="passer_tour" />
 
     </LinearLayout>
 

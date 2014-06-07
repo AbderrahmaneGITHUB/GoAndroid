@@ -29,27 +29,31 @@ public final class R {
         public static final int go9=0x7f020005;
         public static final int herbe=0x7f020006;
         public static final int ic_launcher=0x7f020007;
-        public static final int pion_blanc=0x7f020008;
-        public static final int pion_noir=0x7f020009;
-        public static final int plateau_go_test=0x7f02000a;
-        public static final int test=0x7f02000b;
+        public static final int image_titre=0x7f020008;
+        public static final int image_titre_old=0x7f020009;
+        public static final int pion_blanc=0x7f02000a;
+        public static final int pion_blanc_old=0x7f02000b;
+        public static final int pion_noir=0x7f02000c;
+        public static final int pion_noir_old=0x7f02000d;
+        public static final int plateau_go_test=0x7f02000e;
+        public static final int test=0x7f02000f;
     }
     public static final class id {
-        public static final int action_settings=0x7f090008;
-        public static final int button1=0x7f090004;
-        public static final int button2=0x7f090005;
+        public static final int action_settings=0x7f090007;
+        public static final int button1=0x7f090005;
         public static final int dixneuf_case=0x7f090002;
-        public static final int imageView1=0x7f090003;
+        public static final int imageView1=0x7f090004;
         public static final int neuf_case=0x7f090000;
-        public static final int passer=0x7f090007;
-        public static final int tour_joueur=0x7f090006;
+        public static final int passer=0x7f090006;
+        public static final int tour_joueur=0x7f090003;
         public static final int treize_case=0x7f090001;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int plateau_dixneuf=0x7f030001;
-        public static final int plateau_neuf=0x7f030002;
-        public static final int plateau_treize=0x7f030003;
+        public static final int optionsactivity=0x7f030001;
+        public static final int plateau_dixneuf=0x7f030002;
+        public static final int plateau_neuf=0x7f030003;
+        public static final int plateau_treize=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;
