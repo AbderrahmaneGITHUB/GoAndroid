@@ -293,7 +293,7 @@ public class plateau_treize extends MainActivity{
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
 	            	int width = le_pion.getWidth();  
-	            	int taille_pion = (int)(x_grille/10)/2;
+	            	int taille_pion = (int)(x_grille/9)/2;
 	            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);                 	
 	            	drawImg((x+(width/4)), (y+(width/4)), le_pion);
             	}
