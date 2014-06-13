@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 	private ActionRealiseeStruct actionRealisee;
 	protected int nombreDePasse; //si on pasee deux fois, on arret la partie
 	protected int posPionValide;
+	private SauvegardePartie sauvegardePartie;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -58,8 +59,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		/************   Initialisation du tableau		***************/
-		initialisationClasseGo();	
-		
+		this.initialisationClasseGo();	
+		this.sauvegardePartie = new SauvegardePartie(MainActivity.this);
 		/*********** Lecture musique ****************/
 		if(mPlayer==null){
 			this.intialisationOfSaound(R.raw.asian_dream);
@@ -274,6 +275,12 @@ public class MainActivity extends Activity {
 	public void onBackPressed(){
 		String string_activity = this.getClass().getName();
 
+		//////////////////////////////////
+		this.sauvegardePartie.creationFichier();
+		this.sauvegardePartie.EnregistrerLaPartie(this.actionRealisee);
+		this.sauvegardePartie.lecture();
+		//////////////////////////////////
+		
 		if(string_activity.equals("com.example.goandroid.MainActivity")){
 			// TODO : Il faut proposer à l'utilisateur d'enregistrer sa partie
 			super.onDestroy();
