@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -41,12 +42,13 @@ public class MainActivity extends Activity {
 	//private ChainesCapturees ChainesCapturesTest;
 	//private Positions PosisionsYeuxDeCaine;
 	private MediaPlayer mPlayer = null;
-	public boolean NoSound = false;
+	protected static boolean NoSound;
+	protected static boolean NoMusic;
 	private TailleEcran tailleEcran;
-	private ActionRealiseeStruct actionRealisee;
+	protected ActionRealiseeStruct actionRealisee;
 	protected int nombreDePasse; //si on pasee deux fois, on arret la partie
 	protected int posPionValide;
-	private SauvegardePartie sauvegardePartie;
+	protected SauvegardePartie sauvegardePartie;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -57,6 +59,8 @@ public class MainActivity extends Activity {
     	/**************************************************************/ 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		Log.v("AS_TEST","son : "+NoSound);
 		
 		/************   Initialisation du tableau		***************/
 		this.initialisationClasseGo();	
@@ -99,18 +103,23 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	/*							Type plateau						  */
 	/******************************************************************/
-	public void plateau_neuf(View v){
-		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
+	public void nouvelle_partie(View v){
+		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
 		startActivity(intent);
 	}
 	
-	public void plateau_treize(View v){
-		Intent intent = new Intent(MainActivity.this, plateau_treize.class);
+	public void charger_partie(View v){
+		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
 		startActivity(intent);
 	}
 	
-	public void plateau_dixneuf(View v){
-		Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
+	public void option(View v){
+		Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
+		startActivity(intent);
+	}
+	
+	public void a_propos(View v){
+		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
 		startActivity(intent);
 	}
 	
@@ -284,7 +293,6 @@ public class MainActivity extends Activity {
 		if(string_activity.equals("com.example.goandroid.MainActivity")){
 			// TODO : Il faut proposer à l'utilisateur d'enregistrer sa partie
 			super.onDestroy();
-
 		}else{
 			if(mPlayer != null){
 				mPlayer.stop();

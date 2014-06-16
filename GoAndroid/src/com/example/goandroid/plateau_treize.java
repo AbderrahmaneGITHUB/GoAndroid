@@ -4,6 +4,8 @@ import java.util.List;
 
 import structure.Pion;
 import structure.Position;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -43,7 +45,9 @@ public class plateau_treize extends MainActivity{
 		couleur_pion = 1;
     	initTaillePlateau(Constante.TAILLEPLATEAU_13);
 		intialisationOfSaound(R.raw.asian_dream);
-		playSound();
+		if(NoMusic!=false){
+			playSound();
+		}
 		super.onCreate(savedInstanceState);                   
         setContentView(R.layout.plateau_treize);     
         maVue = findViewById(R.id.imageView1);
@@ -124,7 +128,9 @@ public class plateau_treize extends MainActivity{
 	                    		unPion.couleur  = laCouleur;
 	                    		unPion.position = laPosition;                    		
 		                    	
-		                    	playSound_touche(R.raw.poser);
+	                    		if(NoSound!=false){
+		                    		playSound_touche(R.raw.poser);
+		                    	}
 		                    	couleur_pion++;
 		                    	afficherPlateau(plateau.positionPlateau);		                    	
 	                    		break;
@@ -318,4 +324,48 @@ public class plateau_treize extends MainActivity{
 	     canva.save(1);
 	     maVue.draw(canva);
     } 
+	
+	public void onBackPressed(){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+		        plateau_treize.this);
+		 
+		 
+		// Le message
+		alertDialog.setMessage("Souhaitez-vous sauvegarder la partie ?");
+		 
+		// L'icone
+		alertDialog.setIcon(android.R.drawable.ic_menu_save);
+		 
+		// Le premier bouton "Oui" ( positif )
+		alertDialog.setPositiveButton("Oui",
+		        new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) {
+		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
+		            	mPlayer.stop();
+		    	        mPlayer.release();
+		                plateau_treize.this.finish();
+		            }
+		        });
+		 
+		// Le deuxième bouton "NON" ( négatif )
+		alertDialog.setNegativeButton("Non",
+		        new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) {
+		            	mPlayer.stop();
+		    	        mPlayer.release();
+		                plateau_treize.this.finish();
+		            }
+		        });
+		
+		// le troisième bouton "Annuler"
+		alertDialog.setNeutralButton("Annuler", 
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+		                dialog.cancel();
+					}
+				});
+		 
+		// Affiche la boite du dialogue
+		alertDialog.show();
+	}
 }

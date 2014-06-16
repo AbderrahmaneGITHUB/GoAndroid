@@ -14,6 +14,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +49,9 @@ public class plateau_neuf extends MainActivity{
 		couleur_pion = 1;
     	initTaillePlateau(Constante.TAILLEPLATEAU_9);
 		intialisationOfSaound(R.raw.asian_dream);
-		playSound();
+		if(NoMusic!=false){
+			playSound();
+		}
 		super.onCreate(savedInstanceState);                   
         setContentView(R.layout.plateau_neuf);     
         maVue = findViewById(R.id.imageView1);
@@ -130,7 +134,10 @@ public class plateau_neuf extends MainActivity{
 	                    		unPion.position = laPosition;                    		
 		                    	int taille_pion = (int)(xI/10)/2;
 		                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-		                    	playSound_touche(R.raw.poser);
+		                    	Log.v("AS_TEST", "NoSound : "+NoSound);
+		                    	if(NoSound!=false){
+		                    		playSound_touche(R.raw.poser);
+		                    	}
 		                    	couleur_pion++;
 		                    	afficherPlateau(plateau.positionPlateau);		                    	
 	                    		break;
@@ -361,6 +368,9 @@ public class plateau_neuf extends MainActivity{
 		alertDialog.setPositiveButton("Oui",
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
+		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
+		            	mPlayer.stop();
+		    	        mPlayer.release();
 		                plateau_neuf.this.finish();
 		            }
 		        });
@@ -369,10 +379,13 @@ public class plateau_neuf extends MainActivity{
 		alertDialog.setNegativeButton("Non",
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
+		            	mPlayer.stop();
+		    	        mPlayer.release();
 		                plateau_neuf.this.finish();
 		            }
 		        });
 		
+		// le troisième bouton "Annuler"
 		alertDialog.setNeutralButton("Annuler", 
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {

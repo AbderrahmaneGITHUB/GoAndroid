@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/herbe"
+    android:paddingTop="50dp"
+    android:paddingBottom="50dp">
+        
+        <Button 
+            android:id="@+id/neuf_case"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/bouton_9"
+            android:layout_margin="20dp"
+            android:onClick="plateau_neuf"
+            android:layout_weight="1"
+            />
+        
+        <Button 
+            android:id="@+id/treize_case"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/bouton_13"
+            android:layout_margin="20dp"
+            android:onClick="plateau_treize"
+            android:layout_weight="1"
+            />
+        
+        <Button 
+            android:id="@+id/dixneuf_case"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/bouton_19"
+            android:layout_margin="20dp"
+            android:onClick="plateau_dixneuf"
+            android:layout_weight="1"
+            />        
+        
+        
+    <!--  /LinearLayout-->
+
+    
+
+</LinearLayout>
