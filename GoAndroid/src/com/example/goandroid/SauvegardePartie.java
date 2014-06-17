@@ -11,6 +11,7 @@ import enumeration.Couleur;
 import enumeration.PasseOuJoue;
 
 import android.content.Context;
+import android.util.Log;
 import structure.ActionJoueur;
 import structure.ActionRealiseeStruct;
 import structure.Pion;
@@ -51,13 +52,24 @@ public class SauvegardePartie {
 				//Enregistrement du nombre des actions réalisées
 				this.output = this.mainActivity.openFileOutput(this.file.getName(), 
 	                    									   Context.MODE_APPEND);			
+				dataNombreDElement = Integer.toString(this.mainActivity.plateau.taille);
+				trame = ">:" + dataNombreDElement + ";";				
+				this.bufferOut = null;
+				this.bufferOut = new byte[trame.length()];
+				this.bufferOut = trame.getBytes();
+				this.output.write(this.bufferOut);					
+				this.closeOutPutStream();
+				
+				//Enregistrement du nombre des actions réalisées
+				this.output = this.mainActivity.openFileOutput(this.file.getName(), 
+	                    									   Context.MODE_APPEND);			
 				dataNombreDElement = Integer.toString(inActionRealisees.nbrPositionsActuel);
 				trame = ">:" + dataNombreDElement + ";";				
 				this.bufferOut = null;
 				this.bufferOut = new byte[trame.length()];
 				this.bufferOut = trame.getBytes();
 				this.output.write(this.bufferOut);					
-				this.closeOutPutStream();				
+				this.closeOutPutStream();	
 				
 				//Enregistrement des information de chaque action
 				trame = "";		
@@ -152,17 +164,17 @@ public class SauvegardePartie {
 		/******************************************************************/
 		try{
 			// Ouvrir le fichier en mode lecture
-			inPut = this.mainActivity.openFileInput(this.file.getName());
-			if(inPut != null){
+			this.inPut = this.mainActivity.openFileInput(this.file.getName());
+			if(this.inPut != null){
 				InputStreamReader isr = null; 
-				isr = new InputStreamReader(inPut);
+				isr = new InputStreamReader(this.inPut);
 				// Lire tous le contenu du fichier
 				isr.read(inputBuffer);									
 			}			
 			this.closeInPutStream();
 			
 			//Récupération des nombres
-			iterrtion 	 = 2;
+			iterrtion 	 = 6;
 			dataNbrActionsRealisees = Character.getNumericValue(inputBuffer[iterrtion]);
 			iterrtion++;
 			finTrame 	 = true;
@@ -182,7 +194,7 @@ public class SauvegardePartie {
 			}
 			this.inActionRealisees.nbrPositionsActuel = dataNbrActionsRealisees;
 		
-			for(iterrData = 7; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
+			for(iterrData = 11; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
 			{
 				dataPasseOuJoue = Character.getNumericValue(inputBuffer[iterrData]);
 				dataPasseOuJoue = dataPasseOuJoue * 10 + Character.getNumericValue(inputBuffer[iterrData + 1]);
@@ -214,6 +226,53 @@ public class SauvegardePartie {
 		}	
 		
 		return this.inActionRealisees;
+	}
+	
+	/*************************************************************************/
+	/*************************************************************************/
+	public int lireLaTaille(){
+		char[]  inputBuffer  = new char[4];
+		try{
+			// Ouvrir le fichier en mode lecture
+			this.inPut = this.mainActivity.openFileInput(this.file.getName());
+			if(this.inPut != null){
+				InputStreamReader isr = null; 
+				isr = new InputStreamReader(this.inPut);
+				// Lire tous le contenu du fichier
+				isr.read(inputBuffer);									
+			}			
+			this.closeInPutStream();
+									
+		}
+		catch (FileNotFoundException e) {
+	        System.out.println("File Not Found.");
+	        e.printStackTrace();
+	    }
+		catch(IOException exception)
+		{								      
+		}	
+		
+		return Character.getNumericValue(inputBuffer[2]);
+	}	
+	
+	/*************************************************************************/
+	/*************************************************************************/
+	public void recuperationListeDeFichier(){	
+		try{
+			
+			String [] listefichiers = this.mainActivity.fileList();
+			
+			for(int i = 0; i < listefichiers.length; i++){
+				
+				if(listefichiers[i].endsWith(".txt")==true)
+				{
+					Log.d("LISTE_SAUVEGARDE", listefichiers[i]);
+				}				
+			}
+		}
+		catch(Exception exception)
+		{								      
+		}
 	}
 	
 	/*************************************************************************/
