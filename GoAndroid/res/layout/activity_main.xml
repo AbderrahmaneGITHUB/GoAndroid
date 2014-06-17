@@ -16,34 +16,44 @@
         android:layout_marginBottom="50dp" -->
         
         <Button 
-            android:id="@+id/neuf_case"
+            android:id="@+id/nouvelle_partie"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/bouton_9"
+            android:background="@drawable/nouvelle_partie"
             android:layout_margin="20dp"
-            android:onClick="plateau_neuf"
+            android:onClick="nouvelle_partie"
             android:layout_weight="1"
             />
         
         <Button 
-            android:id="@+id/treize_case"
+            android:id="@+id/charger_partie"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/bouton_13"
+            android:background="@drawable/charger_partie"
             android:layout_margin="20dp"
-            android:onClick="plateau_treize"
+            android:onClick="charger_partie"
             android:layout_weight="1"
             />
         
         <Button 
-            android:id="@+id/dixneuf_case"
+            android:id="@+id/option"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/bouton_19"
+            android:background="@drawable/options"
             android:layout_margin="20dp"
-            android:onClick="plateau_dixneuf"
+            android:onClick="option"
             android:layout_weight="1"
-            />        
+            /> 
+        
+        <Button 
+            android:id="@+id/a_propos"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/a_propos"
+            android:layout_margin="20dp"
+            android:onClick="a_propos"
+            android:layout_weight="1"
+            />            
         
         
     <!--  /LinearLayout-->

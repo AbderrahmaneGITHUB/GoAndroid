@@ -4,16 +4,18 @@ import java.util.List;
 
 import structure.Pion;
 import structure.Position;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +31,7 @@ public class plateau_neuf extends MainActivity{
 	public View maVue;
 	private int taille_plateau;
 	private int couleur_pion;
+	private int nb_passe = 0;
 	private float x_grille, y_grille, x_case, y_case;
 	private MediaPlayer mPlayer = null;
 	public  ImageView image_plateau;
@@ -46,7 +49,9 @@ public class plateau_neuf extends MainActivity{
 		couleur_pion = 1;
     	initTaillePlateau(Constante.TAILLEPLATEAU_9);
 		intialisationOfSaound(R.raw.asian_dream);
-		playSound();
+		if(NoMusic!=false){
+			playSound();
+		}
 		super.onCreate(savedInstanceState);                   
         setContentView(R.layout.plateau_neuf);     
         maVue = findViewById(R.id.imageView1);
@@ -117,6 +122,7 @@ public class plateau_neuf extends MainActivity{
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     	switch(erreur){                    		
 	                    	case NO_ERREUR_OK:
+	                    		nb_passe = 0;
 	                    		if((couleur_pion % 2) == 0 && couleur_pion != 1){
 	                        		le_pion = pion_blanc;
 	                        		tour_joueur.setText("Joueur Noir"); 
@@ -128,7 +134,10 @@ public class plateau_neuf extends MainActivity{
 	                    		unPion.position = laPosition;                    		
 		                    	int taille_pion = (int)(xI/10)/2;
 		                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-		                    	playSound_touche(R.raw.poser);
+		                    	Log.v("AS_TEST", "NoSound : "+NoSound);
+		                    	if(NoSound!=false){
+		                    		playSound_touche(R.raw.poser);
+		                    	}
 		                    	couleur_pion++;
 		                    	afficherPlateau(plateau.positionPlateau);		                    	
 	                    		break;
@@ -152,7 +161,6 @@ public class plateau_neuf extends MainActivity{
                 return true;
             }
         });
-    	//test(plateau.positionPlateau,image_plateau);
     } 
 	
 	public void traitement(Couleur inCouleur, Position inPosition, PasseOuJoue inPasseOuJoue)
@@ -225,7 +233,7 @@ public class plateau_neuf extends MainActivity{
     	/*				Declaration variables				  */
     	/******************************************************/
 		couleur_pion ++;
-		
+		nb_passe++;
 		/******************************************************/
     	/*							Codes					  */
     	/******************************************************/    	
@@ -238,6 +246,27 @@ public class plateau_neuf extends MainActivity{
     		tour_joueur.setText("Joueur Blanc");
     		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
     	}
+		
+		if(nb_passe == 2){
+			AlertDialog alertDialog = new AlertDialog.Builder(
+			        plateau_neuf.this).create();
+			 
+			// Le titre
+			alertDialog.setTitle("Partie terminée");
+			 
+			// Le message
+			alertDialog.setMessage("La partie est finie, \nVictoire pour le peuple !");
+			
+			// Ajout du bouton "OK"
+			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int which) {
+			        plateau_neuf.this.finish();
+			    }
+			});
+			
+			// Affichage
+			alertDialog.show();
+		}
 	}
 		
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -308,18 +337,63 @@ public class plateau_neuf extends MainActivity{
 		
 	}	
 	
+	
 	public void onWindowFocusChanged(boolean hasFocus) {
 		int xI,xY;
 	    super.onWindowFocusChanged(hasFocus);
 		 
 	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-         xY = maVue.getHeight();   
-         
-         //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
-         bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
-         canva = new Canvas(bitmap);
-         canva.save(1);
-         maVue.draw(canva);
-	    }
+	     xY = maVue.getHeight();   
+	     
+	     //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
+	     bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
+	     canva = new Canvas(bitmap);
+	     canva.save(1);
+	     maVue.draw(canva);
+    }
+	
+	public void onBackPressed(){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+		        plateau_neuf.this);
+		 
+		 
+		// Le message
+		alertDialog.setMessage("Souhaitez-vous sauvegarder la partie ?");
+		 
+		// L'icone
+		alertDialog.setIcon(android.R.drawable.ic_menu_save);
+		 
+		// Le premier bouton "Oui" ( positif )
+		alertDialog.setPositiveButton("Oui",
+		        new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) {
+		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
+		            	mPlayer.stop();
+		    	        mPlayer.release();
+		                plateau_neuf.this.finish();
+		            }
+		        });
+		 
+		// Le deuxième bouton "NON" ( négatif )
+		alertDialog.setNegativeButton("Non",
+		        new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) {
+		            	mPlayer.stop();
+		    	        mPlayer.release();
+		                plateau_neuf.this.finish();
+		            }
+		        });
+		
+		// le troisième bouton "Annuler"
+		alertDialog.setNeutralButton("Annuler", 
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+		                dialog.cancel();
+					}
+				});
+		 
+		// Affiche la boite du dialogue
+		alertDialog.show();
+	}
 }
