@@ -67,14 +67,14 @@
             android:textSize="25dp" />
 
         <Button
-            android:id="@+id/musique_non"
+            android:id="@+id/son_non"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bouton_non"
             android:onClick="couper_son" />
 
         <Button
-            android:id="@+id/musique_oui"
+            android:id="@+id/son_oui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bouton_oui"
