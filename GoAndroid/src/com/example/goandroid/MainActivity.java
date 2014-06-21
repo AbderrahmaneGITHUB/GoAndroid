@@ -107,6 +107,16 @@ public class MainActivity extends Activity {
 	}
 	
 	public void charger_partie(View v){
+		
+		///////  TEST/////////////////
+		this.sauvegardePartie = null;
+		this.sauvegardePartie = new SauvegardePartie(this);		
+		this.initTaillePlateau(this.sauvegardePartie.lireLaTaille());
+		
+		this.actionRealisee = null;
+		this.actionRealisee = this.sauvegardePartie.lecture();
+		this.rejouerPartie();
+		//////////////////////////////
 		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
 		startActivity(intent);
 	}
@@ -279,7 +289,19 @@ public class MainActivity extends Activity {
 			this.mPlayer.release();
 		}
 	}	 
-		
+	
+	/**********************************************************************/
+	/*																	  */
+	/*						   rejouerPartie				      		  */
+	/**********************************************************************/
+	public void rejouerPartie(){
+		for(int i = 0; i < this.actionRealisee.nbrPositionsActuel; i++){
+			realiserAction(this.actionRealisee.lesActions.get(i).pion.couleur,
+						   this.actionRealisee.lesActions.get(i).pion.position,
+						   this.actionRealisee.lesActions.get(i).passeeOuJouee);			
+		}		
+	}	
+	
 	public void onBackPressed(){
 		/*String string_activity = this.getClass().getName();
 
