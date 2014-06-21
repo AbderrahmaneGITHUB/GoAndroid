@@ -270,6 +270,7 @@ public class MainActivity extends Activity {
 	
 	public void playSound() {
 		this.mPlayer.start();
+		this.mPlayer.setLooping(true);
 	}
 	
 	public void stopSound(){		
