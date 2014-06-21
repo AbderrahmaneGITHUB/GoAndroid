@@ -38,4 +38,9 @@ public class MenuPlateau extends MainActivity{
 		Intent intent = new Intent(MenuPlateau.this, plateau_dixneuf.class);
 		startActivity(intent);
 	}
+	
+	@Override
+	public void onBackPressed(){
+		MenuPlateau.this.finish();
+	}
 }
