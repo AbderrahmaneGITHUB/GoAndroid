@@ -41,9 +41,9 @@ public class MainActivity extends Activity {
 	//private Libertes libertes;
 	//private ChainesCapturees ChainesCapturesTest;
 	//private Positions PosisionsYeuxDeCaine;
-	private MediaPlayer mPlayer = null;
-	protected static boolean NoSound;
-	protected static boolean NoMusic;
+	protected static MediaPlayer mPlayer = null;
+	protected static boolean NoSound = true;
+	protected static boolean NoMusic = true;
 	private TailleEcran tailleEcran;
 	protected ActionRealiseeStruct actionRealisee;
 	protected int nombreDePasse; //si on pasee deux fois, on arret la partie
@@ -59,8 +59,6 @@ public class MainActivity extends Activity {
     	/**************************************************************/ 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		Log.v("AS_TEST","son : "+NoSound);
 		
 		/************   Initialisation du tableau		***************/
 		this.initialisationClasseGo();	
@@ -119,7 +117,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void a_propos(View v){
-		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
+		Intent intent = new Intent(MainActivity.this, AProposActivity.class);
 		startActivity(intent);
 	}
 	
@@ -272,6 +270,7 @@ public class MainActivity extends Activity {
 	
 	public void playSound() {
 		this.mPlayer.start();
+		this.mPlayer.setLooping(true);
 	}
 	
 	public void stopSound(){		
@@ -282,7 +281,7 @@ public class MainActivity extends Activity {
 	}	 
 		
 	public void onBackPressed(){
-		String string_activity = this.getClass().getName();
+		/*String string_activity = this.getClass().getName();
 
 		//////////////////////////////////
 		this.sauvegardePartie.creationFichier();
@@ -298,7 +297,8 @@ public class MainActivity extends Activity {
 				mPlayer.stop();
 			}
 		}
-		super.onBackPressed();
+		super.onBackPressed();*/
+		MainActivity.this.finish();
 	}	
 
 }//  Fin du main

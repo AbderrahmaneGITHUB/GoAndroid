@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/herbe"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp" >
+
+       <TextView 
+            android:id="@+id/titre_a_propos"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="À propos"
+            android:textColor="#000"
+            android:textSize="40dp"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/fond_option"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/a_propos_1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Développement par Abderrahmane BOUAROUA et Antoine STEEN"
+            android:textColor="#000"
+            android:textSize="25dp" />
+    </LinearLayout>  
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/fond_option"
+        android:orientation="horizontal" >    
+    
+        <TextView
+            android:id="@+id/a_propos_2"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Musique par Alban Lepsy (http://alban.lepsy.free.fr/)"
+            android:textColor="#000"
+            android:textSize="25dp" />
+    </LinearLayout>
+
+</LinearLayout>

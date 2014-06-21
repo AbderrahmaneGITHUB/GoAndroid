@@ -14,7 +14,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +32,7 @@ public class plateau_neuf extends MainActivity{
 	private int couleur_pion;
 	private int nb_passe = 0;
 	private float x_grille, y_grille, x_case, y_case;
-	private MediaPlayer mPlayer = null;
+	protected static MediaPlayer mPlayerPion = null;
 	public  ImageView image_plateau;
 	private Canvas canva;
 	private Bitmap bitmap;
@@ -286,12 +285,12 @@ public class plateau_neuf extends MainActivity{
 	}	
 	
 	private void playSound_touche(int resId) {
-	    if(mPlayer != null) {
-	        mPlayer.stop();
-	        mPlayer.release();
+	    if(mPlayerPion != null) {
+	    	mPlayerPion.stop();
+	    	mPlayerPion.release();
 	    }
-	    mPlayer = MediaPlayer.create(this, resId);
-	    mPlayer.start();
+	    mPlayerPion = MediaPlayer.create(this, resId);
+	    mPlayerPion.start();
 	}
 	
 	public void afficherPlateau(List<Pion> listDesPion){
@@ -353,7 +352,9 @@ public class plateau_neuf extends MainActivity{
 	     maVue.draw(canva);
     }
 	
-	public void onBackPressed(){
+	@Override
+	public void onBackPressed(){		
+				
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
 		        plateau_neuf.this);
 		 
@@ -369,9 +370,18 @@ public class plateau_neuf extends MainActivity{
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
 		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
-		            	mPlayer.stop();
-		    	        mPlayer.release();
-		                plateau_neuf.this.finish();
+	            		
+		            	if(mPlayer!=null){
+			            	mPlayer.stop();
+			            	mPlayer.release();
+			            	mPlayer = null;
+		            	}
+		            	if(mPlayerPion!=null){			            	
+			            	mPlayerPion.stop();
+			            	mPlayerPion.release();
+			            	mPlayerPion = null;
+		            	}
+		                plateau_neuf.this.finish();		                
 		            }
 		        });
 		 
@@ -379,8 +389,16 @@ public class plateau_neuf extends MainActivity{
 		alertDialog.setNegativeButton("Non",
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
-		            	mPlayer.stop();
-		    	        mPlayer.release();
+		            	if(mPlayer!=null){
+			            	mPlayer.stop();
+			            	mPlayer.release();
+			            	mPlayer = null;
+		            	}
+		            	if(mPlayerPion!=null){			            	
+			            	mPlayerPion.stop();
+			            	mPlayerPion.release();
+			            	mPlayerPion = null;
+		            	}
 		                plateau_neuf.this.finish();
 		            }
 		        });
@@ -396,4 +414,10 @@ public class plateau_neuf extends MainActivity{
 		// Affiche la boite du dialogue
 		alertDialog.show();
 	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+	}
+		
 }

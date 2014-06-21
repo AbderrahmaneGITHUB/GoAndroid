@@ -29,7 +29,7 @@ public class plateau_dixneuf extends MainActivity{
 	private int taille_plateau;
 	private int couleur_pion;
 	private float x_grille, y_grille, x_case, y_case;
-	private MediaPlayer mPlayer = null;
+	protected static MediaPlayer mPlayerPion = null;
 	public  ImageView image_plateau;
 	private Canvas canva;
 	private Bitmap bitmap;
@@ -260,12 +260,12 @@ public class plateau_dixneuf extends MainActivity{
 	}	
 	
 	private void playSound_touche(int resId) {
-	    if(mPlayer != null) {
-	        mPlayer.stop();
-	        mPlayer.release();
+	    if(mPlayerPion != null) {
+	    	mPlayerPion.stop();
+	    	mPlayerPion.release();
 	    }
-	    mPlayer = MediaPlayer.create(this, resId);
-	    mPlayer.start();
+	    mPlayerPion = MediaPlayer.create(this, resId);
+	    mPlayerPion.start();
 	}
 	
 	public void afficherPlateau(List<Pion> listDesPion){
@@ -342,8 +342,16 @@ public class plateau_dixneuf extends MainActivity{
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
 		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
-		            	mPlayer.stop();
-		    	        mPlayer.release();
+		            	if(mPlayer!=null){
+			            	mPlayer.stop();
+			            	mPlayer.release();
+			            	mPlayer = null;
+		            	}
+		            	if(mPlayerPion!=null){			            	
+			            	mPlayerPion.stop();
+			            	mPlayerPion.release();
+			            	mPlayerPion = null;
+		            	}
 		                plateau_dixneuf.this.finish();
 		            }
 		        });
@@ -352,8 +360,16 @@ public class plateau_dixneuf extends MainActivity{
 		alertDialog.setNegativeButton("Non",
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
-		            	mPlayer.stop();
-		    	        mPlayer.release();
+		            	if(mPlayer!=null){
+			            	mPlayer.stop();
+			            	mPlayer.release();
+			            	mPlayer = null;
+		            	}
+		            	if(mPlayerPion!=null){			            	
+			            	mPlayerPion.stop();
+			            	mPlayerPion.release();
+			            	mPlayerPion = null;
+		            	}
 		                plateau_dixneuf.this.finish();
 		            }
 		        });
@@ -368,5 +384,10 @@ public class plateau_dixneuf extends MainActivity{
 		 
 		// Affiche la boite du dialogue
 		alertDialog.show();
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
 	}
 }
