@@ -46,7 +46,9 @@ public class plateau_neuf extends MainActivity{
 		image_plateau = (ImageView) this.findViewById(R.id.imageView1);
 		taille_plateau = 9;
 		couleur_pion = 1;
-    	initTaillePlateau(Constante.TAILLEPLATEAU_9);
+		if(this.plateau == null){
+			initTaillePlateau(Constante.TAILLEPLATEAU_9);
+		}    
 		intialisationOfSaound(R.raw.asian_dream);
 		if(NoMusic!=false){
 			playSound();

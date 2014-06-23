@@ -14,6 +14,8 @@ import structure.Pion;
 import structure.Plateau;
 import structure.Position;
 import structure.Positions;
+import structure.ScoreJoueurs;
+import structure.Territoire;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -32,15 +34,16 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
-	protected Plateau plateau;
+	protected static Plateau plateau;
 	protected static MediaPlayer mPlayer = null;
 	protected static boolean NoSound = true;
 	protected static boolean NoMusic = true;
-	private TailleEcran tailleEcran;
-	protected ActionRealiseeStruct actionRealisee;
-	protected int nombreDePasse; //si on pasee deux fois, on arret la partie
-	protected int posPionValide;
-	protected SauvegardePartie sauvegardePartie;
+	//private static TailleEcran tailleEcran;
+	protected static ActionRealiseeStruct actionRealisee;
+	protected static int nombreDePasse; //si on pasee deux fois, on arret la partie
+	protected static int posPionValide;
+	protected static SauvegardePartie sauvegardePartie;
+	protected static ScoreJoueurs scoreJoueurs;
 	/******************************************************************/
 	/*							onCreate		   					  */
 	/******************************************************************/
@@ -59,19 +62,7 @@ public class MainActivity extends Activity {
 		/*********** Lecture musique ****************/
 		if(mPlayer==null){
 			this.intialisationOfSaound(R.raw.asian_dream);
-		}
-		
-		/*********** Test de la fonction réalisé action *********/
-		/*
-		Position TestPosition = new Position();
-		for(int i = 0; i < 4; i++){
-			TestPosition.x = 1;
-			TestPosition.y = 1 +1;
-			this.realiserAction(Couleur.BLANC,  TestPosition, PasseOuJoue.JOUE);								
-		}
-		*/
-		
-		
+		}								
 	}
 	
 	/******************************************************************/
@@ -131,15 +122,7 @@ public class MainActivity extends Activity {
 	/*				Initialisation des structures					  */
 	/******************************************************************/
 	public void initialisationClasseGo(){
-		//this.pionClasse 		= new Pion();						
-		//this.pionEnlever 		= new Pion();		
-		//this.chaineTest 		= new Chaine();		
-		//this.territoireTest 	= new Territoire();		
-		//this.libertes			= new Libertes();
-		//this.ChainesCapturesTest 	= new ChainesCapturees(MainActivity.this);		
-		//this.chainesTests 		= new Chaines();		
-		//this.PosisionsYeuxDeCaine = new Positions();
-		
+		this.scoreJoueurs = new ScoreJoueurs();
 		this.actionRealisee = new ActionRealiseeStruct(); 
 		this.nombreDePasse 	= 0;
 		this.posPionValide 	= 0;
@@ -318,6 +301,92 @@ public class MainActivity extends Activity {
 		super.onBackPressed();*/
 		MainActivity.this.finish();
 	}	
+	
+	
+	/**********************************************************************/
+	/*																	  */
+	/*						   rejouerPartie				      		  */
+	/**********************************************************************/
+	public int leScore(){
+		
+		int i = 0, j = 0, iterTerritoire = 0, app = 1, z = 0;
+		int testAppartenanceTerritoire = 0;
+		Chaine territoireTestAppartenan  = new Chaine();
+		LesTerritoires lv_LesTerritoires = new LesTerritoires();
+		Territoire lv_Territoire = new Territoire();
+		Position lv_pos 		 = new Position();
+		Pion typePion			 = new Pion();
+		float valKomi = 7.5f;
+		
+		if (plateau == null)
+			return 0;
+
+		for (i = 0; i < plateau.taille; i++) 
+		{
+			for (j = 0; j < plateau.taille; j++) 
+			{
+				app = 1;
+				lv_pos.x = i;
+				lv_pos.y = j;
+
+				typePion = typePion.obtenirPionEn(plateau, lv_pos.x, lv_pos.y);
+
+				switch (typePion.couleur)
+				{
+					case RIEN:
+						testAppartenanceTerritoire = 0;
+						if (lv_LesTerritoires.nbrPositionsActuel != 0) {
+							for (iterTerritoire = 0; iterTerritoire < lv_LesTerritoires.nbrPositionsActuel; iterTerritoire++) {
+	
+								territoireTestAppartenan = lv_LesTerritoires.lesChaines.get(iterTerritoire);
+								app = territoireTestAppartenan.appartientAlaChaine(lv_pos, territoireTestAppartenan);
+	
+								if (app == 1)
+									testAppartenanceTerritoire = 1;
+							}
+						}
+	
+						if (testAppartenanceTerritoire == 0) {
+							lv_Territoire = lv_Territoire.determineTerritoire(plateau, lv_pos);
+							lv_LesTerritoires.lesChaines.add(lv_Territoire);
+							lv_LesTerritoires.nbrPositionsActuel++;
+						}
+						break;
+	
+					case NOIR:
+						this.scoreJoueurs.scoreJoueurNoir++;
+						break;
+	
+					case BLANC:
+						this.scoreJoueurs.scoreJoueurBlanc++;
+						break;
+	
+					default:
+						break;
+				}
+			}
+		}
+
+		for (z = 0; z < lv_LesTerritoires.nbrPositionsActuel; z++)
+		{
+			switch (lv_LesTerritoires.lesChaines.get(z).laCouleur)
+			{
+				case NOIR:
+					this.scoreJoueurs.scoreJoueurNoir += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
+					break;
+	
+				case BLANC:
+					this.scoreJoueurs.scoreJoueurBlanc += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
+					break;
+	
+				default:
+					break;
+			}
+		}
+		this.scoreJoueurs.scoreJoueurBlanc += valKomi;
+		return 1;
+	}
+	
 
 }//  Fin du main
 
