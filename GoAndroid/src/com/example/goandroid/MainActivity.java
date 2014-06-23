@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void charger_partie(View v){
-		
+		///test//est///test/zsetest
 		///////  TEST/////////////////
 		sauvegardePartie = null;
 		sauvegardePartie = new SauvegardePartie(this);		
