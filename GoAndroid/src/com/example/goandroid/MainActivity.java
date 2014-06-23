@@ -33,14 +33,6 @@ public class MainActivity extends Activity {
 	/*				Declaration des variables globales		   		  */
 	/******************************************************************/
 	protected Plateau plateau;
-	//private Pion pionEnlever;
-	//private Pion pionClasse;
-	//private Chaine chaineTest;
-	//private Chaines chainesTests;
-	//private Territoire territoireTest;
-	//private Libertes libertes;
-	//private ChainesCapturees ChainesCapturesTest;
-	//private Positions PosisionsYeuxDeCaine;
 	protected static MediaPlayer mPlayer = null;
 	protected static boolean NoSound = true;
 	protected static boolean NoMusic = true;
@@ -53,7 +45,8 @@ public class MainActivity extends Activity {
 	/*							onCreate		   					  */
 	/******************************************************************/
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) { 
+		
 		/**************************************************************/
     	/*				Declaration variables				  		  */
     	/**************************************************************/ 
@@ -78,14 +71,7 @@ public class MainActivity extends Activity {
 		}
 		*/
 		
-		/*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
-		String taille = tailleEcran.getSizeName(this);
-		if(taille != "grand"){
-			View bouton_13 = findViewById(R.id.treize_case);
-			View bouton_19 = findViewById(R.id.dixneuf_case);
-			bouton_13.setVisibility(View.INVISIBLE);
-			bouton_19.setVisibility(View.INVISIBLE);
-		}
+		
 	}
 	
 	/******************************************************************/
@@ -109,16 +95,26 @@ public class MainActivity extends Activity {
 	public void charger_partie(View v){
 		
 		///////  TEST/////////////////
-		this.sauvegardePartie = null;
-		this.sauvegardePartie = new SauvegardePartie(this);		
-		this.initTaillePlateau(this.sauvegardePartie.lireLaTaille());
+		sauvegardePartie = null;
+		sauvegardePartie = new SauvegardePartie(this);		
+		//int laTaille = this.sauvegardePartie.lireLaTaille();
+		initTaillePlateau(sauvegardePartie.lireLaTaille());
 		
-		this.actionRealisee = null;
-		this.actionRealisee = this.sauvegardePartie.lecture();
-		this.rejouerPartie();
-		//////////////////////////////
-		Intent intent = new Intent(MainActivity.this, MenuPlateau.class);
+		actionRealisee = null;
+		actionRealisee = sauvegardePartie.lecture();
+		rejouerPartie();
+		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 		startActivity(intent);
+		/*if(laTaille==9){
+			Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
+			startActivity(intent);
+		}else if(laTaille==13){
+			Intent intent = new Intent(MainActivity.this, plateau_treize.class);
+			startActivity(intent);
+		}else if(laTaille==19){
+			Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
+			startActivity(intent);
+		}*/
 	}
 	
 	public void option(View v){

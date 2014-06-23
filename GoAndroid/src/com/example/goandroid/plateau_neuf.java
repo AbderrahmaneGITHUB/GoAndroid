@@ -133,7 +133,7 @@ public class plateau_neuf extends MainActivity{
 	                    		unPion.position = laPosition;                    		
 		                    	int taille_pion = (int)(xI/10)/2;
 		                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-		                    	Log.v("AS_TEST", "NoSound : "+NoSound);
+
 		                    	if(NoSound!=false){
 		                    		playSound_touche(R.raw.poser);
 		                    	}
@@ -322,6 +322,7 @@ public class plateau_neuf extends MainActivity{
                 	}else{
                 		le_pion = pion_blanc;
                 	}
+            		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
 	            	int taille_pion = (int)(x_grille/9)/2;
@@ -350,6 +351,8 @@ public class plateau_neuf extends MainActivity{
 	     canva = new Canvas(bitmap);
 	     canva.save(1);
 	     maVue.draw(canva);
+	     
+	     afficherPlateau(plateau.positionPlateau);
     }
 	
 	@Override
@@ -370,7 +373,7 @@ public class plateau_neuf extends MainActivity{
 		        new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
 		            	sauvegardePartie.EnregistrerLaPartie(actionRealisee);
-	            		
+	            		Log.v("AS_TEST","taille après sauvegarde : "+sauvegardePartie.lireLaTaille());
 		            	if(mPlayer!=null){
 			            	mPlayer.stop();
 			            	mPlayer.release();

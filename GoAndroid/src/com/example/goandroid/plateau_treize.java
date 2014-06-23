@@ -323,6 +323,8 @@ public class plateau_treize extends MainActivity{
 	     canva = new Canvas(bitmap);
 	     canva.save(1);
 	     maVue.draw(canva);
+	     
+	     afficherPlateau(plateau.positionPlateau);
     } 
 	
 	public void onBackPressed(){

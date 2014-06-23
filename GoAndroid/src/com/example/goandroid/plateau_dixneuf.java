@@ -313,18 +313,20 @@ public class plateau_dixneuf extends MainActivity{
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
 		int xI,xY;
-	    super.onWindowFocusChanged(hasFocus);
+		super.onWindowFocusChanged(hasFocus);
 		 
-	     maVue = findViewById(R.id.imageView1);
+		 maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-         xY = maVue.getHeight();   
-         
-         //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
-         bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
-         canva = new Canvas(bitmap);
-         canva.save(1);
-         maVue.draw(canva);
-	    }
+		 xY = maVue.getHeight();   
+		 
+		 //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
+		 bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
+		 canva = new Canvas(bitmap);
+		 canva.save(1);
+		 maVue.draw(canva);
+		 
+		 afficherPlateau(plateau.positionPlateau);
+    }
 	
 	public void onBackPressed(){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
