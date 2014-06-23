@@ -8,5 +8,6 @@ public class ScoreJoueurs {
 	public ScoreJoueurs(){
 		this.scoreJoueurBlanc = 0.0f;
 		this.scoreJoueurNoir  = 0.0f;
-	}		
+	}	
+	
 }
