@@ -282,8 +282,7 @@ public class plateau_neuf extends MainActivity{
 
 	    // "RECREATE" THE NEW BITMAP
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-	    return resizedBitmap;
-	
+	    return resizedBitmap;	
 	}	
 	
 	private void playSound_touche(int resId) {
@@ -335,8 +334,7 @@ public class plateau_neuf extends MainActivity{
 				z++;
 			}
 		}			
-		afficheImages();		
-		
+		afficheImages();				
 	}	
 	
 	
@@ -346,7 +344,16 @@ public class plateau_neuf extends MainActivity{
 		 
 	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-	     xY = maVue.getHeight();   
+	     xY = maVue.getHeight(); 
+	     
+	     x_grille = (float) (xI - ((xI/100*3.75)*2));
+         y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
+         
+         float cx 	= (float) x_grille/(taille_plateau-1);
+         x_case 		= cx;
+
+         float cy 	= (float) y_grille/(taille_plateau-1);
+         y_case 		= cy;
 	     
 	     //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
 	     bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);

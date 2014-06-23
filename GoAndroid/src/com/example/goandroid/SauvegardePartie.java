@@ -47,6 +47,9 @@ public class SauvegardePartie {
 		/******************************************************************/
 		/*				Declaration des variables 				   		  */
 		/******************************************************************/
+		this.file = new File("SauvegardePartie.txt");
+		creationFichier();
+		
 		try
 		{		
 				//Enregistrement du nombre des actions réalisées

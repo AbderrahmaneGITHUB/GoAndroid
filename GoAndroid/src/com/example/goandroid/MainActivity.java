@@ -57,7 +57,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		/************   Initialisation du tableau		***************/
+		
 		this.initialisationClasseGo();	
+		
 		this.sauvegardePartie = new SauvegardePartie(MainActivity.this);
 		/*********** Lecture musique ****************/
 		if(mPlayer==null){
@@ -83,20 +85,25 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	/******************************************************************/
+	/*							charger_partie						  */
+	/******************************************************************/
 	public void charger_partie(View v){
+		
 		///test//est///test/zsetest
 		///////  TEST/////////////////
 		sauvegardePartie = null;
 		sauvegardePartie = new SauvegardePartie(this);		
-		//int laTaille = this.sauvegardePartie.lireLaTaille();
+		int laTaille = this.sauvegardePartie.lireLaTaille();
 		initTaillePlateau(sauvegardePartie.lireLaTaille());
 		
 		actionRealisee = null;
 		actionRealisee = sauvegardePartie.lecture();
 		rejouerPartie();
-		Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
-		startActivity(intent);
-		/*if(laTaille==9){
+		//Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
+		//startActivity(intent);
+		
+		if(laTaille==9){
 			Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 			startActivity(intent);
 		}else if(laTaille==13){
@@ -105,7 +112,7 @@ public class MainActivity extends Activity {
 		}else if(laTaille==19){
 			Intent intent = new Intent(MainActivity.this, plateau_dixneuf.class);
 			startActivity(intent);
-		}*/
+		}
 	}
 	
 	public void option(View v){
@@ -122,8 +129,12 @@ public class MainActivity extends Activity {
 	/*				Initialisation des structures					  */
 	/******************************************************************/
 	public void initialisationClasseGo(){
+		
 		this.scoreJoueurs = new ScoreJoueurs();
-		this.actionRealisee = new ActionRealiseeStruct(); 
+		if(this.actionRealisee == null)
+		{
+			this.actionRealisee = new ActionRealiseeStruct(); 
+		}
 		this.nombreDePasse 	= 0;
 		this.posPionValide 	= 0;
 		this.posPionValide  = 0; 
