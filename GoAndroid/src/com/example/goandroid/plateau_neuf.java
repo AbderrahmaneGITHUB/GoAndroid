@@ -393,6 +393,8 @@ public class plateau_neuf extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		            	plateau = null;
+		            	actionRealisee = null;
 		                plateau_neuf.this.finish();		                
 		            }
 		        });
@@ -411,6 +413,8 @@ public class plateau_neuf extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		            	plateau = null;
+		            	actionRealisee = null;
 		                plateau_neuf.this.finish();
 		            }
 		        });
