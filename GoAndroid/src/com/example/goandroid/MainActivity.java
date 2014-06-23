@@ -271,7 +271,7 @@ public class MainActivity extends Activity {
 			this.mPlayer.stop();
 			this.mPlayer.release();
 		}
-    	this.mPlayer = this.mPlayer.create(MainActivity.this, resId);
+    	this.mPlayer = this.mPlayer.create(MainActivity.this, resId);  
     }
 	
 	public void playSound() {
