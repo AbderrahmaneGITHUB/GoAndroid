@@ -14,6 +14,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ public class plateau_dixneuf extends MainActivity{
 	public View maVue;
 	private int taille_plateau;
 	private int couleur_pion;
+	private int nb_passe = 0;
 	private float x_grille, y_grille, x_case, y_case;
 	protected static MediaPlayer mPlayerPion = null;
 	public  ImageView image_plateau;
@@ -43,7 +45,13 @@ public class plateau_dixneuf extends MainActivity{
 		image_plateau = (ImageView) this.findViewById(R.id.imageView1);
 		taille_plateau = 19;
 		couleur_pion = 1;
-    	initTaillePlateau(Constante.TAILLEPLATEAU_19);
+
+    	this.scoreJoueurs.scoreJoueurBlanc = 0;
+		this.scoreJoueurs.scoreJoueurNoir = 0;
+		
+		if(this.plateau == null){
+			initTaillePlateau(Constante.TAILLEPLATEAU_19);
+		}
 		intialisationOfSaound(R.raw.asian_dream);
 		if(NoMusic!=false){
 			playSound();
@@ -79,20 +87,20 @@ public class plateau_dixneuf extends MainActivity{
                 
                 x_grille = (float) (xI - ((xI/100*3.75)*2));
                 y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
-                //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
+
                 px 				= (int) (x/(x_grille/(taille_plateau-1)))+1;
                 py 				= (int) (y/(y_grille/(taille_plateau-1)))+1;
                 laPosition.x 	= px-1;
                 laPosition.y 	= py-1;
-                //Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
+
                 float cx 	= (float) x_grille/(taille_plateau-1);
                 x_case 		= cx;
-                //Toast.makeText(plateau_neuf.this, "taille case ("+cx+")", (int)2000).show();
+
                 float cy 	= (float) y_grille/(taille_plateau-1);
                 y_case 		= cy;
                 cx 			= (float) ((px-1)*cx);
                 cy 			= (float) ((py-1)*cy);
-                //Toast.makeText(plateau_neuf.this, "touché en ("+cx+" / "+cy+")", (int)2000).show();
+
                 if (action==MotionEvent.ACTION_UP)
                 {
                 	if(px>19 || px<=0 || py>19 || py<=0)
@@ -118,6 +126,7 @@ public class plateau_dixneuf extends MainActivity{
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     	switch(erreur){                    		
 	                    	case NO_ERREUR_OK:
+								nb_passe = 0;
 	                    		if((couleur_pion % 2) == 0 && couleur_pion != 1){
 	                        		le_pion = pion_blanc;
 	                        		tour_joueur.setText("Joueur Noir"); 
@@ -155,7 +164,6 @@ public class plateau_dixneuf extends MainActivity{
                 return true;
             }
         });
-    	//test(plateau.positionPlateau,image_plateau);
     } 
 	
 	public void traitement(Couleur inCouleur, Position inPosition, PasseOuJoue inPasseOuJoue)
@@ -228,7 +236,7 @@ public class plateau_dixneuf extends MainActivity{
     	/*				Declaration variables				  */
     	/******************************************************/
 		couleur_pion ++;
-		
+		nb_passe++;
 		/******************************************************/
     	/*							Codes					  */
     	/******************************************************/    	
@@ -241,6 +249,33 @@ public class plateau_dixneuf extends MainActivity{
     		tour_joueur.setText("Joueur Blanc");
     		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
     	}
+		
+		if(nb_passe == 2){
+			nb_passe = 0;
+			AlertDialog alertDialog = new AlertDialog.Builder(
+			        plateau_dixneuf.this).create();
+			
+			this.leScore();
+			
+			
+			// Le titre
+			alertDialog.setTitle("Partie terminée");
+			 
+			// Le message
+			alertDialog.setMessage("Scores :\nBlanc : "+this.scoreJoueurs.scoreJoueurBlanc+" Noir : "+this.scoreJoueurs.scoreJoueurNoir);
+			
+			// Ajout du bouton "OK"
+			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int which) {
+			    	plateau = null;
+			    	actionRealisee = null;
+			        plateau_dixneuf.this.finish();
+			    }
+			});
+			
+			// Affichage
+			alertDialog.show();
+		}
 	}
 		
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -256,7 +291,6 @@ public class plateau_dixneuf extends MainActivity{
 	    // "RECREATE" THE NEW BITMAP
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
 	    return resizedBitmap;
-	
 	}	
 	
 	private void playSound_touche(int resId) {
@@ -307,9 +341,9 @@ public class plateau_dixneuf extends MainActivity{
 				z++;
 			}
 		}			
-		afficheImages();		
-		
+		afficheImages();	
 	}	
+	
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
 		int xI,xY;
@@ -317,7 +351,16 @@ public class plateau_dixneuf extends MainActivity{
 		 
 		 maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-		 xY = maVue.getHeight();   
+		 xY = maVue.getHeight(); 
+	     
+	     x_grille = (float) (xI - ((xI/100*3.75)*2));
+         y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
+         
+         float cx 	= (float) x_grille/(taille_plateau-1);
+         x_case 		= cx;
+
+         float cy 	= (float) y_grille/(taille_plateau-1);
+         y_case 		= cy;
 		 
 		 //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
 		 bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
@@ -354,6 +397,8 @@ public class plateau_dixneuf extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		                plateau = null;
+		            	actionRealisee = null;
 		                plateau_dixneuf.this.finish();
 		            }
 		        });
@@ -372,6 +417,8 @@ public class plateau_dixneuf extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		                plateau = null;
+		            	actionRealisee = null;
 		                plateau_dixneuf.this.finish();
 		            }
 		        });

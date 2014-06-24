@@ -6,6 +6,7 @@ import structure.Pion;
 import structure.Position;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -52,7 +53,7 @@ public class plateau_neuf extends MainActivity{
 		
 		if(this.plateau == null){
 			initTaillePlateau(Constante.TAILLEPLATEAU_9);
-		}    
+		}
 		intialisationOfSaound(R.raw.asian_dream);
 		if(NoMusic!=false){
 			playSound();
@@ -253,6 +254,7 @@ public class plateau_neuf extends MainActivity{
     	}
 		
 		if(nb_passe == 2){
+			nb_passe = 0;
 			AlertDialog alertDialog = new AlertDialog.Builder(
 			        plateau_neuf.this).create();
 			
@@ -291,7 +293,7 @@ public class plateau_neuf extends MainActivity{
 
 	    // "RECREATE" THE NEW BITMAP
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-	    return resizedBitmap;	
+	    return resizedBitmap;
 	}	
 	
 	private void playSound_touche(int resId) {
@@ -343,7 +345,7 @@ public class plateau_neuf extends MainActivity{
 				z++;
 			}
 		}			
-		afficheImages();				
+		afficheImages();	
 	}	
 	
 	
@@ -423,7 +425,9 @@ public class plateau_neuf extends MainActivity{
 			            	mPlayerPion = null;
 		            	}
 		            	plateau = null;
-		            	actionRealisee = null;
+		            	actionRealisee = null;		            	
+		        		
+		            	//finishActivity();
 		                plateau_neuf.this.finish();
 		            }
 		        });

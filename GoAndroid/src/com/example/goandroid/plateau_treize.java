@@ -28,6 +28,7 @@ public class plateau_treize extends MainActivity{
 	public View maVue;
 	private int taille_plateau;
 	private int couleur_pion;
+	private int nb_passe = 0;
 	private float x_grille, y_grille, x_case, y_case;
 	protected static MediaPlayer mPlayerPion = null;
 	public  ImageView image_plateau;
@@ -43,7 +44,13 @@ public class plateau_treize extends MainActivity{
 		image_plateau = (ImageView) this.findViewById(R.id.imageView1);
 		taille_plateau = 13;
 		couleur_pion = 1;
-    	initTaillePlateau(Constante.TAILLEPLATEAU_13);
+    	
+		this.scoreJoueurs.scoreJoueurBlanc = 0;
+		this.scoreJoueurs.scoreJoueurNoir = 0;
+		
+		if(this.plateau == null){
+			initTaillePlateau(Constante.TAILLEPLATEAU_13);
+		}
 		intialisationOfSaound(R.raw.asian_dream);
 		if(NoMusic!=false){
 			playSound();
@@ -74,7 +81,7 @@ public class plateau_treize extends MainActivity{
                 y 		= event.getY();
                 xI 		= maVue.getWidth();
                 xY 		= maVue.getHeight();
-                unPion 	= new Pion(); 
+                unPion 	= new Pion();
                 laPosition = new Position();
                 
                 x_grille = (float) (xI - ((xI/100*3.75)*2));
@@ -154,7 +161,6 @@ public class plateau_treize extends MainActivity{
                 return true;
             }
         });
-    	//test(plateau.positionPlateau,image_plateau);
     } 
 	
 	public void traitement(Couleur inCouleur, Position inPosition, PasseOuJoue inPasseOuJoue)
@@ -227,7 +233,7 @@ public class plateau_treize extends MainActivity{
     	/*				Declaration variables				  */
     	/******************************************************/
 		couleur_pion ++;
-		
+		nb_passe++;
 		/******************************************************/
     	/*							Codes					  */
     	/******************************************************/    	
@@ -240,6 +246,33 @@ public class plateau_treize extends MainActivity{
     		tour_joueur.setText("Joueur Blanc");
     		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
     	}
+		
+		if(nb_passe == 2){
+			nb_passe = 0;
+			AlertDialog alertDialog = new AlertDialog.Builder(
+			        plateau_treize.this).create();
+			
+			this.leScore();
+			
+			
+			// Le titre
+			alertDialog.setTitle("Partie terminée");
+			 
+			// Le message
+			alertDialog.setMessage("Scores :\nBlanc : "+this.scoreJoueurs.scoreJoueurBlanc+" Noir : "+this.scoreJoueurs.scoreJoueurNoir);
+			
+			// Ajout du bouton "OK"
+			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int which) {
+			    	plateau = null;
+			    	actionRealisee = null;
+			    	plateau_treize.this.finish();
+			    }
+			});
+			
+			// Affichage
+			alertDialog.show();
+		}
 	}
 		
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -255,7 +288,6 @@ public class plateau_treize extends MainActivity{
 	    // "RECREATE" THE NEW BITMAP
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
 	    return resizedBitmap;
-	
 	}	
 	
 	private void playSound_touche(int resId) {
@@ -306,8 +338,7 @@ public class plateau_treize extends MainActivity{
 				z++;
 			}
 		}			
-		afficheImages();		
-		
+		afficheImages();
 	}	
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
@@ -316,7 +347,16 @@ public class plateau_treize extends MainActivity{
 		 
 	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-	     xY = maVue.getHeight();   
+	     xY = maVue.getHeight(); 
+	     
+	     x_grille = (float) (xI - ((xI/100*3.75)*2));
+         y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
+         
+         float cx 	= (float) x_grille/(taille_plateau-1);
+         x_case 		= cx;
+
+         float cy 	= (float) y_grille/(taille_plateau-1);
+         y_case 		= cy;
 	     
 	     //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
 	     bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
@@ -327,6 +367,7 @@ public class plateau_treize extends MainActivity{
 	     afficherPlateau(plateau.positionPlateau);
     } 
 	
+	@Override
 	public void onBackPressed(){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
 		        plateau_treize.this);
@@ -353,6 +394,8 @@ public class plateau_treize extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		            	plateau = null;
+		            	actionRealisee = null;
 		                plateau_treize.this.finish();
 		            }
 		        });
@@ -371,6 +414,8 @@ public class plateau_treize extends MainActivity{
 			            	mPlayerPion.release();
 			            	mPlayerPion = null;
 		            	}
+		            	plateau = null;
+		            	actionRealisee = null;
 		                plateau_treize.this.finish();
 		            }
 		        });
