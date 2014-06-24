@@ -56,7 +56,13 @@ public class SauvegardePartie {
 				this.output = this.mainActivity.openFileOutput(this.file.getName(), 
 	                    									   Context.MODE_APPEND);			
 				dataNombreDElement = Integer.toString(this.mainActivity.plateau.taille);
-				trame = ">:" + dataNombreDElement + ";";				
+				if(this.mainActivity.plateau.taille <10){
+					trame = ">:0" + dataNombreDElement + ";";	
+				}else
+				{
+					trame = ">:" + dataNombreDElement + ";";
+				}
+								
 				this.bufferOut = null;
 				this.bufferOut = new byte[trame.length()];
 				this.bufferOut = trame.getBytes();
@@ -193,7 +199,7 @@ public class SauvegardePartie {
 			this.closeInPutStream();
 			
 			//Récupération des nombres
-			iterrtion 	 = 6;
+			iterrtion 	 = 7;
 			dataNbrActionsRealisees = Character.getNumericValue(inputBuffer[iterrtion]);
 			iterrtion++;
 			finTrame 	 = true;
@@ -213,7 +219,7 @@ public class SauvegardePartie {
 			}
 			this.inActionRealisees.nbrPositionsActuel = dataNbrActionsRealisees;
 		
-			for(iterrData = 14; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
+			for(iterrData = 15; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
 			{
 				dataPasseOuJoue = Character.getNumericValue(inputBuffer[iterrData]);
 				dataPasseOuJoue = dataPasseOuJoue * 10 + Character.getNumericValue(inputBuffer[iterrData + 1]);
@@ -250,7 +256,14 @@ public class SauvegardePartie {
 	/*************************************************************************/
 	/*************************************************************************/
 	public int lireLaTaille(){
-		char[]  inputBuffer  = new char[4];
+		char[]  inputBuffer  = new char[5];			
+		boolean finTrame = true;
+		char 	data		 = 0;
+		String  pointVergule = "";
+		pointVergule = ";";
+		int 	iterrtion	 = 0;
+		int 	dataNbrActionsRealisees  = 0;
+		
 		try{
 			// Ouvrir le fichier en mode lecture
 			this.inPut = this.mainActivity.openFileInput(this.file.getName());
@@ -261,7 +274,23 @@ public class SauvegardePartie {
 				isr.read(inputBuffer);									
 			}			
 			this.closeInPutStream();
-									
+			
+			iterrtion = 2;
+			
+			dataNbrActionsRealisees = Character.getNumericValue(inputBuffer[iterrtion]);
+			iterrtion++;
+			while(finTrame){
+				data = inputBuffer[iterrtion];
+				if(data != pointVergule.charAt(0))
+				{
+					dataNbrActionsRealisees = dataNbrActionsRealisees * 10 + Character.getNumericValue(data);										
+				}
+				else
+				{
+					finTrame = false;
+				}
+				iterrtion++;
+			}									
 		}
 		catch (FileNotFoundException e) {
 	        System.out.println("File Not Found.");
@@ -271,7 +300,7 @@ public class SauvegardePartie {
 		{								      
 		}	
 		
-		return Character.getNumericValue(inputBuffer[2]);
+		return dataNbrActionsRealisees;
 	}	
 	
 	/*************************************************************************/
