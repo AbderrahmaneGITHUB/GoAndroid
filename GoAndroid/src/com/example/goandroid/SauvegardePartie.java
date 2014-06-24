@@ -67,7 +67,23 @@ public class SauvegardePartie {
 				this.output = this.mainActivity.openFileOutput(this.file.getName(), 
 	                    									   Context.MODE_APPEND);			
 				dataNombreDElement = Integer.toString(inActionRealisees.nbrPositionsActuel);
-				trame = ">:" + dataNombreDElement + ";";				
+				if(inActionRealisees.nbrPositionsActuel < 10)
+				{
+					trame = ">:000" + dataNombreDElement + ";";
+				}else if(inActionRealisees.nbrPositionsActuel < 100 &&
+						inActionRealisees.nbrPositionsActuel  > 10)
+				{
+					trame = ">:00" + dataNombreDElement + ";";
+				}else if(inActionRealisees.nbrPositionsActuel < 1000 &&
+						 inActionRealisees.nbrPositionsActuel > 100)
+				{
+					trame = ">:0" + dataNombreDElement + ";";
+				}else if(inActionRealisees.nbrPositionsActuel < 10000 &&
+						 inActionRealisees.nbrPositionsActuel > 1000)
+				{
+					trame = ">:" + dataNombreDElement + ";";
+				}
+								
 				this.bufferOut = null;
 				this.bufferOut = new byte[trame.length()];
 				this.bufferOut = trame.getBytes();
@@ -197,7 +213,7 @@ public class SauvegardePartie {
 			}
 			this.inActionRealisees.nbrPositionsActuel = dataNbrActionsRealisees;
 		
-			for(iterrData = 11; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
+			for(iterrData = 14; iterrData < this.inActionRealisees.nbrPositionsActuel*21; iterrData += 21 )
 			{
 				dataPasseOuJoue = Character.getNumericValue(inputBuffer[iterrData]);
 				dataPasseOuJoue = dataPasseOuJoue * 10 + Character.getNumericValue(inputBuffer[iterrData + 1]);
