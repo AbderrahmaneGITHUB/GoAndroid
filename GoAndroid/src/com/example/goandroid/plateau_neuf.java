@@ -46,6 +46,10 @@ public class plateau_neuf extends MainActivity{
 		image_plateau = (ImageView) this.findViewById(R.id.imageView1);
 		taille_plateau = 9;
 		couleur_pion = 1;
+		
+		this.scoreJoueurs.scoreJoueurBlanc = 0;
+		this.scoreJoueurs.scoreJoueurNoir = 0;
+		
 		if(this.plateau == null){
 			initTaillePlateau(Constante.TAILLEPLATEAU_9);
 		}    
@@ -251,16 +255,21 @@ public class plateau_neuf extends MainActivity{
 		if(nb_passe == 2){
 			AlertDialog alertDialog = new AlertDialog.Builder(
 			        plateau_neuf.this).create();
-			 
+			
+			this.leScore();
+			
+			
 			// Le titre
 			alertDialog.setTitle("Partie terminée");
 			 
 			// Le message
-			alertDialog.setMessage("La partie est finie, \nVictoire pour le peuple !");
+			alertDialog.setMessage("Scores :\nBlanc : "+this.scoreJoueurs.scoreJoueurBlanc+" Noir : "+this.scoreJoueurs.scoreJoueurNoir);
 			
 			// Ajout du bouton "OK"
 			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int which) {
+			    	plateau = null;
+			    	actionRealisee = null;
 			        plateau_neuf.this.finish();
 			    }
 			});
