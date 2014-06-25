@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -61,7 +60,7 @@ public class MainActivity extends Activity {
 		
 		this.initialisationClasseGo();	
 		
-		this.sauvegardePartie = new SauvegardePartie(MainActivity.this);
+		sauvegardePartie = new SauvegardePartie(MainActivity.this);
 		/*********** Lecture musique ****************/
 		if(mPlayer==null){
 			this.intialisationOfSaound(R.raw.asian_dream);
@@ -95,11 +94,14 @@ public class MainActivity extends Activity {
 		///////  TEST/////////////////
 		sauvegardePartie = null;
 		sauvegardePartie = new SauvegardePartie(this);		
-		int laTaille = this.sauvegardePartie.lireLaTaille();
+		int laTaille = sauvegardePartie.lireLaTaille();
 		initTaillePlateau(sauvegardePartie.lireLaTaille());
 		
 		actionRealisee = null;
-		actionRealisee = sauvegardePartie.lecture();
+		actionRealisee = new ActionRealiseeStruct();
+		
+		actionRealisee2 = null;
+		actionRealisee2 = sauvegardePartie.lecture();
 		rejouerPartie();
 		//Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 		//startActivity(intent);
@@ -131,21 +133,21 @@ public class MainActivity extends Activity {
 	/******************************************************************/
 	public void initialisationClasseGo(){
 		
-		this.scoreJoueurs = new ScoreJoueurs();
-		if(this.actionRealisee == null)
+		scoreJoueurs = new ScoreJoueurs();
+		if(actionRealisee == null)
 		{
-			this.actionRealisee = new ActionRealiseeStruct(); 
+			actionRealisee = new ActionRealiseeStruct(); 
 		}
-		this.nombreDePasse 	= 0;
-		this.posPionValide 	= 0;
-		this.posPionValide  = 0; 
+		nombreDePasse 	= 0;
+		posPionValide 	= 0;
+		posPionValide  = 0; 
 	}
 	
 	/******************************************************************/
 	/*				Fonction d'Initialisation du plateau    		  */
 	/******************************************************************/
 	public void initTaillePlateau(int inTaille){		
-		this.plateau = new Plateau(inTaille);
+		plateau = new Plateau(inTaille);
 	}
 		
 	/**********************************************************************/
@@ -174,7 +176,7 @@ public class MainActivity extends Activity {
 		switch(inPasseOuJoue){
 		/***	cas d'un pion joué   *****/
 		case JOUE:
-			taille = this.plateau.taille;
+			taille = plateau.taille;
 			testDedans = 0;
 			if((inPosition.x >= 0) && (inPosition.x < taille) && (inPosition.y >= 0) && (inPosition.y < taille)){
 				testDedans = 1;
@@ -185,7 +187,7 @@ public class MainActivity extends Activity {
 			
 			if(testDedans == 1){
 				//Vérification si l'emplacement est déja occupé 
-				testPlacementPion = pionDeReference.placerPionEnPosition(this.plateau, inPosition, inCouleur);
+				testPlacementPion = pionDeReference.placerPionEnPosition(plateau, inPosition, inCouleur);
 				
 				if(testPlacementPion == 0){
 					return Erreur.ERR_EMPLACEMENT_OCCUPE;
@@ -193,8 +195,8 @@ public class MainActivity extends Activity {
 				else if(testPlacementPion == 1){
 					//Vérifier si on a capturé des chaines avec la pos du pion			
 					chainesCaptures = fonctionCaptures.captureChaines(pionDeReference, 
-							this.plateau, 
-							this.posPionValide);
+							plateau, 
+							posPionValide);
 					//Vérification les chaine capturée
 					if ((chainesCaptures != null) && (chainesCaptures.nbrPositionsActuel > 0)) {
 						Log.d("AS_TEST", "capture");
@@ -202,39 +204,38 @@ public class MainActivity extends Activity {
 							//Récupération un chaine
 							chaineCap = chainesCaptures.lesChaines.get(rea);
 							//Vérifier si la chaine récupérée à la des yeux
-							positonsYeuxChaine = chaineCap.lesYeuxDeLaChaine(chaineCap, this.plateau);
+							positonsYeuxChaine = chaineCap.lesYeuxDeLaChaine(chaineCap, plateau);
 							if (positonsYeuxChaine.nbrPositionsActuel < 2) {
 								//si la chaine capturée a moins de deux yeux donc elle capturée
-								fonctionCaptures.RealiserCapture(chaineCap, this.plateau);
+								fonctionCaptures.RealiserCapture(chaineCap, plateau);
 							}						
 						}
 					}else if ((chainesCaptures == null ||
 							   chainesCaptures.nbrPositionsActuel == 0)&&
-							   (this.posPionValide == 0)) {
+							   (posPionValide == 0)) {
 						//tester si le pion joué avant est bien enlevé (car a pos de pion n'est pas valide) 
-						testPionEnleve = pionAEnlever.enleverPionEn(this.plateau, inPosition, pionAEnlever);
+						testPionEnleve = pionAEnlever.enleverPionEn(plateau, inPosition, pionAEnlever);
 						if ((inPosition.memePosition(pionAEnlever.position, inPosition) == 1) && 
 							(pionAEnlever.couleur == inCouleur) && 
 							(testPionEnleve == 1)) {
 							return Erreur.ERR_PION_NON_VALIDE;
-							//TODO coninu
 						}	
 					}					
-					this.actionRealisee.lesActions.add(new ActionJoueur(pionDeReference, inPasseOuJoue));
-					this.actionRealisee.nbrPositionsActuel++;
-					this.nombreDePasse  = 0; //réinitialisation de la variable passe
+					actionRealisee.lesActions.add(new ActionJoueur(pionDeReference, inPasseOuJoue));
+					actionRealisee.nbrPositionsActuel++;
+					nombreDePasse  = 0; //réinitialisation de la variable passe
 				}				
 			}							
 			break;
 		/***	cas d'un joueur passe   *****/				
 		case PASSE:	
-			this.nombreDePasse ++;
+			nombreDePasse ++;
 			pionDeReference.position.x = 30;
 			pionDeReference.position.y = 30;
-			this.actionRealisee.lesActions.add(new ActionJoueur(pionDeReference, inPasseOuJoue));
-			this.actionRealisee.nbrPositionsActuel++;
+			actionRealisee.lesActions.add(new ActionJoueur(pionDeReference, inPasseOuJoue));
+			actionRealisee.nbrPositionsActuel++;
 			/***	tester s'il y'a deux passe (fin de la partie) ***/
-			if(this.nombreDePasse  == 2){
+			if(nombreDePasse  == 2){
 				return Erreur.FIN_DE_LA_PARTIE;
 			}						
 			
@@ -254,30 +255,30 @@ public class MainActivity extends Activity {
 	/**********************************************************************/
 	/*						 setPosPionValide					      	  */
 	/**********************************************************************/
-	public void setPosPionValide(int posPionValide) {
-		this.posPionValide = posPionValide;
+	public void setPosPionValide(int inPosPionValide) {
+		posPionValide = inPosPionValide;
 	}
 
 	/**********************************************************************/
 	/*						 MediaPlayer					      		  */
 	/**********************************************************************/
     public void intialisationOfSaound(int resId){
-    	if(this.mPlayer != null){
-			this.mPlayer.stop();
-			this.mPlayer.release();
+    	if(mPlayer != null){
+			mPlayer.stop();
+			mPlayer.release();
 		}
-    	this.mPlayer = this.mPlayer.create(MainActivity.this, resId);  
+    	mPlayer = mPlayer.create(MainActivity.this, resId);  
     }
 	
 	public void playSound() {
-		this.mPlayer.start();
-		this.mPlayer.setLooping(true);
+		mPlayer.start();
+		mPlayer.setLooping(true);
 	}
 	
 	public void stopSound(){		
-		if(this.mPlayer != null){
-			this.mPlayer.stop();
-			this.mPlayer.release();
+		if(mPlayer != null){
+			mPlayer.stop();
+			mPlayer.release();
 		}
 	}	 
 	
@@ -287,13 +288,17 @@ public class MainActivity extends Activity {
 	/*						   rejouerPartie				      		  */
 	/**********************************************************************/
 	public void rejouerPartie(){
-		for(int i = 0; i < this.actionRealisee.nbrPositionsActuel; i++){
-			realiserAction(this.actionRealisee.lesActions.get(i).pion.couleur,
-						   this.actionRealisee.lesActions.get(i).pion.position,
-						   this.actionRealisee.lesActions.get(i).passeeOuJouee);			
+		for(int i = 0; i < actionRealisee2.nbrPositionsActuel; i++){
+			realiserAction(actionRealisee2.lesActions.get(i).pion.couleur,
+						   actionRealisee2.lesActions.get(i).pion.position,
+						   actionRealisee2.lesActions.get(i).passeeOuJouee);			
 		}		
 	}	
 	
+	/**********************************************************************/
+	/*																	  */
+	/*						   onBackPressed				      		  */
+	/**********************************************************************/
 	public void onBackPressed(){		
 		MainActivity.this.finish();
 	}	
@@ -350,11 +355,11 @@ public class MainActivity extends Activity {
 						break;
 	
 					case NOIR:
-						this.scoreJoueurs.scoreJoueurNoir++;
+						scoreJoueurs.scoreJoueurNoir++;
 						break;
 	
 					case BLANC:
-						this.scoreJoueurs.scoreJoueurBlanc++;
+						scoreJoueurs.scoreJoueurBlanc++;
 						break;
 	
 					default:
@@ -368,18 +373,18 @@ public class MainActivity extends Activity {
 			switch (lv_LesTerritoires.lesChaines.get(z).laCouleur)
 			{
 				case NOIR:
-					this.scoreJoueurs.scoreJoueurNoir += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
+					scoreJoueurs.scoreJoueurNoir += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
 					break;
 	
 				case BLANC:
-					this.scoreJoueurs.scoreJoueurBlanc += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
+					scoreJoueurs.scoreJoueurBlanc += (float)lv_LesTerritoires.lesChaines.get(z).lesCoordCases.nbrPositionsActuel;
 					break;
 	
 				default:
 					break;
 			}
 		}
-		this.scoreJoueurs.scoreJoueurBlanc += valKomi;
+		scoreJoueurs.scoreJoueurBlanc += valKomi;
 		return 1;
 	}
 	

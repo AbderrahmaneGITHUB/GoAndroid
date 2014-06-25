@@ -48,10 +48,10 @@ public class plateau_neuf extends MainActivity{
 		taille_plateau = 9;
 		couleur_pion = 1;
 		
-		this.scoreJoueurs.scoreJoueurBlanc = 0;
-		this.scoreJoueurs.scoreJoueurNoir = 0;
+		scoreJoueurs.scoreJoueurBlanc = 0;
+		scoreJoueurs.scoreJoueurNoir = 0;
 		
-		if(this.plateau == null){
+		if(plateau == null){
 			initTaillePlateau(Constante.TAILLEPLATEAU_9);
 		}
 		intialisationOfSaound(R.raw.asian_dream);
@@ -195,7 +195,7 @@ public class plateau_neuf extends MainActivity{
         		break;
         		
         	case PASSE:
-        		int z =5;
+        		
         		break;
         		
         	case ERR_PION_NON_VALIDE:	                 		
@@ -267,7 +267,9 @@ public class plateau_neuf extends MainActivity{
 			alertDialog.setTitle("Partie terminée");
 			 
 			// Le message
-			alertDialog.setMessage("Scores :\nBlanc : "+this.scoreJoueurs.scoreJoueurBlanc+" Noir : "+this.scoreJoueurs.scoreJoueurNoir);
+			alertDialog.setMessage("Scores :\nBlanc : " +
+								   scoreJoueurs.scoreJoueurBlanc + " Noir : "+ 
+								   scoreJoueurs.scoreJoueurNoir);
 			
 			// Ajout du bouton "OK"
 			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -291,7 +293,7 @@ public class plateau_neuf extends MainActivity{
 	//TODO bouton retour
 	public void annuler_action(View v){
 		this.retourAction();
-		this.afficherPlateau(this.plateau.positionPlateau);
+		this.afficherPlateau(plateau.positionPlateau);
 	}
 	
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
