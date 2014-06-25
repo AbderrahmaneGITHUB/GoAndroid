@@ -323,7 +323,7 @@ public class plateau_treize extends MainActivity{
 		pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
         pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	iv = (ImageView) findViewById(R.id.imageView1);	
-	
+    	couleur_pion = 1;
     	for(int j=0; j < taille; j++)
 		{
 			for(int k=0; k < taille; k++)
@@ -336,6 +336,7 @@ public class plateau_treize extends MainActivity{
                 		le_pion = pion_blanc;
                 		a_qui_le_tour = "noir";
                 	}
+            		couleur_pion++;
             		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
@@ -348,12 +349,12 @@ public class plateau_treize extends MainActivity{
 			}
 		}
 		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
-		if(a_qui_le_tour=="noir"){
-			couleur_pion = 1;
-			tour_joueur.setText("Joueur Noir");
-		}else{
+		if((couleur_pion % 2) == 0 && couleur_pion != 1){
 			couleur_pion = 2;
 			tour_joueur.setText("Joueur Blanc");
+		}else{
+			couleur_pion = 1;
+			tour_joueur.setText("Joueur Noir");
 		}
 		afficheImages();
 	}	
