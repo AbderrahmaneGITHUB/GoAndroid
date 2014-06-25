@@ -383,6 +383,37 @@ public class MainActivity extends Activity {
 	}
 	
 
+	/**********************************************************************/
+	/*																	  */
+	/*						   rejouerPartie				      		  */
+	/**********************************************************************/
+	public void retourAction(){
+		int taillePlateau;
+		
+		taillePlateau = this.plateau.taille;
+		
+		if(this.actionRealisee.nbrPositionsActuel == 1){
+			this.initTaillePlateau(taillePlateau);
+			this.actionRealisee = null;
+			this.actionRealisee = new ActionRealiseeStruct(); 
+			
+		}else if(this.actionRealisee.nbrPositionsActuel > 1){
+			this.initTaillePlateau(taillePlateau);			
+			this.actionRealisee.lesActions.remove(this.actionRealisee.nbrPositionsActuel);
+			this.actionRealisee.nbrPositionsActuel--;
+			
+			for(int i = 0; i < this.actionRealisee.nbrPositionsActuel; i++){
+				realiserAction(this.actionRealisee.lesActions.get(i).pion.couleur,
+							   this.actionRealisee.lesActions.get(i).pion.position,
+							   this.actionRealisee.lesActions.get(i).passeeOuJouee);			
+			}
+		}
+		
+	}
+	
+	
+	
+	
 }//  Fin du main
 
 
