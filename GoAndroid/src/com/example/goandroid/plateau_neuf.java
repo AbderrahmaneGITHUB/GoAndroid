@@ -288,7 +288,8 @@ public class plateau_neuf extends MainActivity{
 	
 	//TODO bouton retour
 	public void annuler_action(View v){
-		this.retourAction();				
+		this.retourAction();
+		this.afficherPlateau(this.plateau.positionPlateau);
 	}
 	
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -335,7 +336,8 @@ public class plateau_neuf extends MainActivity{
         pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	iv = (ImageView) findViewById(R.id.imageView1);	
     	couleur_pion = 1;
-		for(int j=0; j < taille; j++)
+
+    	for(int j=0; j < taille; j++)
 		{
 			for(int k=0; k < taille; k++)
 			{				

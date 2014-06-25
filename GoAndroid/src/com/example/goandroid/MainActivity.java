@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
 	protected static boolean NoMusic = true;
 	//private static TailleEcran tailleEcran;
 	protected static ActionRealiseeStruct actionRealisee;
+	protected static ActionRealiseeStruct actionRealisee2;
 	protected static int nombreDePasse; //si on pasee deux fois, on arret la partie
 	protected static int posPionValide;
 	protected static SauvegardePartie sauvegardePartie;
@@ -390,22 +391,27 @@ public class MainActivity extends Activity {
 	public void retourAction(){
 		int taillePlateau;
 		
-		taillePlateau = this.plateau.taille;
+		taillePlateau = plateau.taille;
 		
-		if(this.actionRealisee.nbrPositionsActuel == 1){
+		if(actionRealisee.nbrPositionsActuel == 1){
+			plateau = null;
 			this.initTaillePlateau(taillePlateau);
-			this.actionRealisee = null;
-			this.actionRealisee = new ActionRealiseeStruct(); 
+			actionRealisee = null;
+			actionRealisee = new ActionRealiseeStruct(); 
 			
-		}else if(this.actionRealisee.nbrPositionsActuel > 1){
-			this.initTaillePlateau(taillePlateau);			
-			this.actionRealisee.lesActions.remove(this.actionRealisee.nbrPositionsActuel);
-			this.actionRealisee.nbrPositionsActuel--;
+		}else if(actionRealisee.nbrPositionsActuel > 1){
+			plateau = null;
+			this.initTaillePlateau(taillePlateau);	
 			
-			for(int i = 0; i < this.actionRealisee.nbrPositionsActuel; i++){
-				realiserAction(this.actionRealisee.lesActions.get(i).pion.couleur,
-							   this.actionRealisee.lesActions.get(i).pion.position,
-							   this.actionRealisee.lesActions.get(i).passeeOuJouee);			
+			actionRealisee.lesActions.remove(actionRealisee.nbrPositionsActuel-1);
+			actionRealisee.nbrPositionsActuel--;
+			actionRealisee2 = actionRealisee;
+			actionRealisee = null;
+			actionRealisee = new ActionRealiseeStruct();
+			for(int i = 0; i < actionRealisee2.nbrPositionsActuel; i++){
+				realiserAction(actionRealisee2.lesActions.get(i).pion.couleur,
+							   actionRealisee2.lesActions.get(i).pion.position,
+							   actionRealisee2.lesActions.get(i).passeeOuJouee);			
 			}
 		}
 		
