@@ -116,6 +116,8 @@ public class plateau_neuf extends MainActivity{
                     	Bitmap le_pion;
                     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
                     	
+                    	
+                    	
                     	if((couleur_pion % 2) == 0 && couleur_pion != 1){
                     		laCouleur = Couleur.BLANC;
                     	}else{
@@ -128,7 +130,6 @@ public class plateau_neuf extends MainActivity{
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     	switch(erreur){                    		
 	                    	case NO_ERREUR_OK:
-	                    		nb_passe = 0;
 	                    		if((couleur_pion % 2) == 0 && couleur_pion != 1){
 	                        		le_pion = pion_blanc;
 	                        		tour_joueur.setText("Joueur Noir"); 
@@ -144,8 +145,9 @@ public class plateau_neuf extends MainActivity{
 		                    	if(NoSound!=false){
 		                    		playSound_touche(R.raw.poser);
 		                    	}
-		                    	couleur_pion++;
-		                    	afficherPlateau(plateau.positionPlateau);		                    	
+		                    	//couleur_pion++;
+		                    	afficherPlateau(plateau.positionPlateau);
+	                    		nb_passe = 0;		                    	
 	                    		break;
 	                    		
 	                    	case FIN_DE_LA_PARTIE:
@@ -238,7 +240,6 @@ public class plateau_neuf extends MainActivity{
 		/******************************************************/
     	/*				Declaration variables				  */
     	/******************************************************/
-		couleur_pion ++;
 		nb_passe++;
 		/******************************************************/
     	/*							Codes					  */
@@ -252,6 +253,7 @@ public class plateau_neuf extends MainActivity{
     		tour_joueur.setText("Joueur Blanc");
     		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
     	}
+		couleur_pion ++;
 		
 		if(nb_passe == 2){
 			nb_passe = 0;
@@ -349,7 +351,9 @@ public class plateau_neuf extends MainActivity{
                 		le_pion = pion_blanc;
                 		a_qui_le_tour = "noir";
                 	}
+            		if(nb_passe==0){
             		couleur_pion++;
+            		}
             		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
