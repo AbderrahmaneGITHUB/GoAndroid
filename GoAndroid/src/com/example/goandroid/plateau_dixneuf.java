@@ -6,6 +6,7 @@ import structure.Pion;
 import structure.Position;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -269,6 +270,10 @@ public class plateau_dixneuf extends MainActivity{
 			    public void onClick(DialogInterface dialog, int which) {
 			    	plateau = null;
 			    	actionRealisee = null;
+			    	
+			    	Intent intent = new Intent(plateau_dixneuf.this, MainActivity.class);
+	                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+	                startActivity(intent);
 			        plateau_dixneuf.this.finish();
 			    }
 			});
@@ -308,6 +313,7 @@ public class plateau_dixneuf extends MainActivity{
 		/******************************************************************/
 		int z 		= 0;
 		int taille 	= 19;
+		String a_qui_le_tour = "noir";
 		float x,y;
 		Bitmap pion_noir;
         Bitmap pion_blanc;
@@ -321,16 +327,19 @@ public class plateau_dixneuf extends MainActivity{
         pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	iv = (ImageView) findViewById(R.id.imageView1);	
 	
-		for(int j=0; j < taille; j++)
+    	for(int j=0; j < taille; j++)
 		{
 			for(int k=0; k < taille; k++)
 			{				
             	if(listDesPion.get(z).couleur != Couleur.RIEN){
             		if(listDesPion.get(z).couleur==Couleur.NOIR){
                 		le_pion = pion_noir;
+                		a_qui_le_tour = "blanc";
                 	}else{
                 		le_pion = pion_blanc;
+                		a_qui_le_tour = "noir";
                 	}
+            		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
 	            	x = (listDesPion.get(z).position.x)*x_case;
 	            	y = (listDesPion.get(z).position.y)*y_case;
 	            	int taille_pion = (int)(x_grille/9)/2;
@@ -340,7 +349,15 @@ public class plateau_dixneuf extends MainActivity{
             	}
 				z++;
 			}
-		}			
+		}
+		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
+		if(a_qui_le_tour=="noir"){
+			couleur_pion = 1;
+			tour_joueur.setText("Joueur Noir");
+		}else{
+			couleur_pion = 2;
+			tour_joueur.setText("Joueur Blanc");
+		}
 		afficheImages();	
 	}	
 	
@@ -399,6 +416,10 @@ public class plateau_dixneuf extends MainActivity{
 		            	}
 		                plateau = null;
 		            	actionRealisee = null;
+		            	
+		            	Intent intent = new Intent(plateau_dixneuf.this, MainActivity.class);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+		                startActivity(intent);
 		                plateau_dixneuf.this.finish();
 		            }
 		        });
@@ -419,6 +440,10 @@ public class plateau_dixneuf extends MainActivity{
 		            	}
 		                plateau = null;
 		            	actionRealisee = null;
+		            	
+		            	Intent intent = new Intent(plateau_dixneuf.this, MainActivity.class);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+		                startActivity(intent);
 		                plateau_dixneuf.this.finish();
 		            }
 		        });

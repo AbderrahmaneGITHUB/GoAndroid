@@ -272,6 +272,10 @@ public class plateau_neuf extends MainActivity{
 			    public void onClick(DialogInterface dialog, int which) {
 			    	plateau = null;
 			    	actionRealisee = null;
+			    	
+			    	Intent intent = new Intent(plateau_neuf.this, MainActivity.class);
+	                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+	                startActivity(intent);
 			        plateau_neuf.this.finish();
 			    }
 			});
@@ -281,6 +285,11 @@ public class plateau_neuf extends MainActivity{
 		}
 	}
 		
+	//TODO bouton retour
+	public void annuler_action(View v){
+		
+	}
+	
 	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
 	    int width = bm.getWidth();
 	    int height = bm.getHeight();
@@ -312,6 +321,7 @@ public class plateau_neuf extends MainActivity{
 		int z 		= 0;
 		int taille 	= 9;
 		float x,y;
+		String a_qui_le_tour = "noir";
 		Bitmap pion_noir;
         Bitmap pion_blanc;
     	Bitmap le_pion;
@@ -331,8 +341,10 @@ public class plateau_neuf extends MainActivity{
             	if(listDesPion.get(z).couleur != Couleur.RIEN){
             		if(listDesPion.get(z).couleur==Couleur.NOIR){
                 		le_pion = pion_noir;
+                		a_qui_le_tour = "blanc";
                 	}else{
                 		le_pion = pion_blanc;
+                		a_qui_le_tour = "noir";
                 	}
             		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
 	            	x = (listDesPion.get(z).position.x)*x_case;
@@ -344,7 +356,15 @@ public class plateau_neuf extends MainActivity{
             	}
 				z++;
 			}
-		}			
+		}
+		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
+		if(a_qui_le_tour=="noir"){
+			couleur_pion = 1;
+			tour_joueur.setText("Joueur Noir");
+		}else{
+			couleur_pion = 2;
+			tour_joueur.setText("Joueur Blanc");
+		}
 		afficheImages();	
 	}	
 	
@@ -406,6 +426,10 @@ public class plateau_neuf extends MainActivity{
 		            	}
 		            	plateau = null;
 		            	actionRealisee = null;
+		            	
+		            	Intent intent = new Intent(plateau_neuf.this, MainActivity.class);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+		                startActivity(intent);
 		                plateau_neuf.this.finish();		                
 		            }
 		        });
@@ -427,7 +451,9 @@ public class plateau_neuf extends MainActivity{
 		            	plateau = null;
 		            	actionRealisee = null;		            	
 		        		
-		            	//finishActivity();
+		            	Intent intent = new Intent(plateau_neuf.this, MainActivity.class);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+		                startActivity(intent);
 		                plateau_neuf.this.finish();
 		            }
 		        });

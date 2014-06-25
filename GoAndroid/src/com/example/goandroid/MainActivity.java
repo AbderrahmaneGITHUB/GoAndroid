@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 		rejouerPartie();
 		//Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 		//startActivity(intent);
-		
+		Log.v("AS_TEST","taille sauvegarde : "+laTaille);
 		if(laTaille==9){
 			Intent intent = new Intent(MainActivity.this, plateau_neuf.class);
 			startActivity(intent);
@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
 		}
 	}	 
 	
+	
 	/**********************************************************************/
 	/*																	  */
 	/*						   rejouerPartie				      		  */
@@ -292,24 +293,7 @@ public class MainActivity extends Activity {
 		}		
 	}	
 	
-	public void onBackPressed(){
-		/*String string_activity = this.getClass().getName();
-
-		//////////////////////////////////
-		this.sauvegardePartie.creationFichier();
-		this.sauvegardePartie.EnregistrerLaPartie(this.actionRealisee);
-		this.sauvegardePartie.lecture();
-		//////////////////////////////////
-		
-		if(string_activity.equals("com.example.goandroid.MainActivity")){
-			// TODO : Il faut proposer à l'utilisateur d'enregistrer sa partie
-			super.onDestroy();
-		}else{
-			if(mPlayer != null){
-				mPlayer.stop();
-			}
-		}
-		super.onBackPressed();*/
+	public void onBackPressed(){		
 		MainActivity.this.finish();
 	}	
 	
