@@ -116,12 +116,15 @@ public class plateau_neuf extends MainActivity{
                     	Bitmap le_pion;
                     	TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
                     	
-                    	
-                    	
-                    	if((couleur_pion % 2) == 0 && couleur_pion != 1){
-                    		laCouleur = Couleur.BLANC;
-                    	}else{
+                    	laCouleur = Couleur.NOIR;
+                    	if(actionRealisee.nbrPositionsActuel==0){
                     		laCouleur = Couleur.NOIR;
+                    	}else{
+	                    	if(actionRealisee.lesActions.get(actionRealisee.nbrPositionsActuel-1).pion.couleur == Couleur.NOIR && actionRealisee.nbrPositionsActuel!=0){
+	                    		laCouleur = Couleur.BLANC;
+	                    	}else if(actionRealisee.lesActions.get(actionRealisee.nbrPositionsActuel-1).pion.couleur == Couleur.BLANC || actionRealisee.nbrPositionsActuel==0){
+	                    		laCouleur = Couleur.NOIR;
+	                    	}
                     	}
                     	                    	
                     	//récupération du core erreur renvoyé
@@ -130,24 +133,13 @@ public class plateau_neuf extends MainActivity{
                     	//Log.d("AS_TEST", "erreur : " + erreur.toString());
                     	switch(erreur){                    		
 	                    	case NO_ERREUR_OK:
-	                    		if((couleur_pion % 2) == 0 && couleur_pion != 1){
-	                        		le_pion = pion_blanc;
-	                        		tour_joueur.setText("Joueur Noir"); 
-	                        	}else{
-	                        		le_pion = pion_noir;
-	                        		tour_joueur.setText("Joueur Blanc");
-	                        	}
-	                    		unPion.couleur  = laCouleur;
-	                    		unPion.position = laPosition;                    		
-		                    	int taille_pion = (int)(xI/10)/2;
-		                    	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-
+	                    		
 		                    	if(NoSound!=false){
 		                    		playSound_touche(R.raw.poser);
 		                    	}
 		                    	//couleur_pion++;
 		                    	afficherPlateau(plateau.positionPlateau);
-	                    		nb_passe = 0;		                    	
+	                    		nb_passe = 0;	
 	                    		break;
 	                    		
 	                    	case FIN_DE_LA_PARTIE:
@@ -245,15 +237,19 @@ public class plateau_neuf extends MainActivity{
     	/*							Codes					  */
     	/******************************************************/    	
 		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
-		if((couleur_pion % 2)==0){
-    		tour_joueur.setText("Joueur Noir");
-    		// On execute cette fonction afin d'ajouter l'action dans la liste des actions
-    		traitement(Couleur.BLANC, new Position(), PasseOuJoue.PASSE);
-    	}else{
-    		tour_joueur.setText("Joueur Blanc");
+		if(actionRealisee.nbrPositionsActuel==0){
+			tour_joueur.setText("Joueur Blanc");
     		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
-    	}
-		couleur_pion ++;
+		}else{
+			if(actionRealisee.lesActions.get(actionRealisee.nbrPositionsActuel-1).pion.couleur == Couleur.NOIR){
+	    		tour_joueur.setText("Joueur Noir");
+	    		// On execute cette fonction afin d'ajouter l'action dans la liste des actions
+	    		traitement(Couleur.BLANC, new Position(), PasseOuJoue.PASSE);
+	    	}else if(actionRealisee.lesActions.get(actionRealisee.nbrPositionsActuel-1).pion.couleur == Couleur.BLANC){
+	    		tour_joueur.setText("Joueur Blanc");
+	    		traitement(Couleur.NOIR, new Position(), PasseOuJoue.PASSE);
+	    	}
+		}
 		
 		if(nb_passe == 2){
 			nb_passe = 0;
@@ -290,7 +286,6 @@ public class plateau_neuf extends MainActivity{
 	}
 	
 	
-	//TODO bouton retour
 	public void annuler_action(View v){
 		this.retourAction();
 		this.afficherPlateau(plateau.positionPlateau);
@@ -339,43 +334,55 @@ public class plateau_neuf extends MainActivity{
 		pion_noir = BitmapFactory.decodeResource(getResources(),R.drawable.pion_noir);
         pion_blanc = BitmapFactory.decodeResource(getResources(),R.drawable.pion_blanc);
     	iv = (ImageView) findViewById(R.id.imageView1);	
+    	
+		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
     	couleur_pion = 1;
 
-    	for(int j=0; j < taille; j++)
-		{
-			for(int k=0; k < taille; k++)
-			{				
-            	if(listDesPion.get(z).couleur != Couleur.RIEN){
-            		if(listDesPion.get(z).couleur==Couleur.NOIR){
-                		le_pion = pion_noir;
-                		a_qui_le_tour = "blanc";
-                	}else{
-                		le_pion = pion_blanc;
-                		a_qui_le_tour = "noir";
-                	}
-            		if(nb_passe==0){
-            		couleur_pion++;
-            		}
-            		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
-	            	x = (listDesPion.get(z).position.x)*x_case;
-	            	y = (listDesPion.get(z).position.y)*y_case;
-	            	int taille_pion = (int)(x_grille/9)/2;
-	            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
-	            	int width = le_pion.getWidth();            	
-	            	drawImg((x+(width/4)), (y+(width/4)), le_pion);
-            	}
-				z++;
+		if(actionRealisee.nbrPositionsActuel!=0){
+	    	for(int j=0; j < taille; j++)
+			{
+				for(int k=0; k < taille; k++)
+				{				
+	            	if(listDesPion.get(z).couleur != Couleur.RIEN){
+	            		if(listDesPion.get(z).couleur==Couleur.NOIR){
+	                		le_pion = pion_noir;
+	                		a_qui_le_tour = "blanc";
+	                	}else{
+	                		le_pion = pion_blanc;
+	                		a_qui_le_tour = "noir";
+	                	}
+	//            		if(nb_passe==0){
+	//            		couleur_pion++;
+	//            		}
+	            		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
+		            	x = (listDesPion.get(z).position.x)*x_case;
+		            	y = (listDesPion.get(z).position.y)*y_case;
+		            	int taille_pion = (int)(x_grille/9)/2;
+		            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);
+		            	int width = le_pion.getWidth();            	
+		            	drawImg((x+(width/4)), (y+(width/4)), le_pion);
+	            	}
+					z++;
+				}
 			}
-		}
-		TextView tour_joueur = (TextView) findViewById(R.id.tour_joueur);
-		if((couleur_pion % 2) == 0 && couleur_pion != 1){
-			couleur_pion = 2;
-			tour_joueur.setText("Joueur Blanc");
+			/*if((couleur_pion % 2) == 0 && couleur_pion != 1){
+				couleur_pion = 2;
+				tour_joueur.setText("Joueur Blanc");
+			}else{
+				couleur_pion = 1;
+				tour_joueur.setText("Joueur Noir");
+			}*/
+			if(actionRealisee.lesActions.get(actionRealisee.nbrPositionsActuel-1).pion.couleur == Couleur.NOIR){
+				//couleur_pion = 2;
+				tour_joueur.setText("Joueur Blanc");
+			}else{
+				//couleur_pion = 1;
+				tour_joueur.setText("Joueur Noir");
+			}
+			afficheImages();
 		}else{
-			couleur_pion = 1;
 			tour_joueur.setText("Joueur Noir");
 		}
-		afficheImages();	
 	}	
 	
 	
@@ -402,7 +409,9 @@ public class plateau_neuf extends MainActivity{
 	     canva.save(1);
 	     maVue.draw(canva);
 	     
-	     afficherPlateau(plateau.positionPlateau);
+	     if(actionRealisee.nbrPositionsActuel!=0){
+		     afficherPlateau(plateau.positionPlateau);
+		}
     }
 	
 	@Override
