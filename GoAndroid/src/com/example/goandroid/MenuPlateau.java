@@ -23,7 +23,7 @@ public class MenuPlateau extends MainActivity{
     	
         /*********** Si écran trop petit, on ne propose pas les plateau de 13 et 19 lignes ****************/
 		String taille = tailleEcran.getSizeName(this);
-		if(taille != "grand"){
+		if(taille != "grand" && taille != "xlarge"){
 			View bouton_13 = findViewById(R.id.treize_case);
 			View bouton_19 = findViewById(R.id.dixneuf_case);
 			bouton_13.setVisibility(View.INVISIBLE);

@@ -271,6 +271,17 @@ public class plateau_dixneuf extends MainActivity{
 			    	plateau = null;
 			    	actionRealisee = null;
 			    	
+			    	if(mPlayer!=null){
+		            	mPlayer.stop();
+		            	mPlayer.release();
+		            	mPlayer = null;
+	            	}
+	            	if(mPlayerPion!=null){			            	
+		            	mPlayerPion.stop();
+		            	mPlayerPion.release();
+		            	mPlayerPion = null;
+	            	}
+			    	
 			    	Intent intent = new Intent(plateau_dixneuf.this, MainActivity.class);
 	                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
 	                startActivity(intent);

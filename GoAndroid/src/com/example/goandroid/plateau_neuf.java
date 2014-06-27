@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -273,6 +274,17 @@ public class plateau_neuf extends MainActivity{
 			    	plateau = null;
 			    	actionRealisee = null;
 			    	
+			    	if(mPlayer!=null){
+		            	mPlayer.stop();
+		            	mPlayer.release();
+		            	mPlayer = null;
+	            	}
+	            	if(mPlayerPion!=null){			            	
+		            	mPlayerPion.stop();
+		            	mPlayerPion.release();
+		            	mPlayerPion = null;
+	            	}
+			    	
 			    	Intent intent = new Intent(plateau_neuf.this, MainActivity.class);
 	                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
 	                startActivity(intent);
@@ -351,11 +363,8 @@ public class plateau_neuf extends MainActivity{
 	                		le_pion = pion_blanc;
 	                		a_qui_le_tour = "noir";
 	                	}
-	//            		if(nb_passe==0){
-	//            		couleur_pion++;
-	//            		}
-	            		//Log.v("AS_TEST","pion : "+listDesPion.get(z).position.x+" / "+listDesPion.get(z).position.y);
-		            	x = (listDesPion.get(z).position.x)*x_case;
+
+	            		x = (listDesPion.get(z).position.x)*x_case;
 		            	y = (listDesPion.get(z).position.y)*y_case;
 		            	int taille_pion = (int)(x_grille/9)/2;
 		            	le_pion = getResizedBitmap(le_pion, taille_pion, taille_pion);

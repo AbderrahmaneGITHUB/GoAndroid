@@ -19,8 +19,8 @@
             android:id="@+id/nouvelle_partie"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/nouvelle_partie"
-            android:layout_margin="20dp"
+            android:background="@drawable/nouvelle_partie_btn"
+            android:layout_margin="10dp"
             android:onClick="nouvelle_partie"
             android:layout_weight="1"
             />
@@ -29,8 +29,8 @@
             android:id="@+id/charger_partie"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/charger_partie"
-            android:layout_margin="20dp"
+            android:background="@drawable/charger_partie_btn"
+            android:layout_margin="10dp"
             android:onClick="charger_partie"
             android:layout_weight="1"
             />
@@ -39,8 +39,8 @@
             android:id="@+id/option"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/options"
-            android:layout_margin="20dp"
+            android:background="@drawable/options_btn"
+            android:layout_margin="10dp"
             android:onClick="option"
             android:layout_weight="1"
             /> 
@@ -49,8 +49,8 @@
             android:id="@+id/a_propos"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/a_propos"
-            android:layout_margin="20dp"
+            android:background="@drawable/a_propos_btn"
+            android:layout_margin="10dp"
             android:onClick="a_propos"
             android:layout_weight="1"
             />            
