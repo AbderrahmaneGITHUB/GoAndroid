@@ -88,21 +88,21 @@ public class plateau_neuf extends MainActivity{
                 unPion 	= new Pion();
                 laPosition = new Position();
                 
-                x_grille = (float) (xI - ((xI/100*3.75)*2));
-                y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
+               /* x_grille = (float) (xI - ((xI/100*3.75)*2));
+                y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));*/
                 //Toast.makeText(plateau_neuf.this, "taille grille "+x_grille, (int)2000).show();
                 px 				= (int) (x/(x_grille/(taille_plateau-1)))+1;
                 py 				= (int) (y/(y_grille/(taille_plateau-1)))+1;
                 laPosition.x 	= px-1;
                 laPosition.y 	= py-1;
                 //Toast.makeText(plateau_neuf.this, "touché en ("+px+" / "+py+")", (int)2000).show();
-                float cx 	= (float) x_grille/(taille_plateau-1);
+                /*float cx 	= (float) x_grille/(taille_plateau-1);
                 x_case 		= cx;
                 //Toast.makeText(plateau_neuf.this, "taille case ("+cx+")", (int)2000).show();
                 float cy 	= (float) y_grille/(taille_plateau-1);
                 y_case 		= cy;
                 cx 			= (float) ((px-1)*cx);
-                cy 			= (float) ((py-1)*cy);
+                cy 			= (float) ((py-1)*cy);*/
                 //Toast.makeText(plateau_neuf.this, "touché en ("+cx+" / "+cy+")", (int)2000).show();
                 if (action==MotionEvent.ACTION_UP)
                 {
@@ -221,7 +221,7 @@ public class plateau_neuf extends MainActivity{
 		//Log.d("AS_TEST", "width bmp :"+test);
 		ImageView image = (ImageView)findViewById(R.id.imageView1);
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.go9);
-		bmp = getResizedBitmap(bmp, x, y);		
+		bmp = getResizedBitmap(bmp, x, y);
 		canva.drawBitmap(bmp, 0, 0,p);	
 		((ImageView) maVue).setImageBitmap(bmp); 
 	}
@@ -363,7 +363,9 @@ public class plateau_neuf extends MainActivity{
 	                		le_pion = pion_blanc;
 	                		a_qui_le_tour = "noir";
 	                	}
-
+                        //Log.v("AS_TEST","x_case : "+x_case);
+                        /*x_case = 55.5f;
+                        y_case = 55.5f;*/
 	            		x = (listDesPion.get(z).position.x)*x_case;
 		            	y = (listDesPion.get(z).position.y)*y_case;
 		            	int taille_pion = (int)(x_grille/9)/2;
@@ -374,6 +376,9 @@ public class plateau_neuf extends MainActivity{
 					z++;
 				}
 			}
+            int taille_pion = (int)(x_grille/9)/2;
+            le_pion = getResizedBitmap(pion_noir, taille_pion, taille_pion);
+            //drawImg(444+25/2, 444+25/2, le_pion);
 			/*if((couleur_pion % 2) == 0 && couleur_pion != 1){
 				couleur_pion = 2;
 				tour_joueur.setText("Joueur Blanc");
@@ -396,7 +401,7 @@ public class plateau_neuf extends MainActivity{
 	
 	
 	public void onWindowFocusChanged(boolean hasFocus) {
-		int xI,xY;
+		float xI,xY;
 	    super.onWindowFocusChanged(hasFocus);
 		 
 	     maVue = findViewById(R.id.imageView1);
@@ -405,15 +410,20 @@ public class plateau_neuf extends MainActivity{
 	     
 	     x_grille = (float) (xI - ((xI/100*3.75)*2));
          y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
-         
+
+
+
+         Log.d("AS_TEST", "taille : ("+x_grille+"/"+y_grille+")");
+
          float cx 	= (float) x_grille/(taille_plateau-1);
          x_case 		= cx;
 
          float cy 	= (float) y_grille/(taille_plateau-1);
          y_case 		= cy;
-	     
-	     //Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
-	     bitmap = Bitmap.createBitmap(xI,xY, Config.ARGB_8888);
+
+         Log.v("AS_TEST","x_case : "+x_case);
+         Log.v("AS_TEST","y_case : "+y_case);
+	     bitmap = Bitmap.createBitmap((int)xI,(int)xY, Config.ARGB_8888);
 	     canva = new Canvas(bitmap);
 	     canva.save(1);
 	     maVue.draw(canva);
