@@ -17,6 +17,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -399,7 +400,17 @@ public class plateau_treize extends MainActivity{
 		 
 	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-	     xY = maVue.getHeight(); 
+	     xY = maVue.getHeight();
+
+        //patch correction 10 pouces
+        if(xI == 800 || xY == 800){
+            ViewGroup.LayoutParams params = maVue.getLayoutParams();
+            params.width = 800;
+            params.height = 800;
+            maVue.setLayoutParams(params);
+            xI = 800;
+            xY = 800;
+        }
 	     
 	     x_grille = (float) (xI - ((xI/100*3.75)*2));
          y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));

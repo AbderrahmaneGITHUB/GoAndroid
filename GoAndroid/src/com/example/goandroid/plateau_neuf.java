@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -222,7 +223,7 @@ public class plateau_neuf extends MainActivity{
 		ImageView image = (ImageView)findViewById(R.id.imageView1);
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.go9);
 		bmp = getResizedBitmap(bmp, x, y);
-		canva.drawBitmap(bmp, 0, 0,p);	
+		canva.drawBitmap(bmp, 0, 0,p);
 		((ImageView) maVue).setImageBitmap(bmp); 
 	}
 	
@@ -403,17 +404,33 @@ public class plateau_neuf extends MainActivity{
 	public void onWindowFocusChanged(boolean hasFocus) {
 		float xI,xY;
 	    super.onWindowFocusChanged(hasFocus);
-		 
+
+        /*TailleEcran tailleEcran = new TailleEcran();
+
+        String tailleE = tailleEcran.getSizeName(this);*/
+
+
+
 	     maVue = findViewById(R.id.imageView1);
 		 xI = maVue.getWidth();
-	     xY = maVue.getHeight(); 
+	     xY = maVue.getHeight();
+
+        //patch correction 10 pouces
+        if(xI == 800 || xY == 800){
+            ViewGroup.LayoutParams params = maVue.getLayoutParams();
+            params.width = 800;
+            params.height = 800;
+            maVue.setLayoutParams(params);
+            xI = 800;
+            xY = 800;
+        }
 	     
 	     x_grille = (float) (xI - ((xI/100*3.75)*2));
          y_grille = (float) (xY - (xY/100*3.75) - (xY/100*3.75));
 
 
 
-         Log.d("AS_TEST", "taille : ("+x_grille+"/"+y_grille+")");
+         Log.d("AS_TEST", "taille : ("+xI+"/"+xY+")");
 
          float cx 	= (float) x_grille/(taille_plateau-1);
          x_case 		= cx;
@@ -421,7 +438,7 @@ public class plateau_neuf extends MainActivity{
          float cy 	= (float) y_grille/(taille_plateau-1);
          y_case 		= cy;
 
-         Log.v("AS_TEST","x_case : "+x_case);
+         Log.v("AS_TEST", "x_case : " + x_case);
          Log.v("AS_TEST","y_case : "+y_case);
 	     bitmap = Bitmap.createBitmap((int)xI,(int)xY, Config.ARGB_8888);
 	     canva = new Canvas(bitmap);
