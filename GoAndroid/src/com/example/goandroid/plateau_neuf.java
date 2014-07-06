@@ -415,7 +415,7 @@ public class plateau_neuf extends MainActivity{
 		 xI = maVue.getWidth();
 	     xY = maVue.getHeight();
 
-        //patch correction 10 pouces
+        //patch correction grand écran
         if(xI == 800 || xY == 800){
             ViewGroup.LayoutParams params = maVue.getLayoutParams();
             params.width = 800;
